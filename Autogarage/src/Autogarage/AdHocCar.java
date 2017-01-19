@@ -17,3 +17,5 @@ public class AdHocCar extends Car {
     	return COLOR;
     }
 }
+
+test

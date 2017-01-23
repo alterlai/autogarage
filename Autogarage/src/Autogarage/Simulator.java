@@ -34,11 +34,16 @@ public class Simulator {
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
-        simulatorView = new SimulatorView(3, 6, 30);
+        simulatorView = new SimulatorView(3, 6, 30, this);
     }
-
-    public void run() {
-        for (int i = 0; i < 10000; i++) {
+    
+    public static void main(String [] args)
+    {
+    	Simulator sim = new Simulator();
+    }
+    
+    public void run(int ammountOfTicks) {
+        for (int i = 0; i < ammountOfTicks; i++) {
             tick();
         }
     }
@@ -180,5 +185,6 @@ public class Simulator {
     	simulatorView.removeCarAt(car.getLocation());
         exitCarQueue.addCar(car);
     }
+   
 
 }

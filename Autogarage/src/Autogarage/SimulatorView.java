@@ -4,14 +4,20 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SimulatorView extends JFrame {
-    private CarParkView carParkView;
+    private Simulator simulator;	// The simulator controlling the GUI
+	private CarParkView carParkView;
     private int numberOfFloors;
     private int numberOfRows;
     private int numberOfPlaces;
     private int numberOfOpenSpots;
     private Car[][][] cars;
+    
+    //UI stuff
+    
+    Container contentPane;
+    JTextField simulationLengthField;
 
-    public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
+    public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces, Simulator simulator) {
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
@@ -20,14 +26,58 @@ public class SimulatorView extends JFrame {
         
         carParkView = new CarParkView();
 
-        Container contentPane = getContentPane();
+        contentPane = getContentPane();
         contentPane.add(carParkView, BorderLayout.CENTER);
+        makeInputUI();
         pack();
         setVisible(true);
 
         updateView();
     }
-
+    
+    /**
+     * This method adds inputs to the right of the simulation.
+     */
+    public void makeInputUI()
+    {
+    	JPanel flowInputPanel = new JPanel();
+    	contentPane.add(flowInputPanel, BorderLayout.EAST);
+    	flowInputPanel.setLayout(new FlowLayout());
+    	
+    	JPanel inputPanel = new JPanel();
+    	flowInputPanel.add(inputPanel);
+    	
+    
+    	simulationLengthField = new JTextField("Enter simulation time");
+    		inputPanel.add(simulationLengthField, BorderLayout.NORTH);
+    	JButton startSimulationButton = new JButton("Start");
+    		startSimulationButton.addActionListener(e -> startSimulation());
+    		inputPanel.add(startSimulationButton, BorderLayout.SOUTH);
+    		
+    	JButton stopSimulationButton = new JButton("Stop");
+    		inputPanel.add(stopSimulationButton);
+    		
+    	JButton resetSimulationButton = new JButton("Reset");
+    		inputPanel.add(resetSimulationButton);
+    }	
+    
+    /**
+     * Grab the value inside of the simulationLength input field and execute the ammount of ticks specified.
+     * If the input is not numeric, display an error message.
+     */
+    public void startSimulation()
+    {
+    	String simulationLength = simulationLengthField.getText();
+    	if (isNumeric(simulationLength)) // If the input value is numeric.
+    	{
+    		int simulationLengthInt = Integer.valueOf(simulationLength);
+    		System.out.println("Ticks: " + simulationLength);
+    		simulator.run(simulationLengthInt);
+    	}
+    	else
+    		System.out.println("Enter a numeric value");
+    }
+    
     public void updateView() {
         carParkView.updateView();
     }
@@ -206,5 +256,8 @@ public class SimulatorView extends JFrame {
                     10 - 1); // TODO use dynamic size or constants
         }
     }
-
+    
+    public boolean isNumeric(String s) {  
+        return s.matches("[-+]?\\d*\\.?\\d+");  
+    }
 }

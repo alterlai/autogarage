@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SimulatorView extends JFrame {
-    private Simulator simulator;	// The simulator controlling the GUI
+	private SimulatorModel simulatorModel;
 	private CarParkView carParkView;
     private int numberOfFloors;
     private int numberOfRows;
@@ -17,7 +17,7 @@ public class SimulatorView extends JFrame {
     Container contentPane;
     JTextField simulationLengthField;
 
-    public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces, Simulator simulator) {
+    public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
@@ -33,6 +33,11 @@ public class SimulatorView extends JFrame {
         setVisible(true);
 
         updateView();
+    }
+    
+    public void setModel(SimulatorModel model)
+    {
+    	this.simulatorModel = model;
     }
     
     /**
@@ -67,15 +72,7 @@ public class SimulatorView extends JFrame {
      */
     public void startSimulation()
     {
-    	String simulationLength = simulationLengthField.getText();
-    	if (isNumeric(simulationLength)) // If the input value is numeric.
-    	{
-    		int simulationLengthInt = Integer.valueOf(simulationLength);
-    		System.out.println("Ticks: " + simulationLength);
-    		simulator.run(simulationLengthInt);
-    	}
-    	else
-    		System.out.println("Enter a numeric value");
+    	simulatorModel.run(100);
     }
     
     public void updateView() {

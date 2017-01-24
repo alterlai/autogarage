@@ -9,7 +9,9 @@ public class Simulator {
 	{
 		controller = new SimulatorController();
 		model = new SimulatorModel(controller);
-		view = new SimulatorView(3, 6, 30, controller);
+		view = new SimulatorView(controller);
+		controller.setView(view);
+		controller.setModel(model);
 	}
 	
 }

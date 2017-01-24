@@ -4,6 +4,8 @@ import java.util.Random;
 
 public class SimulatorModel {
 
+	private SimulatorController controller; //The controller that's controlling this model.
+	
 	private static final String AD_HOC = "1";
 	private static final String PASS = "2";
 	
@@ -28,17 +30,14 @@ public class SimulatorModel {
     int paymentSpeed = 7; // number of cars that can pay per minute
     int exitSpeed = 5; // number of cars that can leave per minute
 
-    public SimulatorModel() {
-        entranceCarQueue = new CarQueue();
+    public SimulatorModel(SimulatorController controller) {
+        this.controller = controller;
+    	entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
     }
-    
-    public void setView(SimulatorView view)
-    {
-    	this.simulatorView = view;
-    }
+
     
     public void run(int ammountOfTicks) {
         for (int i = 0; i < ammountOfTicks; i++) {

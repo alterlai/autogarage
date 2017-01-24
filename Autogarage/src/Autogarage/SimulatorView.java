@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SimulatorView extends JFrame {
-	private SimulatorModel simulatorModel;
+	private SimulatorController controller;
 	private CarParkView carParkView;
     private int numberOfFloors;
     private int numberOfRows;
@@ -17,8 +17,9 @@ public class SimulatorView extends JFrame {
     Container contentPane;
     JTextField simulationLengthField;
 
-    public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
-        this.numberOfFloors = numberOfFloors;
+    public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces, SimulatorController controller) {
+    	this.controller = controller;
+    	this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
         this.numberOfOpenSpots =numberOfFloors*numberOfRows*numberOfPlaces;
@@ -33,11 +34,6 @@ public class SimulatorView extends JFrame {
         setVisible(true);
 
         updateView();
-    }
-    
-    public void setModel(SimulatorModel model)
-    {
-    	this.simulatorModel = model;
     }
     
     /**
@@ -56,7 +52,7 @@ public class SimulatorView extends JFrame {
     	simulationLengthField = new JTextField("Enter simulation time");
     		inputPanel.add(simulationLengthField, BorderLayout.NORTH);
     	JButton startSimulationButton = new JButton("Start");
-    		startSimulationButton.addActionListener(e -> startSimulation());
+    		startSimulationButton.addActionListener(e -> controller.startSimulation(10));
     		inputPanel.add(startSimulationButton, BorderLayout.SOUTH);
     		
     	JButton stopSimulationButton = new JButton("Stop");
@@ -65,15 +61,6 @@ public class SimulatorView extends JFrame {
     	JButton resetSimulationButton = new JButton("Reset");
     		inputPanel.add(resetSimulationButton);
     }	
-    
-    /**
-     * Grab the value inside of the simulationLength input field and execute the ammount of ticks specified.
-     * If the input is not numeric, display an error message.
-     */
-    public void startSimulation()
-    {
-    	simulatorModel.run(100);
-    }
     
     public void updateView() {
         carParkView.updateView();

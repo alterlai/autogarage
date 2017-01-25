@@ -2,21 +2,30 @@ package Autogarage;
 
 import java.util.Random;
 
+/**
+ * The SimulatorModel is in charge of all the information of the simulation. The model will also handle the main tick loop.
+ * The main tick loop will issue view updates to the controller which will delegate them to the view.
+ * It will also order the queues to update and the cars to act.
+ * @author Jeroen van der Laan
+ * @version 0.1
+ *
+ */
 public class SimulatorModel {
 	private SimulatorController controller; //The controller that's controlling this model.
 	private static final String AD_HOC = "1";
 	private static final String PASS = "2";
-	
+
+	// Queues
 	private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
-    private SimulatorView simulatorView;
 
     private int day = 0;
     private int hour = 0;
     private int minute = 0;
-
+    
+    //The pause between each tick.
     private int tickPause = 100;
 
     int weekDayArrivals= 100; // average number of arriving cars per hour
@@ -43,7 +52,10 @@ public class SimulatorModel {
         exitCarQueue = new CarQueue();
     }
 
-    
+    /**
+     * The run command will run the simulation by issuing ticks.
+     * @param ammountOfTicks The amount of ticks to be simulated.
+     */
     public void run(int ammountOfTicks) {
         for (int i = 0; i < ammountOfTicks; i++) {
             tick();
@@ -51,9 +63,9 @@ public class SimulatorModel {
     }
 
     private void tick() {
-    	advanceTime();
-    	handleExit();
-    	controller.updateViews(); // TODO add updateviews to controller
+    	advanceTime();				// Advance the time inside the simulation
+    	handleExit();				// Handle cars exiting the garage
+    	controller.updateViews(); // TODO add update views to controller
     	// Pause.
         try {
             Thread.sleep(tickPause);
@@ -103,12 +115,6 @@ public class SimulatorModel {
         carsReadyToLeave();
         carsPaying();
         carsLeaving();
-    }
-    
-    private void updateLogic(){
-    	tick();
-        // Update the car park view.
-        controller.updateView();	
     }
     
     private void carsArriving(){
@@ -197,7 +203,7 @@ public class SimulatorModel {
     }
     
     private void carLeavesSpot(Car car){
-    	simulatorView.removeCarAt(car.getLocation());
+    	removeCarAt(car.getLocation());
         exitCarQueue.addCar(car);
     }
    

@@ -27,4 +27,33 @@ public class SimulatorController {
 	{
 		model.run(10);
 	}
+	
+	/**
+	 * This method will ask each view to update it's display with new information.
+	 */
+	public void updateViews()
+	{
+		view.updateView(); //TODO make a list of all the views instead of just one variable and loop over the list.
+	}
+	
+	/*
+	 * The the amount of floors, rows and places.
+	 */
+	public int getNumberOfFloors()
+	{
+		return model.getNumberOfFloors();
+	}
+	public int getNumberOfRows()
+	{
+		return model.getNumberOfRows();
+	}
+	public int getNumberOfPlaces()
+	{
+		return model.getNumberOfPlaces();
+	}
+	
+	public Car getCarAt(Location location)
+	{
+		return model.getCarAt(location);
+	}
 }

@@ -54,7 +54,8 @@ public class SimulatorView extends JFrame {
         carParkView.updateView();
     }
      
-    private class CarParkView extends JPanel {
+    @SuppressWarnings("serial")
+	private class CarParkView extends JPanel {
         
         private Dimension size;
         private Image carParkImage;    
@@ -99,11 +100,11 @@ public class SimulatorView extends JFrame {
                 carParkImage = createImage(size.width, size.height);
             }
             Graphics graphics = carParkImage.getGraphics();
-            for(int floor = 0; floor < getNumberOfFloors(); floor++) {
-                for(int row = 0; row < getNumberOfRows(); row++) {
-                    for(int place = 0; place < getNumberOfPlaces(); place++) {
+            for(int floor = 0; floor < controller.getNumberOfFloors(); floor++) {
+                for(int row = 0; row < controller.getNumberOfRows(); row++) {
+                    for(int place = 0; place < controller.getNumberOfPlaces(); place++) {
                         Location location = new Location(floor, row, place);
-                        Car car = getCarAt(location);
+                        Car car = controller.getCarAt(location);
                         Color color = car == null ? Color.white : car.getColor();
                         drawPlace(graphics, location, color);
                     }
@@ -124,8 +125,5 @@ public class SimulatorView extends JFrame {
                     10 - 1); // TODO use dynamic size or constants
         }
     }
-    
-    public boolean isNumeric(String s) {  
-        return s.matches("[-+]?\\d*\\.?\\d+");  
-    }
+   
 }

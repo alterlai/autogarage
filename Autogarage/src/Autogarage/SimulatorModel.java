@@ -7,10 +7,10 @@ import java.util.Random;
  * The main tick loop will issue view updates to the controller which will delegate them to the view.
  * It will also order the queues to update and the cars to act.
  * @author Jeroen van der Laan
- * @version 0.1
+ * @version 0.4
  *
  */
-public class SimulatorModel {
+public class SimulatorModel implements Runnable{
 	private SimulatorController controller; //The controller that's controlling this model.
 	private static final String AD_HOC = "1";
 	private static final String PASS = "2";
@@ -37,10 +37,10 @@ public class SimulatorModel {
     int paymentSpeed = 7; // number of cars that can pay per minute
     int exitSpeed = 5; // number of cars that can leave per minute
     
-    private int numberOfFloors;	// The ammount of floors in the garage.
-    private int numberOfRows;	// The ammount of rows in each floor.
-    private int numberOfPlaces;	// The ammount of places in each row
-    private int numberOfOpenSpots;	// The ammount of free spots in the garage.
+    private int numberOfFloors;	// The amount of floors in the garage.
+    private int numberOfRows;	// The amount of rows in each floor.
+    private int numberOfPlaces;	// The amount of places in each row
+    private int numberOfOpenSpots;	// The amount of free spots in the garage.
     private Car[][][] cars;			//Car array of all the cars in the garage.
     
 
@@ -64,8 +64,8 @@ public class SimulatorModel {
      * The run command will run the simulation by issuing ticks.
      * @param ammountOfTicks The amount of ticks to be simulated.
      */
-    public void run(int ammountOfTicks) {
-        for (int i = 0; i < ammountOfTicks; i++) {
+    public void run() {
+        for (int i = 0; i < 20; i++) {
             tick();
         }
     }

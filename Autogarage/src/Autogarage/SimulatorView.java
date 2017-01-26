@@ -36,9 +36,9 @@ public class SimulatorView extends JFrame {
     	flowInputPanel.add(inputPanel);
     	
     
-    	simulationLengthField = new JTextField("Enter simulation time");
+    	simulationLengthField = new JTextField();
     		inputPanel.add(simulationLengthField, BorderLayout.NORTH);
-    	JButton startSimulationButton = new JButton("Start");
+    	JButton startSimulationButton = new JButton("Run");
     		startSimulationButton.addActionListener(e -> controller.startSimulation(10));
     		inputPanel.add(startSimulationButton, BorderLayout.SOUTH);
     		

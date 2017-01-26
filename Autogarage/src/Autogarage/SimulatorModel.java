@@ -43,6 +43,10 @@ public class SimulatorModel implements Runnable{
     private int numberOfOpenSpots;	// The amount of free spots in the garage.
     private Car[][][] cars;			//Car array of all the cars in the garage.
     
+    //Multithreading info
+    private Thread t;
+    private String threadName = "model";
+    
 
     public SimulatorModel(SimulatorController controller) {
         this.controller = controller;
@@ -69,11 +73,19 @@ public class SimulatorModel implements Runnable{
             tick();
         }
     }
-
+    
+    public void start () {
+        System.out.println("Starting " +  threadName );
+        if (t == null) {
+           t = new Thread (this, threadName);
+           t.start ();
+        }
+     }
+    
     private void tick() {
     	advanceTime();				// Advance the time inside the simulation
     	handleExit();				// Handle cars exiting the garage
-    	controller.updateViews(); // TODO add update views to controller
+    	controller.updateViews(); 
     	// Pause.
         try {
             Thread.sleep(tickPause);

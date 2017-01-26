@@ -25,7 +25,7 @@ public class SimulatorController {
 	
 	public void startSimulation(int duration)
 	{
-		model.run();
+		model.start();
 	}
 	
 	/**

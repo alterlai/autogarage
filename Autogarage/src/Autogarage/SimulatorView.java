@@ -3,6 +3,7 @@ package Autogarage;
 import javax.swing.*;
 import java.awt.*;
 
+@SuppressWarnings("serial")
 public class SimulatorView extends JFrame {
 	private SimulatorController controller;
 	private CarParkView carParkView;
@@ -13,15 +14,13 @@ public class SimulatorView extends JFrame {
     JTextField simulationLengthField;
 
     public SimulatorView(SimulatorController controller) {        
-        carParkView = new CarParkView();
+        carParkView = new CarParkView(controller);
 
         contentPane = getContentPane();
         contentPane.add(carParkView, BorderLayout.CENTER);
         makeInputUI();
         pack();
         setVisible(true);
-
-        updateView();
     }
     
     /**
@@ -54,17 +53,17 @@ public class SimulatorView extends JFrame {
         carParkView.updateView();
     }
      
-    @SuppressWarnings("serial")
 	private class CarParkView extends JPanel {
         
         private Dimension size;
         private Image carParkImage;    
-    
+        private SimulatorController controller;
         /**
          * Constructor for objects of class CarPark
          */
-        public CarParkView() {
+        public CarParkView(SimulatorController controller) {
             size = new Dimension(0, 0);
+            this.controller = controller;
         }
     
         /**

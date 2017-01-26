@@ -6,6 +6,7 @@ public class SimulatorRunner {
 	 */
 	public static void main(String[] args)
 	{
+		@SuppressWarnings("unused")
 		Simulator controller = new Simulator();
 	}
 }

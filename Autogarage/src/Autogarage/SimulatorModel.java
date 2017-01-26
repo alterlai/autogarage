@@ -46,10 +46,18 @@ public class SimulatorModel {
 
     public SimulatorModel(SimulatorController controller) {
         this.controller = controller;
+        //Generate new queues.
     	entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
+        
+        // Populate fields.
+        this.numberOfFloors = 3;
+        this.numberOfRows = 6;
+        this.numberOfPlaces = 30;
+        this.numberOfOpenSpots =numberOfFloors*numberOfRows*numberOfPlaces;
+        cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
     }
 
     /**
@@ -227,7 +235,7 @@ public class SimulatorModel {
     }
     
     public int getNumberOfFloors() {
-        return numberOfFloors;
+        return this.numberOfFloors;
     }
 
     public int getNumberOfRows() {

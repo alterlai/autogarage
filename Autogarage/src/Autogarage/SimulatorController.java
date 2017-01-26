@@ -1,5 +1,7 @@
 package Autogarage;
 
+import java.awt.event.*;
+
 public class SimulatorController {
 	private SimulatorModel model;
 	private SimulatorView view;
@@ -56,4 +58,10 @@ public class SimulatorController {
 	{
 		return model.getCarAt(location);
 	}
+	
+	public void makeInputUI()
+	{
+		view.makeInputUI();
+	}
+
 }

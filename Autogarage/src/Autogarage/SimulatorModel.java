@@ -319,9 +319,4 @@ public class SimulatorModel {
         return null;
     }
 
-    
-
-    public void tick2() {
-        
-    }
 }

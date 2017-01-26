@@ -13,6 +13,7 @@ public class Simulator {
 		controller.setView(view);
 		controller.setModel(model);
 		controller.updateViews();
+		controller.makeInputUI();
 	}
 	
 }

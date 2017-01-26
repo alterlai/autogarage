@@ -14,11 +14,11 @@ public class SimulatorView extends JFrame {
     JTextField simulationLengthField;
 
     public SimulatorView(SimulatorController controller) {        
-        carParkView = new CarParkView(controller);
+        this.controller = controller;
+    	carParkView = new CarParkView(controller);
 
         contentPane = getContentPane();
         contentPane.add(carParkView, BorderLayout.CENTER);
-        makeInputUI();
         pack();
         setVisible(true);
     }
@@ -47,6 +47,8 @@ public class SimulatorView extends JFrame {
     		
     	JButton resetSimulationButton = new JButton("Reset");
     		inputPanel.add(resetSimulationButton);
+    		
+    		pack();
     }	
     
     public void updateView() {

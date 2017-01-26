@@ -1,15 +1,66 @@
 package Autogarage;
 
 public class SimulatorController {
-	private SimulatorModel simulatorModel;
-	private SimulatorView simulatorView;
+	private SimulatorModel model;
+	private SimulatorView view;
 	
 	/**
-	 * Constructor of the controller
+	 * Set the view for the controller
+	 * @param view 	the view for the controller
 	 */
-	public SimulatorController(SimulatorView simulatorView, SimulatorModel simulatorModel)
+	public void setView(SimulatorView view)
 	{
-		this.simulatorModel = simulatorModel;
-		this.simulatorView = simulatorView;
+		this.view = view;
 	}
+	
+	/**
+	 * Set the model for the controller
+	 * @param model	the model for the controller.
+	 */
+	public void setModel(SimulatorModel model)
+	{
+		this.model = model;
+	}
+
+	
+	public void startSimulation(int duration)
+	{
+		model.start();
+	}
+	
+	/**
+	 * This method will ask each view to update it's display with new information.
+	 */
+	public void updateViews()
+	{
+		view.updateView(); //TODO make a list of all the views instead of just one variable and loop over the list.
+	}
+	
+	/*
+	 * The the amount of floors, rows and places.
+	 */
+	public int getNumberOfFloors()
+	{
+		return model.getNumberOfFloors();
+	}
+	public int getNumberOfRows()
+	{
+		return model.getNumberOfRows();
+	}
+	public int getNumberOfPlaces()
+	{
+		return model.getNumberOfPlaces();
+	}
+	
+	public Car getCarAt(Location location)
+	{
+		return model.getCarAt(location);
+	}
+	
+	public void drawGUI()
+	{
+		updateViews();
+		view.makeInputUI();
+	}
+
 }

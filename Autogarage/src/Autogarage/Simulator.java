@@ -1,14 +1,18 @@
 package Autogarage;
 
 public class Simulator {
-	private SimulatorModel simulatorModel;
-	private SimulatorView simulatorView;
+	private SimulatorModel model;
+	private SimulatorView view;
+	private SimulatorController controller;
 	
 	public Simulator()
 	{
-		simulatorModel = new SimulatorModel();
-		simulatorView = new SimulatorView(3, 6, 30);
-		simulatorView.setModel(simulatorModel);
-		simulatorModel.setView(simulatorView);
+		controller = new SimulatorController();
+		model = new SimulatorModel(controller);
+		view = new SimulatorView(controller);
+		controller.setView(view);
+		controller.setModel(model);
+		controller.drawGUI();
 	}
+	
 }

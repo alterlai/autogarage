@@ -25,9 +25,10 @@ public class SimulatorModel implements Runnable{
     private int hour = 0;
     private int minute = 0;
     
-    //The pause between each tick.
+    //Tick information.
     private int tickPause = 100;
     private int simulationLength = 50;
+    private int currentTick = 1;
 
     int weekDayArrivals= 100; // average number of arriving cars per hour
     int weekendArrivals = 200; // average number of arriving cars per hour
@@ -70,23 +71,28 @@ public class SimulatorModel implements Runnable{
      * @param ammountOfTicks The amount of ticks to be simulated.
      */
     public void run() {
-        for (int i = 0; i < simulationLength; i++) {
-            tick();
-        }
+        int i = 0;
+    	while (i < simulationLength)
+    	{
+    		tick();
+    		i++;
+    		currentTick++;
+    	}
     }
     
     /**
      * The start method starts a thread and will start the simulation ticks.
      */
     public void start () {
-        System.out.println("Starting " +  threadName );
         if (t == null) {
-           t = new Thread (this, threadName);
-           t.start ();
+           System.out.println("Running thread: " +  threadName );
+           t = new Thread (this, threadName);	// Create a new thead.
+           t.start ();							// Start thread's execution.
         }
-        else {
-        	t = null;
-        	start();
+        else
+        {
+        	t = null;	// Delete the thread.
+        	start();	// Remake a new thread and start the simulation.
         }
      }
     
@@ -340,6 +346,15 @@ public class SimulatorModel implements Runnable{
             }
         }
         return null;
+    }
+    
+    /**
+     * Return the current tick of the simulation
+     * @return current tick
+     */
+    public int getCurrentTick()
+    {
+    	return currentTick;
     }
     
    /**

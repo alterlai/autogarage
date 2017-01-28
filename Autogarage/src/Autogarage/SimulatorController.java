@@ -78,8 +78,7 @@ public class SimulatorController {
 		model.reset();
 		view.updateView();
 	}
-	
-	
+
 	/* ----------------------------------------
 	 * --------- Methods for the view ---------
 	 * ----------------------------------------

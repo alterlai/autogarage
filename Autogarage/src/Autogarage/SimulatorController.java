@@ -22,23 +22,24 @@ public class SimulatorController {
 		this.model = model;
 	}
 
+
+	
+	/* ----------------------------------------
+	 * --------- Methods for the model ---------
+	 * ----------------------------------------
+	 */
 	
 	public void startSimulation(int duration)
 	{
-		model.start();
+		model.setSimulationLength(duration); // Get the value that is in the simulation length field and set it in the model.
+		model.start();						// Start the simulation.
 	}
 	
-	/**
-	 * This method will ask each view to update it's display with new information.
-	 */
-	public void updateViews()
+	public void stopSimulation()
 	{
-		view.updateView(); //TODO make a list of all the views instead of just one variable and loop over the list.
+		// Nothing yet.
 	}
 	
-	/*
-	 * The the amount of floors, rows and places.
-	 */
 	public int getNumberOfFloors()
 	{
 		return model.getNumberOfFloors();
@@ -57,10 +58,27 @@ public class SimulatorController {
 		return model.getCarAt(location);
 	}
 	
+	public int getCurrentTick()
+	{
+		return model.getCurrentTick();
+	}
+	
+	/* ----------------------------------------
+	 * --------- Methods for the view ---------
+	 * ----------------------------------------
+	 */
 	public void drawGUI()
 	{
 		updateViews();
 		view.makeInputUI();
+	}
+	
+	/**
+	 * This method will ask each view to update it's display with new information.
+	 */
+	public void updateViews()
+	{
+		view.updateView(); //TODO make a list of all the views instead of just one variable and loop over the list.
 	}
 
 }

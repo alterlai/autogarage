@@ -1,14 +1,16 @@
 package Autogarage;
 
+import view.*;
+
 public class SimulatorController {
 	private SimulatorModel model;
-	private SimulatorView view;
+	private MainFrame view;
 	
 	/**
 	 * Set the view for the controller
 	 * @param view 	the view for the controller
 	 */
-	public void setView(SimulatorView view)
+	public void setView(MainFrame view)
 	{
 		this.view = view;
 	}
@@ -83,11 +85,6 @@ public class SimulatorController {
 	 * --------- Methods for the view ---------
 	 * ----------------------------------------
 	 */
-	public void drawGUI()
-	{
-		updateViews();
-		view.makeInputUI();
-	}
 	
 	/**
 	 * This method will ask each view to update it's display with new information.

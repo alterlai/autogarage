@@ -1,5 +1,7 @@
 package Autogarage;
 
+import view.*;
+
 public class Simulator {
 	private SimulatorModel model;
 	private SimulatorView view;
@@ -9,7 +11,7 @@ public class Simulator {
 	{
 		controller = new SimulatorController();
 		model = new SimulatorModel(controller);
-		view = new SimulatorView(controller);
+		MainFrame view = new MainFrame(controller);
 		controller.setView(view);
 		controller.setModel(model);
 	}

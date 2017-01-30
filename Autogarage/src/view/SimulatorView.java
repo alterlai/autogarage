@@ -1,10 +1,18 @@
-package Autogarage;
+package view;
 
 import javax.swing.*;
+
+import Autogarage.Car;
+import Autogarage.Location;
+import Autogarage.Simulator;
+import Autogarage.SimulatorController;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
-public class SimulatorView extends JFrame {
+public class SimulatorView extends View {
 	private SimulatorController controller;
 	private CarParkView carParkView;
 
@@ -16,7 +24,7 @@ public class SimulatorView extends JFrame {
         this.controller = controller;
     	carParkView = new CarParkView(controller);
 
-        contentPane = (JPanel) getContentPane();
+        contentPane = this;
         contentPane.setLayout(new BorderLayout(6, 6));
         contentPane.add(carParkView, BorderLayout.WEST);
         
@@ -24,12 +32,8 @@ public class SimulatorView extends JFrame {
         tickLabel = new JLabel("Current tick: 1");
         contentPane.add(tickLabel, BorderLayout.SOUTH);
         makeInputUI();
-        pack();
         setVisible(true);
-        
-        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        setLocation(d.width/2 - getWidth()/2, d.height/2 - getHeight()/2);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
     
     /**
@@ -80,7 +84,7 @@ public class SimulatorView extends JFrame {
     		resetSimulationButton.addActionListener(e -> controller.resetSimulation());
     
     	contentPane.add(inputPanel, BorderLayout.EAST);
-    }	
+    } 
     
     /**
      * Update the carparkView

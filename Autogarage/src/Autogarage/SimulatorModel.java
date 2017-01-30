@@ -14,6 +14,7 @@ public class SimulatorModel implements Runnable{
 	private SimulatorController controller; //The controller that's controlling this model.
 	private static final String AD_HOC = "1";
 	private static final String PASS = "2";
+	private static final String RESERVED = "3";
 
 	// Queues
 	private CarQueue entranceCarQueue;
@@ -34,6 +35,8 @@ public class SimulatorModel implements Runnable{
     int weekendArrivals = 200; // average number of arriving cars per hour
     int weekDayPassArrivals= 50; // average number of arriving cars per hour
     int weekendPassArrivals = 5; // average number of arriving cars per hour
+    int weekDayReservedArrivals = 50; // average number of arriving cars per hour
+    int weekendReservedArrivals = 100; // average number of arriving cars per hour
 
     int enterSpeed = 3; // number of cars that can enter per minute
     int paymentSpeed = 7; // number of cars that can pay per minute
@@ -174,7 +177,9 @@ public class SimulatorModel implements Runnable{
     	int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals);
         addArrivingCars(numberOfCars, AD_HOC);    	
     	numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals);
-        addArrivingCars(numberOfCars, PASS);    	
+        addArrivingCars(numberOfCars, PASS);
+        numberOfCars=getNumberOfCars(weekDayReservedArrivals, weekendReservedArrivals);
+        addArrivingCars(numberOfCars, RESERVED);
     }
 
     private void carsEntering(CarQueue queue){
@@ -250,11 +255,19 @@ public class SimulatorModel implements Runnable{
             	entranceCarQueue.addCar(new AdHocCar());
             }
             break;
+            
     	case PASS:
             for (int i = 0; i < numberOfCars; i++) {
             	entrancePassQueue.addCar(new ParkingPassCar());
             }
-            break;	            
+            break;
+            
+    	case RESERVED:
+    		for (int i = 0; i < numberOfCars; i++) {
+            	entrancePassQueue.addCar(new ReservationCar());
+            }
+            break;
+            
     	}
     }
     

@@ -4,7 +4,6 @@ import view.*;
 
 public class Simulator {
 	private SimulatorModel model;
-	private SimulatorView view;
 	private SimulatorController controller;
 	
 	public Simulator()

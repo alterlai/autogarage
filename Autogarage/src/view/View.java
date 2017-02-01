@@ -8,7 +8,12 @@ import javax.swing.JPanel;
  * @version 0.1
  *
  */
-public abstract class View extends JPanel{
+@SuppressWarnings("serial")
+public abstract class View extends JPanel {
 	
+	/**
+	 * Abstract method for all view sub-classes.
+	 */
 	public abstract void updateView();
+	
 }

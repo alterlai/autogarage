@@ -1,20 +1,34 @@
-package Autogarage;
+package view;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import java.util.HashMap;
+
+import controller.SimulatorController;
+import model.Car;
+import model.Location;
+
 import java.awt.*;
 
 @SuppressWarnings("serial")
 public class SimulatorView extends JFrame {
+	// Text
+	private HashMap<String, String> text;	// hashMap for storing text for reference.
+	
 	private SimulatorController controller;
 	private CarParkView carParkView;
+	private JPanel IaSLayout;			//Input and statistics layout.
 
     //UI stuff
-    JPanel contentPane;
-    JLabel tickLabel;
+    private JPanel contentPane;
+    private JLabel tickLabel;
+    private JLabel totalParkedCars;
 
     public SimulatorView(SimulatorController controller) {        
         this.controller = controller;
     	carParkView = new CarParkView(controller);
+    	
+    	fillText();
 
         contentPane = (JPanel) getContentPane();
         contentPane.setLayout(new BorderLayout(6, 6));
@@ -23,7 +37,14 @@ public class SimulatorView extends JFrame {
         // Tick label
         tickLabel = new JLabel("Current tick: 1");
         contentPane.add(tickLabel, BorderLayout.SOUTH);
+        
+        //Build borderLayout on the right handside for Input and Statistic Layout.
+        IaSLayout = new JPanel();
+        IaSLayout.setLayout(new BorderLayout());
+        contentPane.add(IaSLayout, BorderLayout.EAST);
+        
         makeInputUI();
+        makeStatisticsUI();
         pack();
         setVisible(true);
         
@@ -79,8 +100,30 @@ public class SimulatorView extends JFrame {
     		inputPanel.add(resetSimulationButton, c);
     		resetSimulationButton.addActionListener(e -> controller.resetSimulation());
     
-    	contentPane.add(inputPanel, BorderLayout.EAST);
+    	IaSLayout.add(inputPanel, BorderLayout.NORTH);
     }	
+    
+    private void makeStatisticsUI()
+    {
+    	JPanel statisticsContent = new JPanel();
+    	statisticsContent.setLayout(new BoxLayout(statisticsContent, BoxLayout.PAGE_AXIS));
+    	
+    	// Labels
+    	totalParkedCars = new JLabel(text.get("totalCars" + "0"));
+    	statisticsContent.add(totalParkedCars);
+    	
+    	IaSLayout.add(statisticsContent, BorderLayout.SOUTH);
+    	
+    }
+    
+    /**
+     * Fill the text hashmap for reference to text strings.
+     */
+    private void fillText()
+    {
+    	text = new HashMap<>();
+    	text.put("totalCars", "The total amount of cars parked in the garage: ");
+    }
     
     /**
      * Update the carparkView
@@ -157,7 +200,11 @@ public class SimulatorView extends JFrame {
                 size = getSize();
                 carParkImage = createImage(size.width, size.height);
             }
+            // Update all info
+            HashMap<String, Integer> currentTotal = controller.getTotalCarInfo();
             tickLabel.setText("Current tick: " + controller.getCurrentTick());
+            totalParkedCars.setText(text.get("totalCars") + currentTotal.get("all") + " adhoc" + currentTotal.get("adhoc"));
+            
             Graphics graphics = carParkImage.getGraphics();
             for(int floor = 0; floor < controller.getNumberOfFloors(); floor++) {
                 for(int row = 0; row < controller.getNumberOfRows(); row++) {

@@ -1,4 +1,10 @@
-package Autogarage;
+package controller;
+
+import model.Car;
+import model.Location;
+import model.SimulatorModel;
+import view.SimulatorView;
+import java.util.HashMap;
 
 public class SimulatorController {
 	private SimulatorModel model;
@@ -66,6 +72,11 @@ public class SimulatorController {
 	public void setRunning(boolean flag)
 	{
 		model.setRunning(flag);
+	}
+	
+	public HashMap<String, Integer> getTotalCarInfo()
+	{
+		return model.getTotalCarInfo();
 	}
 	
 	/* ----------------------------------------

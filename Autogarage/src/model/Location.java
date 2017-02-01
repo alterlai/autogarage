@@ -1,4 +1,4 @@
-package Autogarage;
+package model;
 
 public class Location {
 

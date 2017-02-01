@@ -43,7 +43,7 @@ public class MainFrame extends JFrame {
         contentPane.setBackground(FRAME_BG_COLOR);
         
         // Build the title
-        JLabel title = new JLabel("Welcome to this amazing application!");
+        JLabel title = new JLabel("Welcome to the parking simulator.");
         title.setHorizontalAlignment(JLabel.CENTER);
         title.setFont(new Font("Arial", Font.PLAIN, 16));
         title.setForeground(new Color(43, 169, 237));
@@ -77,7 +77,7 @@ public class MainFrame extends JFrame {
   		
   		// Adding the panels for the different views
   		tabbedPane.addTab("Simulator", null, views.get(0), null);
-  		tabbedPane.addTab("Revenue", null, new JPanel(), null);
+  		tabbedPane.addTab("Statistics", null, views.get(1), null);
   		tabbedPane.addTab("Busy Periods", null, new JPanel(), null);
   		tabbedPane.addTab("Other", null, new JPanel(), null);
   	}
@@ -147,6 +147,7 @@ public class MainFrame extends JFrame {
 	{
 		views = new LinkedList<>();
 		views.add(new SimulatorView(controller));
+		views.add(new StatisticsView(controller));
 	}
 	
 	

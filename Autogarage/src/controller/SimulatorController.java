@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.HashMap;
+
 import model.Car;
 import model.Location;
 import model.SimulatorModel;
@@ -30,7 +32,7 @@ public class SimulatorController {
 
 	
 	/* ----------------------------------------
-	 * --------- Methods for the model ---------
+	 * --------- Methods to the model ---------
 	 * ----------------------------------------
 	 */
 	
@@ -73,6 +75,11 @@ public class SimulatorController {
 		model.setRunning(flag);
 	}
 	
+	public HashMap<String, Integer> getTotalCarInfo()
+	{
+		return model.getTotalCarInfo();
+	}
+	
 	/* ----------------------------------------
 	 * --------- Methods for both ---------
 	 * ----------------------------------------
@@ -85,7 +92,7 @@ public class SimulatorController {
 	}
 
 	/* ----------------------------------------
-	 * --------- Methods for the view ---------
+	 * --------- Methods to the view ---------
 	 * ----------------------------------------
 	 */
 	

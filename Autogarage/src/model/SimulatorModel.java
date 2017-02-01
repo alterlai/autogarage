@@ -1,5 +1,6 @@
 package model;
 
+import java.util.HashMap;
 import java.util.Random;
 import controller.*;
 
@@ -54,6 +55,9 @@ public class SimulatorModel implements Runnable{
     private String threadName = "model";
     private boolean running = true;
     
+    // Statistics
+    private HashMap<String, Integer> totalCarInfo;
+    
 
     public SimulatorModel(SimulatorController controller) {
         this.controller = controller;
@@ -62,6 +66,12 @@ public class SimulatorModel implements Runnable{
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
+        
+      //Construct hashmap for car information and initialize variables.
+        totalCarInfo = new HashMap<>(); 
+        totalCarInfo.put("all", 0);
+    	totalCarInfo.put("card", 0);
+    	totalCarInfo.put("adhoc", 0);
         
         // Populate fields.
         this.numberOfFloors = 3;
@@ -131,6 +141,11 @@ public class SimulatorModel implements Runnable{
         }
     	handleEntrance();
     	
+    	//Reset car count
+    	totalCarInfo.put("all", 0);
+    	totalCarInfo.put("card", 0);
+    	totalCarInfo.put("adhoc", 0);
+    	
     	// Let the cars tick 
     	for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
@@ -139,6 +154,11 @@ public class SimulatorModel implements Runnable{
                     Car car = getCarAt(location);
                     if (car != null) {
                         car.tick();
+                        
+                        // Car counting.
+                        incrementTotal("all");
+                        if (car instanceof AdHocCar) incrementTotal("adhoc");
+                        if (car instanceof ParkingPassCar) incrementTotal("card");
                     }
                 }
             }
@@ -160,6 +180,16 @@ public class SimulatorModel implements Runnable{
             day -= 7;
         }
 
+    }
+    
+    /**
+     * This method will help increment total counts in the car total hashmap.
+     */
+    public void incrementTotal(String name)
+    {
+    	int tempvalue = totalCarInfo.get(name);
+    	tempvalue++;
+    	totalCarInfo.put(name, tempvalue);
     }
 
     private void handleEntrance(){
@@ -405,5 +435,13 @@ public class SimulatorModel implements Runnable{
     public void setRunning( boolean flag)
     {
     	running = flag;
+    }
+    
+    /**
+     * Returns the total amount of cars parked in the garage that are not in queue.
+     */
+    public HashMap<String, Integer> getTotalCarInfo()
+    {
+    	return this.totalCarInfo;
     }
 }

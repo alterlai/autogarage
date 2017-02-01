@@ -3,9 +3,9 @@ package view;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import Autogarage.Car;
-import Autogarage.Location;
-import Autogarage.SimulatorController;
+import controller.SimulatorController;
+import model.Car;
+import model.Location;
 
 @SuppressWarnings("serial")
 public class SimulatorView extends View {

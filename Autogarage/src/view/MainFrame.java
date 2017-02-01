@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.util.LinkedList;
 
 import Autogarage.*;
+import controller.SimulatorController;
 
 // TODO: ADD pack();
 

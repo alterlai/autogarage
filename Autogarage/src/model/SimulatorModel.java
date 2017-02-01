@@ -1,6 +1,7 @@
-package Autogarage;
+package model;
 
 import java.util.Random;
+import controller.*;
 
 /**
  * The SimulatorModel is in charge of all the information of the simulation. The model will also handle the main tick loop.

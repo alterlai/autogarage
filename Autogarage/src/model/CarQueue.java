@@ -1,4 +1,4 @@
-package Autogarage;
+package model;
 import java.util.LinkedList;
 import java.util.Queue;
 

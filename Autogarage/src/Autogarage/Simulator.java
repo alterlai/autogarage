@@ -1,5 +1,7 @@
 package Autogarage;
 
+import controller.SimulatorController;
+import model.SimulatorModel;
 import view.*;
 
 public class Simulator {

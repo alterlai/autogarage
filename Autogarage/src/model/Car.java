@@ -8,14 +8,24 @@ public abstract class Car {
     private int minutesLeft;
     private boolean isPaying;
     private boolean hasToPay;
+    protected int stayMinutes;
+    protected static Bank BANK;
 
     /**
      * Constructor for objects of class Car
      */
     public Car() {
-
     }
-
+    
+    /**
+     * Set the bank to regulate payment.
+     * @param bank
+     */
+    public static void setBank(Bank bank)
+    {
+    	BANK = bank;
+    }
+    
     public Location getLocation() {
         return location;
     }
@@ -30,6 +40,7 @@ public abstract class Car {
 
     public void setMinutesLeft(int minutesLeft) {
         this.minutesLeft = minutesLeft;
+        this.stayMinutes = minutesLeft;
     }
     
     public boolean getIsPaying() {
@@ -52,5 +63,12 @@ public abstract class Car {
         minutesLeft--;
     }
     
+    public int getStayedMinutes()
+    {
+    	return this.stayMinutes;
+    }
+    
     public abstract Color getColor();
+    public abstract void pay();
+    
 }

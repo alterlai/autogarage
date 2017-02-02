@@ -6,10 +6,12 @@ import model.Car;
 import model.Location;
 import model.SimulatorModel;
 import view.*;
+import model.*;
 
 public class SimulatorController {
 	private SimulatorModel model;
 	private MainFrame view;
+	private Bank bank;
 	
 	/**
 	 * Set the view for the controller
@@ -28,7 +30,6 @@ public class SimulatorController {
 	{
 		this.model = model;
 	}
-
 
 	
 	/* ----------------------------------------
@@ -78,6 +79,15 @@ public class SimulatorController {
 	public HashMap<String, Integer> getTotalCarInfo()
 	{
 		return model.getTotalCarInfo();
+	}
+	
+	/**
+	 * returns the time object.
+	 * @return
+	 */
+	public Time getTime()
+	{
+		return model.getTime();
 	}
 	
 	/* ----------------------------------------

@@ -3,6 +3,7 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 import java.util.LinkedList;
+import model.Time;
 
 import Autogarage.*;
 import controller.SimulatorController;
@@ -17,8 +18,11 @@ public class MainFrame extends JFrame {
 	private LinkedList<View> views;				// List of all view objects.
 	
 	private JPanel contentPane;					// The outer wrapper. JPanel from the frame.
-	private JPanel bottomWrapper;				// JPanel for InputUI and tickLabel.
-	private JLabel tickLabel;
+	private JPanel bottomWrapper;				// Bottom wrapper for input menu
+	private JLabel currentMinute;
+	private JLabel currentHour;
+	private JLabel currentDay;
+	private JLabel currentWeek;
 	
 	static final Color FRAME_BG_COLOR = new Color(221, 221, 221);
 	
@@ -95,7 +99,7 @@ public class MainFrame extends JFrame {
     	GridBagConstraints c = new GridBagConstraints();
     	
     	//Label
-    	JLabel lenghtLabel = new JLabel("Ammount of ticks: ");
+    	JLabel lenghtLabel = new JLabel("Ammount of minutes: ");
     		c.gridy = 0;
     		c.gridx = 0;
     		c.gridwidth = 2;
@@ -133,9 +137,9 @@ public class MainFrame extends JFrame {
     
 		bottomWrapper.add(inputPanel, BorderLayout.EAST);
 		
-        // Tick label
-        tickLabel = new JLabel("Current tick: 1");
-        bottomWrapper.add(tickLabel, BorderLayout.WEST);        
+        // Date label
+        currentMinute = new JLabel("Current minute: " + 0);
+        bottomWrapper.add(currentMinute, BorderLayout.WEST);        
     }
     
     
@@ -156,7 +160,8 @@ public class MainFrame extends JFrame {
 	 */
 	public void updateView()
 	{
-		tickLabel.setText("Current tick: " + controller.getCurrentTick());
+		Time time = controller.getTime();
+		currentMinute.setText("Current minute: " + time.getMinute());
 		for(View view : views)
 		{
 			view.updateView();

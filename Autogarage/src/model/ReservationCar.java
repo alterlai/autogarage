@@ -5,6 +5,9 @@ import java.awt.*;
 
 public class ReservationCar extends Car {
 	private static final Color COLOR=Color.green;
+	//TODO add mutator methods for fees.
+	private static double hourlyRate = 2.20;		// The cost of parking per minute.
+	private static double bonusFee = 1.50;				// Bonus fee for reservations
 	
     public ReservationCar() {
     	Random random = new Random();
@@ -15,5 +18,11 @@ public class ReservationCar extends Car {
     
     public Color getColor(){
     	return COLOR;
+    }
+    
+    @Override
+    public void pay()
+    {
+    	Car.BANK.addBalance(hourlyRate / 60 * this.getStayedMinutes() + bonusFee);
     }
 }

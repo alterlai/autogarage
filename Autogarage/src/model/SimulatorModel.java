@@ -14,6 +14,7 @@ import controller.*;
  */
 public class SimulatorModel implements Runnable{
 	private SimulatorController controller; //The controller that's controlling this model.
+	private Time time;
 	private static final String AD_HOC = "1";
 	private static final String PASS = "2";
 	private static final String RESERVED = "3";
@@ -23,10 +24,6 @@ public class SimulatorModel implements Runnable{
     private CarQueue entrancePassQueue;
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
-
-    private int day = 0;
-    private int hour = 0;
-    private int minute = 0;
     
     //Tick information.
     private int tickPause = 100;
@@ -40,8 +37,8 @@ public class SimulatorModel implements Runnable{
     int weekDayReservedArrivals = 50; // average number of arriving cars per hour
     int weekendReservedArrivals = 100; // average number of arriving cars per hour
 
-    int enterSpeed = 3; // number of cars that can enter per minute
-    int paymentSpeed = 7; // number of cars that can pay per minute
+    int enterSpeed = 8; // number of cars that can enter per minute
+    int paymentSpeed = 5; // number of cars that can pay per minute
     int exitSpeed = 5; // number of cars that can leave per minute
     
     private int numberOfFloors;	// The amount of floors in the garage.
@@ -49,23 +46,33 @@ public class SimulatorModel implements Runnable{
     private int numberOfPlaces;	// The amount of places in each row
     private int numberOfOpenSpots;	// The amount of free spots in the garage.
     private Car[][][] cars;			//Car array of all the cars in the garage.
+    private int numberOfPassHolders = 20;	//Amount of customers with a pass.
     
     //Multithreading info
-    private Thread t;
-    private String threadName = "model";
-    private boolean running = true;
+    private Thread t;						//Running thread.
+    private String threadName = "model";	//threadname.
+    private boolean running = true;			//Flag for the thread to run.
     
     // Statistics
-    private HashMap<String, Integer> totalCarInfo;
+    private HashMap<String, Integer> totalCarInfo;	//Hashmap containing the total amount of cars in the garage.
+    private Bank bank;								// The bank regulating money.
     
-
+    /**
+     * Constructor for the SimulatorModel class.
+     * @param controller
+     */
     public SimulatorModel(SimulatorController controller) {
         this.controller = controller;
+        time = new Time();
         //Generate new queues.
     	entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
+        
+        //Construct the bank.
+        bank = new Bank();
+        Car.setBank(bank);
         
       //Construct hashmap for car information and initialize variables.
         totalCarInfo = new HashMap<>(); 
@@ -100,7 +107,6 @@ public class SimulatorModel implements Runnable{
      */
     public void start () {
         if (t == null) {
-           System.out.println("Running thread: " +  threadName );
            t = new Thread (this, threadName);	// Create a new thead.
            running = true; 						// Set the running flag.
            t.start ();							// Start thread's execution.
@@ -130,7 +136,7 @@ public class SimulatorModel implements Runnable{
      * Each tick will advance the time and will let the cars move around.
      */
     private void tick() {
-    	advanceTime();				// Advance the time inside the simulation
+    	time.advanceTime();				// Advance the time inside the simulation
     	handleExit();				// Handle cars exiting the garage
     	controller.updateViews(); 
     	// Pause.
@@ -165,27 +171,10 @@ public class SimulatorModel implements Runnable{
         }
     }
 
-    private void advanceTime(){
-        // Advance the time by one minute.
-        minute++;
-        while (minute > 59) {
-            minute -= 60;
-            hour++;
-        }
-        while (hour > 23) {
-            hour -= 24;
-            day++;
-        }
-        while (day > 6) {
-            day -= 7;
-        }
-
-    }
-    
     /**
      * This method will help increment total counts in the car total hashmap.
      */
-    public void incrementTotal(String name)
+    private void incrementTotal(String name)
     {
     	int tempvalue = totalCarInfo.get(name);
     	tempvalue++;
@@ -246,7 +235,7 @@ public class SimulatorModel implements Runnable{
     	int i=0;
     	while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed){
             Car car = paymentCarQueue.removeCar();
-            // TODO Handle payment.
+            car.pay();	//Make the car pay.
             carLeavesSpot(car);
             i++;
     	}
@@ -268,7 +257,7 @@ public class SimulatorModel implements Runnable{
         Random random = new Random();
 
         // Get the average number of cars that arrive per hour.
-        int averageNumberOfCarsPerHour = day < 5
+        int averageNumberOfCarsPerHour = time.getDay() < 5
                 ? weekDay
                 : weekend;
 
@@ -443,5 +432,18 @@ public class SimulatorModel implements Runnable{
     public HashMap<String, Integer> getTotalCarInfo()
     {
     	return this.totalCarInfo;
+    }
+    
+    /**
+     * Let all the passholders pay their monthly fee.
+     */
+    public void PayPassClients()
+    {
+    	bank.addBalance(this.numberOfPassHolders * ParkingPassCar.getMonthlyRate());
+    }
+    
+    public Time getTime()
+    {
+    	return this.time;
     }
 }

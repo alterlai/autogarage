@@ -3,12 +3,12 @@ package model;
 import java.util.HashMap;
 
 public class Time {
-	private int minute;
-	private int hour;
-	private int day;
-	private int week;
-	private int month;
-	private int year;
+	private int minute = 0;
+	private int hour = 0;
+	private int day = 0;
+	private int week = 0;
+	private int month = 0;
+	private int year = 2017;
 	
 	public HashMap<String, Integer> getTimeMap()
 	{
@@ -20,6 +20,15 @@ public class Time {
 		timeMap.put("month", month);
 		timeMap.put("year", year);
 		return timeMap;
+	}
+	
+	public String toString()
+	{
+		String prefixHour = "";
+		String prefixMinute = "";
+		if (hour <= 9) prefixHour = "0";
+		if (minute <= 9) prefixMinute = "0";
+		return prefixHour + hour + ":" + prefixMinute + minute + " " + getDayString();
 	}
 	
 	public int getMinute()
@@ -42,6 +51,28 @@ public class Time {
 	}
 	public int getYear(){
 		return year;
+	}
+	
+	public String getDayString()
+	{
+		switch (day){
+		case 0:
+			return "Monday";
+		case 1:
+			return "Tuesday";
+		case 2:
+			return "Wednesday";
+		case 3: 
+			return "Thursday";
+		case 4:
+			return "Friday";
+		case 5:
+			return "Saturday";
+		case 6:
+			return "Sunday";
+		default :
+			return "Error in day string";
+		}
 	}
 	
 	public void advanceTime()

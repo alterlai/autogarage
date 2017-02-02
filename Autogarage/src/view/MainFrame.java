@@ -19,10 +19,7 @@ public class MainFrame extends JFrame {
 	
 	private JPanel contentPane;					// The outer wrapper. JPanel from the frame.
 	private JPanel bottomWrapper;				// Bottom wrapper for input menu
-	private JLabel currentMinute;
-	private JLabel currentHour;
-	private JLabel currentDay;
-	private JLabel currentWeek;
+	private JLabel timeLabel;
 	
 	static final Color FRAME_BG_COLOR = new Color(221, 221, 221);
 	
@@ -99,7 +96,7 @@ public class MainFrame extends JFrame {
     	GridBagConstraints c = new GridBagConstraints();
     	
     	//Label
-    	JLabel lenghtLabel = new JLabel("Ammount of minutes: ");
+    	JLabel lenghtLabel = new JLabel("Amount of minutes: ");
     		c.gridy = 0;
     		c.gridx = 0;
     		c.gridwidth = 2;
@@ -137,9 +134,21 @@ public class MainFrame extends JFrame {
     
 		bottomWrapper.add(inputPanel, BorderLayout.EAST);
 		
-        // Date label
-        currentMinute = new JLabel("Current minute: " + 0);
-        bottomWrapper.add(currentMinute, BorderLayout.WEST);        
+        // Time
+		JPanel timeWrapper = new JPanel();
+		timeWrapper.setBackground(FRAME_BG_COLOR);
+		timeWrapper.setLayout(new GridBagLayout());
+		c = new GridBagConstraints();
+		JLabel timeTitle = new JLabel ("Current time");
+			c.gridx = 0;
+			c.gridy = 0;
+			c.gridwidth = 1;
+			timeWrapper.add(timeTitle, c);
+		timeLabel = new JLabel ("00:00 Monday");
+			c.gridx = 0;
+			c.gridy = 1;
+		timeWrapper.add(timeLabel, c);
+        bottomWrapper.add(timeWrapper, BorderLayout.WEST);        
     }
     
     
@@ -161,7 +170,7 @@ public class MainFrame extends JFrame {
 	public void updateView()
 	{
 		Time time = controller.getTime();
-		currentMinute.setText("Current minute: " + time.getMinute());
+		timeLabel.setText(time.toString());
 		for(View view : views)
 		{
 			view.updateView();

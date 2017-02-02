@@ -16,7 +16,8 @@ public class GraphView extends View {
 	private BufferedImage graphImage;
 	private SimulatorController controller;
 	
-	private int lastVal = 0;
+	private int lastVal;
+	private int lastVal2;
 	
 	public GraphView(SimulatorController controller) {
 		size = new Dimension(0, 0);
@@ -56,15 +57,19 @@ public class GraphView extends View {
 		int width = graphImage.getWidth();
 		int height = graphImage.getHeight();
 		
-		int y = (height/100) * totalCarInfo.get("all");
+		int y = (height/100) * ( totalCarInfo.get("card") / (540/100) );
+		int y2 = (height/100) * ( totalCarInfo.get("adhoc") / (540/100) );
 		
         Graphics g = graphImage.getGraphics();
         g.copyArea(30, 0, width-30, height, -30, 0);
         g.setColor(getBackground());
         g.fillRect(width-30, 0, width, height);
-        g.setColor(Color.RED);
+        g.setColor(Color.BLUE);
         g.drawLine(width-30, height - lastVal, width, height - y);
+        g.setColor(Color.RED);
+        g.drawLine(width-30, height - lastVal2, width, height - y2);
         lastVal = y;
+        lastVal2 = y2;
         repaint();
 	}
 	

@@ -123,7 +123,6 @@ public class MainFrame extends JFrame {
 			c.gridwidth = 1;
     		inputPanel.add(stopSimulationButton, c);
     		stopSimulationButton.addActionListener(e -> controller.setRunning(false));
-    		// TODO add action listener
     	// Reset button
     	JButton resetSimulationButton = new JButton("Reset");
 			c.gridy = 1;

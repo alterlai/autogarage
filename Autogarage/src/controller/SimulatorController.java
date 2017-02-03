@@ -78,7 +78,13 @@ public class SimulatorController {
 	
 	public HashMap<String, Integer> getTotalCarInfo()
 	{
-		return model.getTotalCarInfo();
+		try {
+			return model.getTotalCarInfo();
+		}
+		catch (NullPointerException e)
+		{
+			return null;
+		}
 	}
 	
 	/**

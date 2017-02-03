@@ -1,6 +1,7 @@
 package model;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
 import controller.*;
 
@@ -77,8 +78,10 @@ public class SimulatorModel implements Runnable{
       //Construct hashmap for car information and initialize variables.
         totalCarInfo = new HashMap<>(); 
         totalCarInfo.put("all", 0);
-    	totalCarInfo.put("card", 0);
+    	totalCarInfo.put("pass", 0);
     	totalCarInfo.put("adhoc", 0);
+    	totalCarInfo.put("reservation", 0);
+    	totalCarInfo.put("free", 0);
         
         // Populate fields.
         this.numberOfFloors = 3;
@@ -147,10 +150,13 @@ public class SimulatorModel implements Runnable{
         }
     	handleEntrance();
     	
-    	//Reset car count
-    	totalCarInfo.put("all", 0);
-    	totalCarInfo.put("card", 0);
-    	totalCarInfo.put("adhoc", 0);
+    	//Loop over every element in the car count and reset the value to 0 for counting cars per tick.
+    	Iterator it = totalCarInfo.entrySet().iterator();
+    	while (it.hasNext())
+    	{
+    		HashMap.Entry pair = (HashMap.Entry)it.next();
+    		totalCarInfo.put((String)pair.getKey(), 0);
+    	}
     	
     	// Let the cars tick 
     	for (int floor = 0; floor < getNumberOfFloors(); floor++) {
@@ -164,7 +170,8 @@ public class SimulatorModel implements Runnable{
                         // Car counting.
                         incrementTotal("all");
                         if (car instanceof AdHocCar) incrementTotal("adhoc");
-                        if (car instanceof ParkingPassCar) incrementTotal("card");
+                        if (car instanceof ParkingPassCar) incrementTotal("pass");
+                        if (car instanceof ReservationCar) incrementTotal("reservation");
                     }
                 }
             }
@@ -431,6 +438,7 @@ public class SimulatorModel implements Runnable{
      */
     public HashMap<String, Integer> getTotalCarInfo()
     {
+    	totalCarInfo.put("free", this.numberOfOpenSpots);
     	return this.totalCarInfo;
     }
     

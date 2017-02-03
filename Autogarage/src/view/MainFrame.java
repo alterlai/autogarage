@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.*;
+import java.net.NetworkInterface;
+
 import javax.swing.*;
 import java.util.LinkedList;
 import model.Time;
@@ -79,7 +81,7 @@ public class MainFrame extends JFrame {
   		// Adding the panels for the different views
   		tabbedPane.addTab("Simulator", null, views.get(0), null);
   		tabbedPane.addTab("Statistics", null, views.get(1), null);
-  		tabbedPane.addTab("Busy Periods", null, new JPanel(), null);
+  		tabbedPane.addTab("Settings", null, views.get(2), null);
   		tabbedPane.addTab("Other", null, new JPanel(), null);
   	}
     
@@ -160,6 +162,7 @@ public class MainFrame extends JFrame {
 		views = new LinkedList<>();
 		views.add(new SimulatorView(controller));
 		views.add(new StatisticsView(controller));
+		views.add(new SettingsView(controller));
 	}
 	
 	
@@ -171,6 +174,14 @@ public class MainFrame extends JFrame {
 		Time time = controller.getTime();
 		timeLabel.setText(time.toString());
 		for(View view : views)
+		{
+			view.updateView();
+		}
+	}
+	
+	public void reset()
+	{
+		for (View view : views)
 		{
 			view.updateView();
 		}

@@ -15,5 +15,4 @@ public abstract class View extends JPanel {
 	 * Abstract method for all view sub-classes.
 	 */
 	public abstract void updateView();
-	
 }

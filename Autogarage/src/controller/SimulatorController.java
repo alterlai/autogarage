@@ -104,7 +104,9 @@ public class SimulatorController {
 	public void resetSimulation()
 	{
 		model.reset();
+		view.reset();
 		view.updateView();
+		
 	}
 
 	/* ----------------------------------------

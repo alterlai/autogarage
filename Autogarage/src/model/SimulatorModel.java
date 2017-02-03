@@ -76,12 +76,7 @@ public class SimulatorModel implements Runnable{
         Car.setBank(bank);
         
       //Construct hashmap for car information and initialize variables.
-        totalCarInfo = new HashMap<>(); 
-        totalCarInfo.put("all", 0);
-    	totalCarInfo.put("pass", 0);
-    	totalCarInfo.put("adhoc", 0);
-    	totalCarInfo.put("reservation", 0);
-    	totalCarInfo.put("free", 0);
+        resetCarInfo();
         
         // Populate fields.
         this.numberOfFloors = 3;
@@ -132,6 +127,10 @@ public class SimulatorModel implements Runnable{
         exitCarQueue = new CarQueue();
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
         currentTick = 1;
+        resetCarInfo();
+        time = new Time();
+        bank = new Bank();
+        Car.setBank(bank);
     }
     
     /**
@@ -392,7 +391,20 @@ public class SimulatorModel implements Runnable{
         numberOfOpenSpots++;
         return car;
     }
-
+    
+    /**
+     * Reset all the car counting data.
+     */
+    public void resetCarInfo()
+    {
+    	totalCarInfo = new HashMap<>(); 
+        totalCarInfo.put("all", 0);
+    	totalCarInfo.put("pass", 0);
+    	totalCarInfo.put("adhoc", 0);
+    	totalCarInfo.put("reservation", 0);
+    	totalCarInfo.put("free", 0);
+    }
+    
     public Location getFirstFreeLocation() {
         for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {

@@ -175,5 +175,4 @@ public class StatisticsView extends View {
 		
 		//Balance Overview.
 	} 
-
 }

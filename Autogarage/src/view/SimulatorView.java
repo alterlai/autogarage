@@ -92,7 +92,7 @@ public class SimulatorView extends View {
             40 + location.getPlace() * 10,
             20 - 1,
             10 - 1
-        );*/ // TODO use dynamic size or constants
+        );*/
         
         
         // DYNAMIC

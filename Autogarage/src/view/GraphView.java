@@ -3,7 +3,6 @@ package view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
@@ -30,7 +29,6 @@ public class GraphView extends View {
 	@Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
         if (graphImage == null) {
             return;
         }
@@ -57,7 +55,7 @@ public class GraphView extends View {
 		int width = graphImage.getWidth();
 		int height = graphImage.getHeight();
 		
-		int y = (height/100) * ( totalCarInfo.get("card") / (540/100) );
+		int y = (height/100) * ( totalCarInfo.get("pass") / (540/100) );
 		int y2 = (height/100) * ( totalCarInfo.get("adhoc") / (540/100) );
 		
         Graphics g = graphImage.getGraphics();
@@ -78,7 +76,7 @@ public class GraphView extends View {
 	 * Set the default size for this JPanel.
 	 */
     public Dimension getPreferredSize() {
-        return new Dimension(800, 400);
+        return new Dimension(300, 200);
     }   
 	
 }

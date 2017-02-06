@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JLabel;
 
 import controller.SimulatorController;
@@ -11,7 +13,8 @@ public class SettingsView extends View{
 	{
 		this.controller = controller;
 		
-		this.add(new JLabel("SETTINGS PAGE"));
+		setLayout(new BorderLayout());
+		add(new JLabel("SETTINGS PAGE"), BorderLayout.NORTH);
 	}
 	
 	@Override

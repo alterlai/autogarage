@@ -14,6 +14,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.util.HashMap;
 
+@SuppressWarnings("serial")
 public class StatisticsView extends View {
 	private SimulatorController controller;
 	private JTextField totalCarsTf;
@@ -21,6 +22,8 @@ public class StatisticsView extends View {
 	private JTextField passCarTf;
 	private JTextField reserverationTf;
 	private JTextField freeSpotsTf;
+	private View graphPanel;
+	private View piePanel;
 
 	/**
 	 * Create the panel.
@@ -152,11 +155,11 @@ public class StatisticsView extends View {
 		panel.setBackground(Color.WHITE);
 		BalancePanel.add(panel, BorderLayout.CENTER);
 		
-		JPanel panel_1 = new JPanel();
-		add(panel_1);
+		graphPanel = new GraphView(controller);
+		add(graphPanel);
 		
-		JPanel panel_2 = new JPanel();
-		add(panel_2);
+		piePanel = new PieChartView(controller);
+		add(piePanel);
 
 	}
 
@@ -165,6 +168,9 @@ public class StatisticsView extends View {
 	 */
 	@Override
 	public void updateView() {
+		graphPanel.updateView();
+		piePanel.updateView();
+		
 		// Population Overview.
 		HashMap<String, Integer> totalCarInfo = controller.getTotalCarInfo();
 		totalCarsTf.setText("" + totalCarInfo.get("all"));

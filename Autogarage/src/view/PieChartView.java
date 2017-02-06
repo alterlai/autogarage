@@ -55,7 +55,7 @@ public class PieChartView extends View {
         
         int y = totalCarInfo.get("adhoc") / (540/100);
         int yRot = (360/100) * y;
-        int y2 = totalCarInfo.get("card") / (540/100);
+        int y2 = totalCarInfo.get("pass") / (540/100);
         int y2Rot = (360/100) * y2;
         int empty = 100 - y - y2;
         
@@ -86,6 +86,6 @@ public class PieChartView extends View {
 	 * Set the default size for this JPanel.
 	 */
     public Dimension getPreferredSize() {
-        return new Dimension(800, 400);
+        return new Dimension(300, 200);
     }  
 }

@@ -43,7 +43,7 @@ public class SettingsView extends View{
 		simTickPauseTF.setColumns(10);
 		
 		JButton btnApply = new JButton("Apply");
-		btnApply.addActionListener(e -> controller.setTickPause(getSimTickPauseTF())); 
+		btnApply.addActionListener(e -> applySettings()); 
 		panel.add(btnApply);
 		
 		JPanel panel_1 = new JPanel();
@@ -72,6 +72,11 @@ public class SettingsView extends View{
     		showError("Enter a valid number"); 
     		return 0;
     	}
+	}
+	
+	public void applySettings()
+	{
+		controller.setTickPause(getSimTickPauseTF());
 	}
 	
 }

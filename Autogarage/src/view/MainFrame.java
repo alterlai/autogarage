@@ -80,6 +80,7 @@ public class MainFrame extends JFrame {
   		tabbedPane.addTab("Statistics", null, views.get(1), null);
   		tabbedPane.addTab("Busy Periods", null, new JPanel(), null);
   		tabbedPane.addTab("Graph", null, views.get(2), null);
+  		tabbedPane.addTab("Pie Chart", null, views.get(3), null);
   	}
     
     
@@ -149,6 +150,7 @@ public class MainFrame extends JFrame {
 		views.add(new SimulatorView(controller));
 		views.add(new StatisticsView(controller));
 		views.add(new GraphView(controller));
+		views.add(new PieChartView(controller));
 	}
 	
 	

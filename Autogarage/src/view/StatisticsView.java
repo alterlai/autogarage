@@ -21,6 +21,8 @@ public class StatisticsView extends View {
 	private JTextField passCarTf;
 	private JTextField reserverationTf;
 	private JTextField freeSpotsTf;
+	private JTextField servedCarsTf;
+	private JTextField missedCarsTf;
 
 	/**
 	 * Create the panel.
@@ -47,7 +49,7 @@ public class StatisticsView extends View {
 		gbl_populationData.columnWidths = new int[] {0, 0, 1};
 		gbl_populationData.rowHeights = new int[] {0, 0, 0, 0, 0, 1};
 		gbl_populationData.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_populationData.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_populationData.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		populationData.setLayout(gbl_populationData);
 		
 		JLabel totalCarsLb = new JLabel("Total amount of cars");
@@ -124,7 +126,7 @@ public class StatisticsView extends View {
 		
 		JLabel freeSpotsLb = new JLabel("Free spots");
 		GridBagConstraints gbc_freeSpotsLb = new GridBagConstraints();
-		gbc_freeSpotsLb.insets = new Insets(0, 0, 0, 5);
+		gbc_freeSpotsLb.insets = new Insets(0, 0, 5, 5);
 		gbc_freeSpotsLb.gridx = 0;
 		gbc_freeSpotsLb.gridy = 4;
 		populationData.add(freeSpotsLb, gbc_freeSpotsLb);
@@ -134,9 +136,44 @@ public class StatisticsView extends View {
 		freeSpotsTf.setEditable(false);
 		freeSpotsTf.setColumns(10);
 		GridBagConstraints gbc_freeSpotsTf = new GridBagConstraints();
+		gbc_freeSpotsTf.insets = new Insets(0, 0, 5, 0);
 		gbc_freeSpotsTf.gridx = 1;
 		gbc_freeSpotsTf.gridy = 4;
 		populationData.add(freeSpotsTf, gbc_freeSpotsTf);
+		
+		JLabel servedCarsLb = new JLabel("Cars served");
+		GridBagConstraints gbc_servedCarsLb = new GridBagConstraints();
+		gbc_servedCarsLb.insets = new Insets(0, 0, 5, 5);
+		gbc_servedCarsLb.gridx = 0;
+		gbc_servedCarsLb.gridy = 5;
+		populationData.add(servedCarsLb, gbc_servedCarsLb);
+		
+		servedCarsTf = new JTextField();
+		GridBagConstraints gbc_servedCarsTf = new GridBagConstraints();
+		gbc_servedCarsTf.insets = new Insets(0, 0, 5, 0);
+		gbc_servedCarsTf.gridx = 1;
+		gbc_servedCarsTf.gridy = 5;
+		populationData.add(servedCarsTf, gbc_servedCarsTf);
+		servedCarsTf.setText("0");
+		servedCarsTf.setEditable(false);
+		servedCarsTf.setColumns(10);
+		
+		JLabel missedCarsLb = new JLabel("Cars missed");
+		GridBagConstraints gbc_missedCarsLb = new GridBagConstraints();
+		gbc_missedCarsLb.insets = new Insets(0, 0, 5, 5);
+		gbc_missedCarsLb.gridx = 0;
+		gbc_missedCarsLb.gridy = 6;
+		populationData.add(missedCarsLb, gbc_missedCarsLb);
+		
+		missedCarsTf = new JTextField();
+		GridBagConstraints gbc_missedCarsTf = new GridBagConstraints();
+		gbc_missedCarsTf.insets = new Insets(0, 0, 5, 0);
+		gbc_missedCarsTf.gridx = 1;
+		gbc_missedCarsTf.gridy = 6;
+		populationData.add(missedCarsTf, gbc_missedCarsTf);
+		missedCarsTf.setText("0");
+		missedCarsTf.setEditable(false);
+		missedCarsTf.setColumns(10);
 		
 		JPanel BalancePanel = new JPanel();
 		add(BalancePanel);
@@ -172,6 +209,8 @@ public class StatisticsView extends View {
 		passCarTf.setText("" + totalCarInfo.get("pass"));
 		reserverationTf.setText("" + totalCarInfo.get("reservation"));
 		freeSpotsTf.setText("" + totalCarInfo.get("free"));
+		servedCarsTf.setText("" + totalCarInfo.get("served"));
+		missedCarsTf.setText("" + totalCarInfo.get("missed"));
 		
 		//Balance Overview.
 	} 

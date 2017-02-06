@@ -219,6 +219,13 @@ public class SimulatorModel implements Runnable{
             setCarAt(freeLocation, car);
             i++;
         }
+    	// Any car that doesn't get added to the parking lot gets added to the missed statistic
+    	while (queue.carsInQueue()>0 &&
+    			i>enterSpeed) {
+    		incrementTotal("missed");
+    		i++;
+    	}
+    	
     }
     
     private void carsReadyToLeave(){
@@ -255,6 +262,7 @@ public class SimulatorModel implements Runnable{
     	int i=0;
     	while (exitCarQueue.carsInQueue()>0 && i < exitSpeed){
             exitCarQueue.removeCar();
+            incrementTotal("served");
             i++;
     	}	
     }
@@ -402,7 +410,9 @@ public class SimulatorModel implements Runnable{
     	totalCarInfo.put("pass", 0);
     	totalCarInfo.put("adhoc", 0);
     	totalCarInfo.put("reservation", 0);
-    	totalCarInfo.put("free", 0);
+    	totalCarInfo.put("served", 0);
+    	totalCarInfo.put("missed", 0);
+    	totalCarInfo.put("free", 0);    	
     }
     
     public Location getFirstFreeLocation() {

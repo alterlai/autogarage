@@ -1,5 +1,6 @@
 package view;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -10,6 +11,15 @@ import javax.swing.JPanel;
  */
 @SuppressWarnings("serial")
 public abstract class View extends JPanel {
+	
+	/**
+	 * show an error message.
+	 * @param message
+	 */
+	public void showError(String message)
+    {
+    	JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
 	
 	/**
 	 * Abstract method for all view sub-classes.

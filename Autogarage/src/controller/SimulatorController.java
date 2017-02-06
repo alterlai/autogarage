@@ -121,5 +121,14 @@ public class SimulatorController {
 	{
 		view.updateView(); //TODO make a list of all the views instead of just one variable and loop over the list.
 	}
+	
+	/**
+	 * Set the interval between each tick.
+	 * @param interval
+	 */
+	public void setTickPause(int interval)
+	{
+		model.setTickPause(interval);
+	}
 
 }

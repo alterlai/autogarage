@@ -446,6 +446,15 @@ public class SimulatorModel implements Runnable{
     }
     
     /**
+     * Set the tick interval between each tick.
+     * @param interval
+     */
+    public void setTickPause(int interval)
+    {
+    	this.tickPause = interval;
+    }
+    
+    /**
      * Returns the total amount of cars parked in the garage that are not in queue.
      */
     public HashMap<String, Integer> getTotalCarInfo()

@@ -87,11 +87,27 @@ public class SimulatorView extends View {
      */
     private void drawPlace(Graphics g, Location location, Color color) {
         g.setColor(color);
-        g.fillRect(
+        /*g.fillRect(
             location.getFloor() * 260 + (1 + (int)Math.floor(location.getRow() * 0.5)) * 60 + (location.getRow() % 2) * 20,
             40 + location.getPlace() * 10,
             20 - 1,
             10 - 1
-        ); // TODO use dynamic size or constants
-    }    
+        );*/ // TODO use dynamic size or constants
+        
+        
+        // DYNAMIC
+		int width = carParkImage.getWidth();
+		int height = carParkImage.getHeight();
+        
+        g.fillRect(
+        		location.getFloor() * (width/3) + 
+                (1 + (int)Math.floor(location.getRow() * 0.5)) * (width/13) +                 
+                (location.getRow() % 2) * (width/40),
+
+                (height/40) + location.getPlace() * (height/30),
+                
+                (width/40) - (width/800),
+                (height/40) - (width/400)
+        );
+    }
 }

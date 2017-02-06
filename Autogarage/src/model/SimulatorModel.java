@@ -46,6 +46,8 @@ public class SimulatorModel implements Runnable{
     private int numberOfRows;	// The amount of rows in each floor.
     private int numberOfPlaces;	// The amount of places in each row
     private int numberOfOpenSpots;	// The amount of free spots in the garage.
+    private int numberOfServedCars;	// The amount of served cars.
+    private int numberOfMissedCars; // The amount of missed cars because of business.
     private Car[][][] cars;			//Car array of all the cars in the garage.
     private int numberOfPassHolders = 20;	//Amount of customers with a pass.
     
@@ -131,6 +133,10 @@ public class SimulatorModel implements Runnable{
         time = new Time();
         bank = new Bank();
         Car.setBank(bank);
+        this.numberOfOpenSpots = numberOfFloors*numberOfRows*numberOfPlaces;
+        this.numberOfServedCars = 0;
+        this.numberOfMissedCars = 0;
+        
     }
     
     /**
@@ -222,7 +228,7 @@ public class SimulatorModel implements Runnable{
     	// Any car that doesn't get added to the parking lot gets added to the missed statistic
     	while (queue.carsInQueue()>0 &&
     			i>enterSpeed) {
-    		incrementTotal("missed");
+    		numberOfMissedCars++;
     		i++;
     	}
     	
@@ -262,7 +268,7 @@ public class SimulatorModel implements Runnable{
     	int i=0;
     	while (exitCarQueue.carsInQueue()>0 && i < exitSpeed){
             exitCarQueue.removeCar();
-            incrementTotal("served");
+            numberOfServedCars++;
             i++;
     	}	
     }
@@ -410,9 +416,9 @@ public class SimulatorModel implements Runnable{
     	totalCarInfo.put("pass", 0);
     	totalCarInfo.put("adhoc", 0);
     	totalCarInfo.put("reservation", 0);
+    	totalCarInfo.put("free", 0); 
     	totalCarInfo.put("served", 0);
-    	totalCarInfo.put("missed", 0);
-    	totalCarInfo.put("free", 0);    	
+    	totalCarInfo.put("missed", 0); 	
     }
     
     public Location getFirstFreeLocation() {
@@ -461,6 +467,8 @@ public class SimulatorModel implements Runnable{
     public HashMap<String, Integer> getTotalCarInfo()
     {
     	totalCarInfo.put("free", this.numberOfOpenSpots);
+    	totalCarInfo.put("served", this.numberOfServedCars);
+    	totalCarInfo.put("missed", this.numberOfMissedCars);
     	return this.totalCarInfo;
     }
     

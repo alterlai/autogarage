@@ -77,6 +77,7 @@ public class SettingsView extends View{
 	public void applySettings()
 	{
 		controller.setTickPause(getSimTickPauseTF());
+		
 	}
 	
 }

@@ -65,8 +65,9 @@ public class MainFrame extends JFrame {
         pack();												// Resize window to content.
         setLocationRelativeTo(null);						// Set the position to the center of the screen.
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		// Shutdown when closing window.
-        setMinimumSize(new Dimension(500, 400));			// Set minimumSize of the window.
+        setMinimumSize(new Dimension(1105, 550));			// Set minimumSize of the window.
         setVisible(true);									// Display the Frame.
+        System.out.println("size: " + this.getSize());
 	}
 	
 	

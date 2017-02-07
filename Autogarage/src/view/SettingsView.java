@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import controller.SimulatorController;
 import java.awt.BorderLayout;
@@ -406,6 +407,8 @@ public class SettingsView extends View{
 		controller.setWeekDayReservedArrivals(getFieldInt(weekdayReservedField));
 		controller.setWeekendReservedArrivals(getFieldInt(weekendReservedField));
 		// TODO: MAKE TICKET COST SETTING.
+		
+		JOptionPane.showMessageDialog(this, "Settings have been applied", "Settings applied", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 }

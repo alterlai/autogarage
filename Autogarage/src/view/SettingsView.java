@@ -73,7 +73,7 @@ public class SettingsView extends View{
 		delayLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		delayLabel.setAlignmentY(Component.TOP_ALIGNMENT);
 		
-		simTickPauseTF = new JTextField("50");
+		simTickPauseTF = new JTextField("100");
 		GridBagConstraints gbc_simTickPauseTF = new GridBagConstraints();
 		gbc_simTickPauseTF.insets = new Insets(0, 0, 5, 0);
 		gbc_simTickPauseTF.anchor = GridBagConstraints.NORTHWEST;

@@ -31,23 +31,26 @@ public class SimulatorModel implements Runnable{
     private int simulationLength = 50;
     private int currentTick = 1;
 
-    int weekDayArrivals= 100; // average number of arriving cars per hour
-    int weekendArrivals = 200; // average number of arriving cars per hour
-    int weekDayPassArrivals= 50; // average number of arriving cars per hour
-    int weekendPassArrivals = 5; // average number of arriving cars per hour
-    int weekDayReservedArrivals = 50; // average number of arriving cars per hour
-    int weekendReservedArrivals = 100; // average number of arriving cars per hour
+    int weekDayArrivals= 200; 			// average number of arriving cars per hour
+    int weekendArrivals = 100; 			// average number of arriving cars per hour
+    int weekDayPassArrivals= 100; 		// average number of arriving cars per hour
+    int weekendPassArrivals = 50; 		// average number of arriving cars per hour
+    int weekDayReservedArrivals = 100; 	// average number of arriving cars per hour
+    int weekendReservedArrivals = 50; 	// average number of arriving cars per hour
 
-    int enterSpeed = 8; // number of cars that can enter per minute
-    int paymentSpeed = 5; // number of cars that can pay per minute
-    int exitSpeed = 5; // number of cars that can leave per minute
+    int enterSpeed = 8; 	// number of cars that can enter per minute
+    int paymentSpeed = 5;	// number of cars that can pay per minute
+    int exitSpeed = 5;		// number of cars that can leave per minute
     
-    private int numberOfFloors;	// The amount of floors in the garage.
-    private int numberOfRows;	// The amount of rows in each floor.
-    private int numberOfPlaces;	// The amount of places in each row
+    private int numberOfFloors;		// The amount of floors in the garage.
+    private int numberOfRows;		// The amount of rows in each floor.
+    private int numberOfPlaces;		// The amount of places in each row
     private int numberOfOpenSpots;	// The amount of free spots in the garage.
     private Car[][][] cars;			//Car array of all the cars in the garage.
-    private int numberOfPassHolders = 20;	//Amount of customers with a pass.
+    
+    private int numberOfAdHocsServed;		// The amount of AdHocs that have paid.
+    private int numberOfPassesServed;		// The amount of Parking pass cars that have paid.
+    private int numberOfReservationsServed;	// The amount of Reservation cars that have paid. 
     
     //Multithreading info
     private Thread t;						//Running thread.
@@ -55,9 +58,16 @@ public class SimulatorModel implements Runnable{
     private boolean running = true;			//Flag for the thread to run.
     
     // Statistics
-    private HashMap<String, Integer> totalCarInfo;	//Hashmap containing the total amount of cars in the garage.
-    private Bank bank;								// The bank regulating money.
-    
+    private HashMap<String, Integer> totalCarInfo;		// Hashmap containing the total amount of cars in the garage.
+    private HashMap<String, Double> totalBalanceInfo;	// Hashmap containing the total balance of the garage.
+    private Bank bank;									// The bank regulating money.
+    private Bank adHocBank;								// The bank for adHoc cars.
+    private Bank passBank;								// The bank for parking pass cars.
+    private Bank reservationBank;						// The bank for reservation cars.
+    private int numberOfServedCars;						// The amount of served cars.
+    private int numberOfMissedCars; 					// The amount of missed cars because of business.
+    private int numberOfPassHolders = 20;				// Amount of customers with a pass.
+        
     /**
      * Constructor for the SimulatorModel class.
      * @param controller
@@ -71,12 +81,16 @@ public class SimulatorModel implements Runnable{
         paymentCarQueue = new CarQueue();
         exitCarQueue = new CarQueue();
         
-        //Construct the bank.
+        //Construct the banks.
         bank = new Bank();
+        adHocBank = new Bank();
+        passBank = new Bank();
+        reservationBank = new Bank();
         Car.setBank(bank);
         
-      //Construct hashmap for car information and initialize variables.
+        //Construct hashmaps for car information and balance information and initialize variables.
         resetCarInfo();
+        resetBalanceInfo();
         
         // Populate fields.
         this.numberOfFloors = 3;
@@ -127,10 +141,20 @@ public class SimulatorModel implements Runnable{
         exitCarQueue = new CarQueue();
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
         currentTick = 1;
-        resetCarInfo();
+        this.numberOfOpenSpots = numberOfFloors*numberOfRows*numberOfPlaces;
+        this.numberOfServedCars = 0;
+        this.numberOfMissedCars = 0;
+        this.numberOfAdHocsServed = 0;
+        this.numberOfPassesServed = 0;
+        this.numberOfReservationsServed = 0;
         time = new Time();
         bank = new Bank();
+        adHocBank = new Bank();
+        passBank = new Bank();
+        reservationBank = new Bank();
         Car.setBank(bank);
+        resetCarInfo();
+        resetBalanceInfo();
     }
     
     /**
@@ -219,6 +243,13 @@ public class SimulatorModel implements Runnable{
             setCarAt(freeLocation, car);
             i++;
         }
+    	// Any car that doesn't get added to the parking lot gets added to the missed statistic
+    	while (queue.carsInQueue()>0) {
+    		queue.removeCar();
+    		numberOfMissedCars++;
+    		i++;
+    	}
+    	
     }
     
     private void carsReadyToLeave(){
@@ -242,6 +273,19 @@ public class SimulatorModel implements Runnable{
     	while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed){
             Car car = paymentCarQueue.removeCar();
             car.pay();	//Make the car pay.
+            
+            if (car instanceof AdHocCar) {
+            	car.setBank(adHocBank);
+            	car.pay();
+            }
+            
+            if (car instanceof ReservationCar) {
+            	car.setBank(reservationBank);
+            	car.pay();
+            }
+            
+            car.setBank(bank);
+            
             carLeavesSpot(car);
             i++;
     	}
@@ -254,7 +298,13 @@ public class SimulatorModel implements Runnable{
         // Let cars leave.
     	int i=0;
     	while (exitCarQueue.carsInQueue()>0 && i < exitSpeed){
-            exitCarQueue.removeCar();
+            Car car = exitCarQueue.removeCar();
+            
+            numberOfServedCars++;
+            if (car instanceof AdHocCar) this.numberOfAdHocsServed++;
+            if (car instanceof ParkingPassCar) this.numberOfPassesServed++;
+            if (car instanceof ReservationCar) this.numberOfReservationsServed++;
+            
             i++;
     	}	
     }
@@ -402,7 +452,18 @@ public class SimulatorModel implements Runnable{
     	totalCarInfo.put("pass", 0);
     	totalCarInfo.put("adhoc", 0);
     	totalCarInfo.put("reservation", 0);
-    	totalCarInfo.put("free", 0);
+    	totalCarInfo.put("free", 0); 
+    	totalCarInfo.put("served", 0);
+    	totalCarInfo.put("missed", 0); 	
+    	totalCarInfo.put("adhoc served", 0); 	
+    	totalCarInfo.put("pass served", 0); 	
+    	totalCarInfo.put("reserved served", 0); 	
+
+    }
+    
+    public void resetBalanceInfo()
+    {
+    	totalBalanceInfo = new HashMap<>();
     }
     
     public Location getFirstFreeLocation() {
@@ -510,7 +571,21 @@ public class SimulatorModel implements Runnable{
     public HashMap<String, Integer> getTotalCarInfo()
     {
     	totalCarInfo.put("free", this.numberOfOpenSpots);
+    	totalCarInfo.put("served", this.numberOfServedCars);
+    	totalCarInfo.put("missed", this.numberOfMissedCars);
+    	totalCarInfo.put("adhoc served", this.numberOfAdHocsServed);
+    	totalCarInfo.put("pass served", this.numberOfPassesServed);
+    	totalCarInfo.put("reserved served", this.numberOfReservationsServed);
     	return this.totalCarInfo;
+    }
+    
+    public HashMap<String, Double> getTotalBalanceInfo()
+    {
+    	totalBalanceInfo.put("balance", bank.getTotalBalance());
+    	totalBalanceInfo.put("adhoc balance", adHocBank.getTotalBalance());
+    	totalBalanceInfo.put("pass balance", passBank.getTotalBalance());
+    	totalBalanceInfo.put("reservation balance", reservationBank.getTotalBalance());
+    	return this.totalBalanceInfo;
     }
     
     /**
@@ -519,6 +594,7 @@ public class SimulatorModel implements Runnable{
     public void PayPassClients()
     {
     	bank.addBalance(this.numberOfPassHolders * ParkingPassCar.getMonthlyRate());
+    	passBank.addBalance(this.numberOfPassHolders * ParkingPassCar.getMonthlyRate());
     }
     
     public Time getTime()

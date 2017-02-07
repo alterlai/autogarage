@@ -87,6 +87,17 @@ public class SimulatorController {
 		}
 	}
 	
+	public HashMap<String, Double> getTotalBalanceInfo()
+	{
+		try {
+			return model.getTotalBalanceInfo();
+		}
+		catch (NullPointerException e)
+		{
+			return null;
+		}
+	}
+	
 	/**
      * Sets the number of ad hoc cars arriving per hour during th week.
      * @param int input	cars per hour.

@@ -449,10 +449,60 @@ public class SimulatorModel implements Runnable{
      * Set the tick interval between each tick.
      * @param interval
      */
-    public void setTickPause(int interval)
-    {
+    public void setTickPause(int interval) {
     	this.tickPause = interval;
     }
+    
+    /**
+     * Sets the number of ad hoc cars arriving per hour during th week.
+     * @param int input	cars per hour.
+     */
+    public void setWeekDayArrivals(int input){
+    	this.weekDayArrivals = input;
+    }
+    
+    /**
+     * Sets the number of ad hoc cars arriving per hour in the weekend.
+     * @param int input	cars per hour.
+     */
+    public void setWeekendArrivals(int input){
+    	this.weekendArrivals = input;
+    }
+    /**
+     * Sets the number of pass holders arriving each hour in a weekday.
+     * @param input int cars per hour.
+     */
+    public void setWeekDayPassArrivals(int input){
+    	this.weekDayPassArrivals = input;
+    }
+    public void setWeekendPassArrivals(int input){
+    	this.weekendPassArrivals = input;
+    }
+    public void setWeekDayReservedArrivals(int input){
+    	this.weekDayReservedArrivals = input;
+    }
+    public void setWeekendReservedArrivals(int input){
+    	this.weekendReservedArrivals = input;
+    }
+    public void setEnteringSpeed(int input){
+    	this.enterSpeed = input;
+    }
+    public void setPaymentSpeed(int input){
+    	this.paymentSpeed = input;
+    }
+    public void setExitSpeed(int input){
+    	this.exitSpeed = input;
+    }
+    public void setNumberOfFloors(int input){
+    	this.numberOfFloors = input;
+    }
+    public void setNumberOfRows(int input){
+    	this.numberOfRows = input;
+    }
+    public void setNumberOfPlaces(int input){
+    	this.numberOfPlaces = input;
+    }
+    
     
     /**
      * Returns the total amount of cars parked in the garage that are not in queue.

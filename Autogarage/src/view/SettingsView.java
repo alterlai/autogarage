@@ -27,7 +27,7 @@ public class SettingsView extends View{
 	private SimulatorController controller;
 	private JTextField simTickPauseTF;
 	private JTextField weekDayArrivalsField;
-	private JTextField WeekendArrivalsField;
+	private JTextField weekendArrivalsField;
 	private JTextField weekdayPassField;
 	private JTextField weekendPassField;
 	private JTextField weekdayReservedField;
@@ -127,15 +127,15 @@ public class SettingsView extends View{
 		gbc_lblWeekend.gridy = 4;
 		panel_4.add(lblWeekend, gbc_lblWeekend);
 		
-		WeekendArrivalsField = new JTextField();
-		WeekendArrivalsField.setText("200");
-		GridBagConstraints gbc_WeekendArrivalsField = new GridBagConstraints();
-		gbc_WeekendArrivalsField.insets = new Insets(0, 0, 5, 0);
-		gbc_WeekendArrivalsField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_WeekendArrivalsField.gridx = 1;
-		gbc_WeekendArrivalsField.gridy = 4;
-		panel_4.add(WeekendArrivalsField, gbc_WeekendArrivalsField);
-		WeekendArrivalsField.setColumns(10);
+		weekendArrivalsField = new JTextField();
+		weekendArrivalsField.setText("200");
+		GridBagConstraints gbc_weekendArrivalsField = new GridBagConstraints();
+		gbc_weekendArrivalsField.insets = new Insets(0, 0, 5, 0);
+		gbc_weekendArrivalsField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_weekendArrivalsField.gridx = 1;
+		gbc_weekendArrivalsField.gridy = 4;
+		panel_4.add(weekendArrivalsField, gbc_weekendArrivalsField);
+		weekendArrivalsField.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Weekday passholders");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
@@ -377,18 +377,18 @@ public class SettingsView extends View{
 	
 	@Override
 	public void updateView() {
-		// TODO Auto-generated method stub
+		// Nothing to update.
 		
 	}
 	
 	/**
-	 * Get the value that's put in the input field.
-	 * @return
+	 * Get the value that's put in the input field as an integer.
+	 * @return the value as an integer
 	 */
-	public int getSimTickPauseTF()
+	private int getFieldInt(JTextField field)
 	{
 		try{
-    		return Integer.parseInt(simTickPauseTF.getText());
+    		return Integer.parseInt(field.getText());
     	}
     	catch (NumberFormatException e) {
     		showError("Enter a valid number"); 
@@ -398,8 +398,14 @@ public class SettingsView extends View{
 	
 	public void applySettings()
 	{
-		controller.setTickPause(getSimTickPauseTF());
-		
+		controller.setTickPause(getFieldInt(simTickPauseTF));
+		controller.setWeekDayArrivals(getFieldInt(weekDayArrivalsField));
+		controller.setWeekendArrivals(getFieldInt(weekDayArrivalsField));
+		controller.setWeekDayPassArrivals(getFieldInt(weekdayPassField));
+		controller.setWeekendPassArrivals(getFieldInt(weekendPassField));
+		controller.setWeekDayReservedArrivals(getFieldInt(weekdayReservedField));
+		controller.setWeekendReservedArrivals(getFieldInt(weekendReservedField));
+		// TODO: MAKE TICKET COST SETTING.
 	}
 	
 }

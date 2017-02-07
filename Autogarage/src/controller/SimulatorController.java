@@ -88,6 +88,56 @@ public class SimulatorController {
 	}
 	
 	/**
+     * Sets the number of ad hoc cars arriving per hour during th week.
+     * @param int input	cars per hour.
+     */
+    public void setWeekDayArrivals(int input){
+    	model.setWeekDayArrivals(input);
+    }
+    
+    /**
+     * Sets the number of ad hoc cars arriving per hour in the weekend.
+     * @param int input	cars per hour.
+     */
+    public void setWeekendArrivals(int input){
+    	model.setWeekendArrivals(input);
+    }
+    /**
+     * Sets the number of pass holders arriving each hour in a weekday.
+     * @param input int cars per hour.
+     */
+    public void setWeekDayPassArrivals(int input){
+    	model.setWeekDayPassArrivals(input);
+    }
+    public void setWeekendPassArrivals(int input){
+    	model.setWeekendPassArrivals(input);
+    }
+    public void setWeekDayReservedArrivals(int input){
+    	model.setWeekDayReservedArrivals(input);
+    }
+    public void setWeekendReservedArrivals(int input){
+    	model.setWeekendReservedArrivals(input);
+    }
+    public void setEnteringSpeed(int input){
+    	model.setEnteringSpeed(input);
+    }
+    public void setPaymentSpeed(int input){
+    	model.setPaymentSpeed(input);
+    }
+    public void setExitSpeed(int input){
+    	model.setExitSpeed(input);
+    }
+    public void setNumberOfFloors(int input){
+    	model.setNumberOfFloors(input);
+    }
+    public void setNumberOfRows(int input){
+    	model.setNumberOfRows(input);
+    }
+    public void setNumberOfPlaces(int input){
+    	model.setNumberOfPlaces(input);
+    }
+	
+	/**
 	 * returns the time object.
 	 * @return
 	 */

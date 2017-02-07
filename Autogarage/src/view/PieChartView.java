@@ -81,8 +81,8 @@ public class PieChartView extends View {
         g.fillRect(width - 120, height - 60, 10, 10);
         
         g.setColor(Color.BLACK);
-        g.drawString("Adhoc: " + y + "%", width - 100, height - 100 + (5 + (g.getFont().getSize() / 2)));
-        g.drawString("Pass: " + y2 + "%", width - 100, height - 80 + (5 + (g.getFont().getSize() / 2)));
+        g.drawString("Pass: " + y + "%", width - 100, height - 100 + (5 + (g.getFont().getSize() / 2)));
+        g.drawString("Adhoc: " + y2 + "%", width - 100, height - 80 + (5 + (g.getFont().getSize() / 2)));
         g.drawString("Reserved: " + y3 + "%", width - 100, height - 60 + (5 + (g.getFont().getSize() / 2)));
         g.drawString("Empty spots: " + empty + "%", width - 100, height - 40 + (5 + (g.getFont().getSize() / 2)));
         repaint();

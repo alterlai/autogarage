@@ -403,6 +403,10 @@ public class SimulatorModel implements Runnable{
     	totalCarInfo.put("adhoc", 0);
     	totalCarInfo.put("reservation", 0);
     	totalCarInfo.put("free", 0);
+    	totalCarInfo.put("entranceCarQueue", 0);
+    	totalCarInfo.put("paymentQueue", 0);
+    	totalCarInfo.put("entrancePassQueue", 0);
+    	totalCarInfo.put("exitCarQueue", 0);
     }
     
     public Location getFirstFreeLocation() {
@@ -510,6 +514,10 @@ public class SimulatorModel implements Runnable{
     public HashMap<String, Integer> getTotalCarInfo()
     {
     	totalCarInfo.put("free", this.numberOfOpenSpots);
+    	totalCarInfo.put("entranceCarQueue", entranceCarQueue.carsInQueue());
+    	totalCarInfo.put("paymentQueue", paymentCarQueue.carsInQueue());
+    	totalCarInfo.put("entrancePassQueue", entranceCarQueue.carsInQueue());
+    	totalCarInfo.put("exitCarQueue", exitCarQueue.carsInQueue());
     	return this.totalCarInfo;
     }
     

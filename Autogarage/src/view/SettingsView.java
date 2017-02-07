@@ -373,6 +373,10 @@ public class SettingsView extends View{
 		
 		JButton btnApply = new JButton("Apply");
 		panel_3.add(btnApply);
+		
+		JButton btnResetDefaults = new JButton("Reset defaults");
+		btnResetDefaults.addActionListener(e -> resetValues());
+		panel_3.add(btnResetDefaults);
 		btnApply.addActionListener(e -> applySettings());
 	}
 	
@@ -411,4 +415,20 @@ public class SettingsView extends View{
 		JOptionPane.showMessageDialog(this, "Settings have been applied", "Settings applied", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
+	public void resetValues()
+	{
+		simTickPauseTF.setText("100");
+		weekDayArrivalsField.setText("100");
+		weekendArrivalsField.setText("200");
+		weekdayPassField.setText("50");
+		weekendPassField.setText("5");
+		weekdayReservedField.setText("50");
+		weekendReservedField.setText("100");
+		enterSpeedField.setText("8");
+		paymentSpeedField.setText("5");
+		exitSpeedField.setText("5");
+		numberOfFloorsField.setText("3");
+		numberOfRowsField.setText("6");
+		numberOfPlacesField.setText("30");
+	}
 }

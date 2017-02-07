@@ -107,6 +107,7 @@ public class MainFrame extends JFrame {
     		inputPanel.add(lenghtLabel, c);
     	//length field
     	JTextField durationField = new JTextField(3);
+    	durationField.addActionListener(e -> controller.startSimulation(getsimulationLengthField(durationField)));
     		c.gridy = 0;
     		c.gridx = 2;
     		c.gridwidth = 2;

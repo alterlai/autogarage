@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -44,7 +46,7 @@ public class SettingsView extends View{
 	{
 		this.controller = controller;
 		setLayout(new GridLayout(0, 1, 0, 0));
-		
+
 		JPanel panel = new JPanel();
 		add(panel);
 		panel.setLayout(new BorderLayout(0, 0));

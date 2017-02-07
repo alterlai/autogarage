@@ -14,6 +14,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.util.HashMap;
 
+@SuppressWarnings("serial")
 public class StatisticsView extends View {
 	private SimulatorController controller;
 	private JTextField totalCarsTf;
@@ -21,6 +22,8 @@ public class StatisticsView extends View {
 	private JTextField passCarTf;
 	private JTextField reserverationTf;
 	private JTextField freeSpotsTf;
+	private View graphPanel;
+	private View piePanel;
 
 	/**
 	 * Create the panel.
@@ -152,11 +155,35 @@ public class StatisticsView extends View {
 		panel.setBackground(Color.WHITE);
 		BalancePanel.add(panel, BorderLayout.CENTER);
 		
-		JPanel panel_1 = new JPanel();
-		add(panel_1);
 		
-		JPanel panel_2 = new JPanel();
-		add(panel_2);
+		// Graphview stuff
+		JPanel GraphViewWrapper = new JPanel();
+		GraphViewWrapper.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		GraphViewWrapper.setLayout(new BorderLayout(0, 0));
+		add(GraphViewWrapper);
+		
+		JLabel graphView = new JLabel("Graph view");
+		graphView.setHorizontalAlignment(SwingConstants.CENTER);
+		GraphViewWrapper.add(graphView, BorderLayout.NORTH);
+		
+		graphPanel = new GraphView(controller);
+		graphPanel.setBackground(Color.WHITE);
+		GraphViewWrapper.add(graphPanel);
+		
+		
+		// PieChartview stuff
+		JPanel PieChartViewWrapper = new JPanel();
+		PieChartViewWrapper.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		PieChartViewWrapper.setLayout(new BorderLayout(0, 0));
+		add(PieChartViewWrapper);
+		
+		JLabel pieView = new JLabel("PieChart view");
+		pieView.setHorizontalAlignment(SwingConstants.CENTER);
+		PieChartViewWrapper.add(pieView, BorderLayout.NORTH);
+		
+		piePanel = new PieChartView(controller);
+		piePanel.setBackground(Color.WHITE);
+		PieChartViewWrapper.add(piePanel);
 
 	}
 
@@ -165,6 +192,9 @@ public class StatisticsView extends View {
 	 */
 	@Override
 	public void updateView() {
+		graphPanel.updateView();
+		piePanel.updateView();
+		
 		// Population Overview.
 		HashMap<String, Integer> totalCarInfo = controller.getTotalCarInfo();
 		totalCarsTf.setText("" + totalCarInfo.get("all"));

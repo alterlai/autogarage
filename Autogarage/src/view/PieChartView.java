@@ -53,31 +53,38 @@ public class PieChartView extends View {
         int height = pieChartImage.getHeight();
         int circleSize = (width + height) / 4;
         
-        int y = totalCarInfo.get("adhoc") / (540/100);
-        int yRot = (360/100) * y;
-        int y2 = totalCarInfo.get("card") / (540/100);
-        int y2Rot = (360/100) * y2;
-        int empty = 100 - y - y2;
+        int y = totalCarInfo.get("pass") / (540/100);
+        int yRot = Math.round(y*3.6f);
+        int y2 = totalCarInfo.get("adhoc") / (540/100);
+        int y2Rot = Math.round(y2*3.6f);
+        int y3 = totalCarInfo.get("reservation") / (540/100);
+        int y3Rot = Math.round(y3*3.6f);
+        int empty = 100 - y - y2 - y3;
         
         Graphics g = pieChartImage.getGraphics();
         g.setColor(getBackground());
         g.fillRect(0, 0, width, height);
-        g.setColor(new Color(250,250,250));
-        g.fillArc((width/2)-(circleSize/2), (height/2)-(circleSize/2), circleSize, circleSize, 0, 360);
-        g.fillRect(width - 120, height - 60, 10, 10);
+        g.setColor(new Color(230,230,230));
+        g.fillArc((width/3)-(circleSize/2), (height/2)-(circleSize/2), circleSize, circleSize, 0, 360);
+        g.fillRect(width - 120, height - 40, 10, 10);
         
         g.setColor(Color.BLUE);
-        g.fillArc((width/2)-(circleSize/2), (height/2)-(circleSize/2), circleSize, circleSize, 90, yRot);
+        g.fillArc((width/3)-(circleSize/2), (height/2)-(circleSize/2), circleSize, circleSize, 90, -yRot);
         g.fillRect(width - 120, height - 100, 10, 10);
         
         g.setColor(Color.RED);
-        g.fillArc((width/2)-(circleSize/2), (height/2)-(circleSize/2), circleSize, circleSize, yRot+90, y2Rot);
-        g.fillRect(width - 120, height - 80, 10, 10);
+        g.fillArc((width/3)-(circleSize/2), (height/2)-(circleSize/2), circleSize, circleSize, -yRot+90, -y2Rot);
+        g.fillRect(width - 120, height - 80, 10, 10);        
+        
+        g.setColor(Color.GREEN);
+        g.fillArc((width/3)-(circleSize/2), (height/2)-(circleSize/2), circleSize, circleSize, -(yRot+y2Rot)+90, -y3Rot);
+        g.fillRect(width - 120, height - 60, 10, 10);
         
         g.setColor(Color.BLACK);
-        g.drawString("adhoc: " + y + "%", width - 100, height - 100 + (5 + (g.getFont().getSize() / 2)));
-        g.drawString("card: " + y2 + "%", width - 100, height - 80 + (5 + (g.getFont().getSize() / 2)));
-        g.drawString("empty spots: " + empty + "%", width - 100, height - 60 + (5 + (g.getFont().getSize() / 2)));
+        g.drawString("Pass: " + y + "%", width - 100, height - 100 + (5 + (g.getFont().getSize() / 2)));
+        g.drawString("Adhoc: " + y2 + "%", width - 100, height - 80 + (5 + (g.getFont().getSize() / 2)));
+        g.drawString("Reserved: " + y3 + "%", width - 100, height - 60 + (5 + (g.getFont().getSize() / 2)));
+        g.drawString("Empty spots: " + empty + "%", width - 100, height - 40 + (5 + (g.getFont().getSize() / 2)));
         repaint();
 	}
 	
@@ -86,6 +93,6 @@ public class PieChartView extends View {
 	 * Set the default size for this JPanel.
 	 */
     public Dimension getPreferredSize() {
-        return new Dimension(800, 400);
+        return new Dimension(300, 200);
     }  
 }

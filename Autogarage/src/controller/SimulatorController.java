@@ -87,6 +87,17 @@ public class SimulatorController {
 		}
 	}
 	
+	public HashMap<String, Double> getTotalBalanceInfo()
+	{
+		try {
+			return model.getTotalBalanceInfo();
+		}
+		catch (NullPointerException e)
+		{
+			return null;
+		}
+	}
+	
 	/**
 	 * returns the time object.
 	 * @return

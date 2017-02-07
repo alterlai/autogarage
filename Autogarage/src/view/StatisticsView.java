@@ -155,11 +155,35 @@ public class StatisticsView extends View {
 		panel.setBackground(Color.WHITE);
 		BalancePanel.add(panel, BorderLayout.CENTER);
 		
+		
+		// Graphview stuff
+		JPanel GraphViewWrapper = new JPanel();
+		GraphViewWrapper.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		GraphViewWrapper.setLayout(new BorderLayout(0, 0));
+		add(GraphViewWrapper);
+		
+		JLabel graphView = new JLabel("Graph view");
+		graphView.setHorizontalAlignment(SwingConstants.CENTER);
+		GraphViewWrapper.add(graphView, BorderLayout.NORTH);
+		
 		graphPanel = new GraphView(controller);
-		add(graphPanel);
+		graphPanel.setBackground(Color.WHITE);
+		GraphViewWrapper.add(graphPanel);
+		
+		
+		// PieChartview stuff
+		JPanel PieChartViewWrapper = new JPanel();
+		PieChartViewWrapper.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		PieChartViewWrapper.setLayout(new BorderLayout(0, 0));
+		add(PieChartViewWrapper);
+		
+		JLabel pieView = new JLabel("PieChart view");
+		pieView.setHorizontalAlignment(SwingConstants.CENTER);
+		PieChartViewWrapper.add(pieView, BorderLayout.NORTH);
 		
 		piePanel = new PieChartView(controller);
-		add(piePanel);
+		piePanel.setBackground(Color.WHITE);
+		PieChartViewWrapper.add(piePanel);
 
 	}
 

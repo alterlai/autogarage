@@ -233,7 +233,7 @@ public class SimulatorModel implements Runnable{
     	if (queue.getType() == 0)	// Normal car queue
     	{
 	    	while (	queue.carsInQueue()>0 && 
-	    			getNumberOfOpenSpots() -5 >0 && 
+	    			getNumberOfOpenSpots() >0 && 
 	    			i<enterSpeed) {
 	            Car car = queue.removeCar();
 	            Location freeLocation = getFirstFreeLocation();

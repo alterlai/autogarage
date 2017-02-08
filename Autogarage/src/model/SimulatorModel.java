@@ -30,13 +30,13 @@ public class SimulatorModel implements Runnable{
     private int tickPause = 100;
     private int simulationLength = 50;
     private int currentTick = 1;
-
-    int weekDayArrivals= 100; 			// average number of arriving cars per hour
-    int weekendArrivals = 200; 			// average number of arriving cars per hour
-    int weekDayPassArrivals= 50; 		// average number of arriving cars per hour
-    int weekendPassArrivals = 5; 		// average number of arriving cars per hour
-    int weekDayReservedArrivals = 50; 	// average number of arriving cars per hour
-    int weekendReservedArrivals = 100; 	// average number of arriving cars per hour
+    
+    private int weekDayArrivals= 100; 			// average number of arriving cars per hour
+    private int weekendArrivals = 200; 			// average number of arriving cars per hour
+    private int weekDayPassArrivals= 50; 		// average number of arriving cars per hour
+    private int weekendPassArrivals = 5; 		// average number of arriving cars per hour
+    private int weekDayReservedArrivals = 50; 	// average number of arriving cars per hour
+    private int weekendReservedArrivals = 100; 	// average number of arriving cars per hour
 
     int enterSpeed = 8; 	// number of cars that can enter per minute
     int paymentSpeed = 5;	// number of cars that can pay per minute
@@ -46,7 +46,10 @@ public class SimulatorModel implements Runnable{
     private int numberOfRows;		// The amount of rows in each floor.
     private int numberOfPlaces;		// The amount of places in each row
     private int numberOfOpenSpots;	// The amount of free spots in the garage.
+    private int numberOfOpenPassSpots;
     private Car[][][] cars;			//Car array of all the cars in the garage.
+    
+    private int numberOfPassHolders = 200;		// Amount of customers with a pass..
     
     private int numberOfAdHocsServed;		// The amount of AdHocs that have paid.
     private int numberOfPassesServed;		// The amount of Parking pass cars that have paid.
@@ -62,7 +65,7 @@ public class SimulatorModel implements Runnable{
     private Bank bank;									// The bank regulating money.
     private int numberOfServedCars;						// The amount of served cars.
     private int numberOfMissedCars; 					// The amount of missed cars because of business.
-    private int numberOfPassHolders = 20;				// Amount of customers with a pass.
+
         
     /**
      * Constructor for the SimulatorModel class.
@@ -89,7 +92,8 @@ public class SimulatorModel implements Runnable{
         this.numberOfFloors = 3;
         this.numberOfRows = 6;
         this.numberOfPlaces = 30;
-        this.numberOfOpenSpots =numberOfFloors*numberOfRows*numberOfPlaces;
+        this.numberOfOpenSpots =numberOfFloors*numberOfRows*numberOfPlaces - numberOfPassHolders;
+        this.numberOfOpenPassSpots = numberOfPassHolders;
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
     }
 
@@ -134,7 +138,7 @@ public class SimulatorModel implements Runnable{
         exitCarQueue = new CarQueue();
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
         currentTick = 1;
-        this.numberOfOpenSpots = numberOfFloors*numberOfRows*numberOfPlaces;
+        this.numberOfOpenSpots = numberOfFloors*numberOfRows*numberOfPlaces - this.numberOfPassHolders;
         this.numberOfServedCars = 0;
         this.numberOfMissedCars = 0;
         this.numberOfAdHocsServed = 0;
@@ -153,7 +157,7 @@ public class SimulatorModel implements Runnable{
      */
     private void tick() {
     	time.advanceTime();				// Advance the time inside the simulation
-    	handleExit();				// Handle cars exiting the garage
+    	handleExit();					// Handle cars exiting the garage
     	controller.updateViews(); 
     	// Pause.
         try {
@@ -190,7 +194,8 @@ public class SimulatorModel implements Runnable{
             }
         }
     }
-
+    
+    
     /**
      * This method will help increment total counts in the car total hashmap.
      */
@@ -223,16 +228,31 @@ public class SimulatorModel implements Runnable{
     }
 
     private void carsEntering(CarQueue queue){
-        int i=0;
+    	int i=0;
         // Remove car from the front of the queue and assign to a parking space.
-    	while (queue.carsInQueue()>0 && 
-    			getNumberOfOpenSpots()>0 && 
-    			i<enterSpeed) {
-            Car car = queue.removeCar();
-            Location freeLocation = getFirstFreeLocation();
-            setCarAt(freeLocation, car);
-            i++;
+    	if (queue.getType() == 0)	// Normal car queue
+    	{
+	    	while (	queue.carsInQueue()>0 && 
+	    			getNumberOfOpenSpots() -5 >0 && 
+	    			i<enterSpeed) {
+	            Car car = queue.removeCar();
+	            Location freeLocation = getFirstFreeLocation();
+	            setCarAt(freeLocation, car);
+	            i++;
+	    	}
         }
+    	// If the type is passholders.
+    	if (queue.getType() == 1)
+    	{
+    		while (	queue.carsInQueue()>0 && 
+	    			getNumberOfOpenPassSpots()>0 && 
+	    			i<enterSpeed) {
+	            Car car = queue.removeCar();
+	            Location freeLocation = getFirstFreePassLocation();
+	            setCarAt(freeLocation, car);
+	            i++;
+	    	}
+    	}
     	
     	//TODO: dit werkt nog niet!!!
     	// Any car that doesn't get added to the parking lot gets added to the missed statistic
@@ -367,6 +387,15 @@ public class SimulatorModel implements Runnable{
     public int getNumberOfOpenSpots(){
     	return numberOfOpenSpots;
     }
+    public int getNumberOfOpenPassSpots()
+    {
+    	return numberOfOpenPassSpots;
+    }
+    
+    public int getNumberOfPassHolders()
+    {
+    	return this.numberOfPassHolders;
+    }
     
     /**
      * Return the car that is at a given location.
@@ -383,7 +412,7 @@ public class SimulatorModel implements Runnable{
     /**
      * Check if the given location is a valid location.
      * @param location
-     * @return wether the location is a valid location.
+     * @return whether the location is a valid location.
      */
     private boolean locationIsValid(Location location) {
         int floor = location.getFloor();
@@ -403,7 +432,8 @@ public class SimulatorModel implements Runnable{
         if (oldCar == null) {
             cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
             car.setLocation(location);
-            numberOfOpenSpots--;
+            if (!(car instanceof ParkingPassCar)) numberOfOpenSpots--;
+            else numberOfOpenPassSpots--;
             return true;
         }
         return false;
@@ -419,7 +449,8 @@ public class SimulatorModel implements Runnable{
         }
         cars[location.getFloor()][location.getRow()][location.getPlace()] = null;
         car.setLocation(null);
-        numberOfOpenSpots++;
+        if (!(car instanceof ParkingPassCar)) numberOfOpenSpots++;
+        else numberOfOpenPassSpots++;
         return car;
     }
     
@@ -460,7 +491,24 @@ public class SimulatorModel implements Runnable{
                 for (int place = 0; place < getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
                     if (getCarAt(location) == null) {
-                        return location;
+                        if (!location.isPassSpot(this.numberOfPassHolders, numberOfFloors, numberOfRows, numberOfPlaces))
+                        	return location;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    
+    public Location getFirstFreePassLocation()
+    {
+    	for (int floor = 0; floor < getNumberOfFloors(); floor++) {
+            for (int row = 0; row < getNumberOfRows(); row++) {
+                for (int place = 0; place < getNumberOfPlaces(); place++) {
+                    Location location = new Location(floor, row, place);
+                    if (getCarAt(location) == null) {
+                        if (location.isPassSpot(this.numberOfPassHolders, numberOfFloors, numberOfRows, numberOfPlaces))
+                        	return location;
                     }
                 }
             }
@@ -551,6 +599,7 @@ public class SimulatorModel implements Runnable{
     public void setNumberOfPlaces(int input){
     	this.numberOfPlaces = input;
     }
+
     
     
     /**

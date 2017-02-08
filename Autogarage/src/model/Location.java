@@ -1,10 +1,14 @@
 package model;
 
+import java.awt.Color;
+
 public class Location {
 
     private int floor;
     private int row;
     private int place;
+    
+    public static final Color PASSCOLOR = Color.ORANGE;
 
     /**
      * Constructor for objects of class Location
@@ -65,6 +69,18 @@ public class Location {
      */
     public int getPlace() {
         return place;
+    }
+    
+    public boolean isPassSpot(int numberOfPassHolders, int totalFloors, int totalRows, int totalSpots)
+    {
+    	if (floor * totalRows * totalSpots + row * totalSpots + place < (totalFloors * totalRows * totalSpots - numberOfPassHolders)) // if this location is not in the row of pass holders spots.
+    	{
+    		return false;
+    	}
+    	else
+    	{
+    		return true;
+    	}
     }
 
 }

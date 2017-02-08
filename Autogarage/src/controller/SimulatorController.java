@@ -144,6 +144,10 @@ public class SimulatorController {
     public void setNumberOfPlaces(int input){
     	model.setNumberOfPlaces(input);
     }
+    
+    public int getNumberOfPassHolders(){
+    	return model.getNumberOfPassHolders();
+    }
 	
 	/**
 	 * returns the time object.

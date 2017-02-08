@@ -58,6 +58,7 @@ public class SimulatorView extends View {
             size = getSize();
             carParkImage = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
         } 
+		int totalSpots = controller.getNumberOfFloors() * controller.getNumberOfRows() * controller.getNumberOfPlaces(); // total number of spots.
 		
 		Graphics2D g = carParkImage.createGraphics();
         for(int floor = 0; floor < controller.getNumberOfFloors(); floor++) {
@@ -65,7 +66,19 @@ public class SimulatorView extends View {
                 for(int place = 0; place < controller.getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
                     Car car = controller.getCarAt(location);
-                    Color color = car == null ? Color.white : car.getColor();
+                    
+                    Color color; 	// Location of the spot
+                    
+                    if (car == null) {
+                    	if (location.isPassSpot(controller.getNumberOfPassHolders(), controller.getNumberOfFloors(), controller.getNumberOfRows(), controller.getNumberOfPlaces()))	 // If the spot has no car but is a pass spot.
+                    		color = Location.PASSCOLOR;
+                    	else {								//If the spot does not have a car and is not a pass spot.
+                    		color =  Color.white;
+                    	}
+                    }
+                    else { 
+                    	color = car.getColor();			//If there is a car.
+                    }
                     drawPlace(g, location, color);
                 }
             }

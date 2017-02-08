@@ -88,6 +88,14 @@ public class SimulatorController {
 	}
 	
 	/**
+	 * @return the bank that's being used by the model.
+	 */
+	public Bank getBank()
+	{
+		return model.getBank();
+	}
+	
+	/**
      * Sets the number of ad hoc cars arriving per hour during th week.
      * @param int input	cars per hour.
      */

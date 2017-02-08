@@ -24,7 +24,7 @@ public class ParkingPassCar extends Car {
 		return monthlyRate;
 	}
     
-    public void pay()
+    public void pay(Car car)
     {
     	//pass holders payment is handled in the model.
     }

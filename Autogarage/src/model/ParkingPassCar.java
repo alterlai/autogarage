@@ -28,6 +28,4 @@ public class ParkingPassCar extends Car {
     {
     	//pass holders payment is handled in the model.
     }
-    
-
 }

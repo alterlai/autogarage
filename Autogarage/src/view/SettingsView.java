@@ -41,6 +41,7 @@ public class SettingsView extends View{
 	private JTextField numberOfFloorsField;
 	private JTextField numberOfRowsField;
 	private JTextField numberOfPlacesField;
+	private JTextField passholdersField;
 	
 	public SettingsView(SimulatorController controller)
 	{
@@ -219,7 +220,7 @@ public class SettingsView extends View{
 		gbl_panel_5.columnWidths = new int[]{111, 86, 0};
 		gbl_panel_5.rowHeights = new int[]{20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panel_5.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel_5.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_5.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_5.setLayout(gbl_panel_5);
 		
 		JLabel lblNewLabel_2 = new JLabel("Amount of cars that can:");
@@ -367,6 +368,42 @@ public class SettingsView extends View{
 		panel_5.add(numberOfPlacesField, gbc_numberOfPlacesField);
 		numberOfPlacesField.setColumns(10);
 		
+		JLabel lblPaymentSettings = new JLabel("Payment settings");
+		GridBagConstraints gbc_lblPaymentSettings = new GridBagConstraints();
+		gbc_lblPaymentSettings.gridwidth = 2;
+		gbc_lblPaymentSettings.insets = new Insets(0, 0, 5, 0);
+		gbc_lblPaymentSettings.gridx = 0;
+		gbc_lblPaymentSettings.gridy = 11;
+		panel_5.add(lblPaymentSettings, gbc_lblPaymentSettings);
+		
+		JSeparator separator_3 = new JSeparator();
+		separator_3.setForeground(Color.BLACK);
+		separator_3.setBackground(Color.BLACK);
+		GridBagConstraints gbc_separator_3 = new GridBagConstraints();
+		gbc_separator_3.fill = GridBagConstraints.HORIZONTAL;
+		gbc_separator_3.gridwidth = 3;
+		gbc_separator_3.insets = new Insets(0, 0, 5, 0);
+		gbc_separator_3.gridx = 0;
+		gbc_separator_3.gridy = 12;
+		panel_5.add(separator_3, gbc_separator_3);
+		
+		JLabel lblPassholders = new JLabel("Number of passholders");
+		GridBagConstraints gbc_lblPassholders = new GridBagConstraints();
+		gbc_lblPassholders.anchor = GridBagConstraints.EAST;
+		gbc_lblPassholders.insets = new Insets(0, 0, 0, 5);
+		gbc_lblPassholders.gridx = 0;
+		gbc_lblPassholders.gridy = 13;
+		panel_5.add(lblPassholders, gbc_lblPassholders);
+		
+		passholdersField = new JTextField();
+		passholdersField.setText("90");
+		GridBagConstraints gbc_passholdersField = new GridBagConstraints();
+		gbc_passholdersField.anchor = GridBagConstraints.WEST;
+		gbc_passholdersField.gridx = 1;
+		gbc_passholdersField.gridy = 13;
+		panel_5.add(passholdersField, gbc_passholdersField);
+		passholdersField.setColumns(10);
+		
 		JPanel panel_1 = new JPanel();
 		panel.add(panel_1, BorderLayout.NORTH);
 		
@@ -412,6 +449,7 @@ public class SettingsView extends View{
 		controller.setWeekendPassArrivals(getFieldInt(weekendPassField));
 		controller.setWeekDayReservedArrivals(getFieldInt(weekdayReservedField));
 		controller.setWeekendReservedArrivals(getFieldInt(weekendReservedField));
+		controller.setNumberOfPassholders(getFieldInt(passholdersField));
 		// TODO: MAKE TICKET COST SETTING.
 		
 		JOptionPane.showMessageDialog(this, "Settings have been applied", "Settings applied", JOptionPane.INFORMATION_MESSAGE);
@@ -432,5 +470,6 @@ public class SettingsView extends View{
 		numberOfFloorsField.setText("3");
 		numberOfRowsField.setText("6");
 		numberOfPlacesField.setText("30");
+		passholdersField.setText("90");
 	}
 }

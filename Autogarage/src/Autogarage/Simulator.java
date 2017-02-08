@@ -14,7 +14,8 @@ public class Simulator {
 		model = new SimulatorModel(controller);
 		MainFrame view = new MainFrame(controller);
 		controller.setView(view);
-		controller.setModel(model);
+		controller.setModel(model);		
+		controller.resetSimulation();
 	}
 	
 }

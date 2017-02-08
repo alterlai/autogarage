@@ -60,6 +60,10 @@ public class SimulatorController {
 	{
 		return model.getNumberOfPlaces();
 	}
+	public int getTotalNumberOfPlaces()
+	{
+		return model.getNumberOfPlaces() * model.getNumberOfRows() * model.getNumberOfFloors();
+	}
 	
 	public Car getCarAt(Location location)
 	{
@@ -190,7 +194,7 @@ public class SimulatorController {
 	 */
 	public void updateViews()
 	{
-		view.updateView(); //TODO make a list of all the views instead of just one variable and loop over the list.
+		view.updateView();
 	}
 	
 	/**

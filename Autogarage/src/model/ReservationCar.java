@@ -4,7 +4,7 @@ import java.util.Random;
 import java.awt.*;
 
 public class ReservationCar extends Car {
-	private static final Color COLOR=Color.green;
+	public static final Color COLOR=Color.green;
 	//TODO add mutator methods for fees.
 	private static double hourlyRate = 2.20;		// The cost of parking per minute.
 	private static double bonusFee = 1.50;			// Bonus fee for reservations

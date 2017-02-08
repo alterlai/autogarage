@@ -3,7 +3,7 @@ package model;
 import java.awt.*;
 
 public class PassPlaceHolder extends Car {
-	private static final Color COLOR=Color.magenta;	
+	public static final Color COLOR=Color.magenta;	
 	
     public PassPlaceHolder() {
     	int stayMinutes = 999999999;

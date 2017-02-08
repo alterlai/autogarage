@@ -5,7 +5,6 @@ import java.awt.*;
 
 public class AdHocCar extends Car {
 	private static final Color COLOR=Color.red;
-	//TODO add mutator methods for fees.
 	private static double hourlyRate = 2.20;		// The cost of parking per minute.
 	
     public AdHocCar() {
@@ -23,5 +22,13 @@ public class AdHocCar extends Car {
     public void pay(Car car)
     {
     	Car.BANK.addBalance(hourlyRate / 60 * this.getStayedMinutes(), car);
+    }
+    
+    public static double getHourlyRate() {
+    	return hourlyRate;
+    }
+    
+    public static void setHourlyRate(Double newRate) {
+    	hourlyRate = newRate;
     }
 }

@@ -42,6 +42,9 @@ public class SettingsView extends View{
 	private JTextField numberOfRowsField;
 	private JTextField numberOfPlacesField;
 	private JTextField passholdersField;
+	private JTextField feePerMinuteField;
+	private JTextField bonusFeePerMinuteField;
+	private JTextField passholderFeeField;
 	
 	public SettingsView(SimulatorController controller)
 	{
@@ -62,9 +65,9 @@ public class SettingsView extends View{
 		panel_2.add(panel_4, BorderLayout.WEST);
 		GridBagLayout gbl_panel_4 = new GridBagLayout();
 		gbl_panel_4.columnWidths = new int[]{111, 86, 0};
-		gbl_panel_4.rowHeights = new int[]{20, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel_4.rowHeights = new int[]{0, 0, 20, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panel_4.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel_4.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_4.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 		panel_4.setLayout(gbl_panel_4);
 		
 		JLabel delayLabel = new JLabel("Tick delay");
@@ -91,7 +94,7 @@ public class SettingsView extends View{
 		gbc_weekDayArrivalsLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_weekDayArrivalsLabel.gridwidth = 2;
 		gbc_weekDayArrivalsLabel.gridx = 0;
-		gbc_weekDayArrivalsLabel.gridy = 1;
+		gbc_weekDayArrivalsLabel.gridy = 2;
 		panel_4.add(weekDayArrivalsLabel, gbc_weekDayArrivalsLabel);
 		
 		JSeparator separator = new JSeparator();
@@ -102,7 +105,7 @@ public class SettingsView extends View{
 		gbc_separator.fill = GridBagConstraints.HORIZONTAL;
 		gbc_separator.gridwidth = 2;
 		gbc_separator.gridx = 0;
-		gbc_separator.gridy = 2;
+		gbc_separator.gridy = 3;
 		panel_4.add(separator, gbc_separator);
 		
 		JLabel lblWeekday = new JLabel("Weekday ad hoc");
@@ -110,7 +113,7 @@ public class SettingsView extends View{
 		gbc_lblWeekday.anchor = GridBagConstraints.EAST;
 		gbc_lblWeekday.insets = new Insets(0, 0, 5, 5);
 		gbc_lblWeekday.gridx = 0;
-		gbc_lblWeekday.gridy = 3;
+		gbc_lblWeekday.gridy = 4;
 		panel_4.add(lblWeekday, gbc_lblWeekday);
 		
 		weekDayArrivalsField = new JTextField();
@@ -119,7 +122,7 @@ public class SettingsView extends View{
 		gbc_weekDayArrivalsField.insets = new Insets(0, 0, 5, 0);
 		gbc_weekDayArrivalsField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_weekDayArrivalsField.gridx = 1;
-		gbc_weekDayArrivalsField.gridy = 3;
+		gbc_weekDayArrivalsField.gridy = 4;
 		panel_4.add(weekDayArrivalsField, gbc_weekDayArrivalsField);
 		weekDayArrivalsField.setColumns(10);
 		
@@ -128,7 +131,7 @@ public class SettingsView extends View{
 		gbc_lblWeekend.anchor = GridBagConstraints.EAST;
 		gbc_lblWeekend.insets = new Insets(0, 0, 5, 5);
 		gbc_lblWeekend.gridx = 0;
-		gbc_lblWeekend.gridy = 4;
+		gbc_lblWeekend.gridy = 5;
 		panel_4.add(lblWeekend, gbc_lblWeekend);
 		
 		weekendArrivalsField = new JTextField();
@@ -137,7 +140,7 @@ public class SettingsView extends View{
 		gbc_weekendArrivalsField.insets = new Insets(0, 0, 5, 0);
 		gbc_weekendArrivalsField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_weekendArrivalsField.gridx = 1;
-		gbc_weekendArrivalsField.gridy = 4;
+		gbc_weekendArrivalsField.gridy = 5;
 		panel_4.add(weekendArrivalsField, gbc_weekendArrivalsField);
 		weekendArrivalsField.setColumns(10);
 		
@@ -146,7 +149,7 @@ public class SettingsView extends View{
 		gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 0;
-		gbc_lblNewLabel.gridy = 5;
+		gbc_lblNewLabel.gridy = 6;
 		panel_4.add(lblNewLabel, gbc_lblNewLabel);
 		
 		weekdayPassField = new JTextField();
@@ -155,7 +158,7 @@ public class SettingsView extends View{
 		gbc_weekdayPassField.insets = new Insets(0, 0, 5, 0);
 		gbc_weekdayPassField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_weekdayPassField.gridx = 1;
-		gbc_weekdayPassField.gridy = 5;
+		gbc_weekdayPassField.gridy = 6;
 		panel_4.add(weekdayPassField, gbc_weekdayPassField);
 		weekdayPassField.setColumns(10);
 		
@@ -164,7 +167,7 @@ public class SettingsView extends View{
 		gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_1.gridx = 0;
-		gbc_lblNewLabel_1.gridy = 6;
+		gbc_lblNewLabel_1.gridy = 7;
 		panel_4.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
 		weekendPassField = new JTextField();
@@ -173,7 +176,7 @@ public class SettingsView extends View{
 		gbc_weekendPassField.insets = new Insets(0, 0, 5, 0);
 		gbc_weekendPassField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_weekendPassField.gridx = 1;
-		gbc_weekendPassField.gridy = 6;
+		gbc_weekendPassField.gridy = 7;
 		panel_4.add(weekendPassField, gbc_weekendPassField);
 		weekendPassField.setColumns(10);
 		
@@ -182,7 +185,7 @@ public class SettingsView extends View{
 		gbc_lblWeekdayReservations.anchor = GridBagConstraints.EAST;
 		gbc_lblWeekdayReservations.insets = new Insets(0, 0, 5, 5);
 		gbc_lblWeekdayReservations.gridx = 0;
-		gbc_lblWeekdayReservations.gridy = 7;
+		gbc_lblWeekdayReservations.gridy = 8;
 		panel_4.add(lblWeekdayReservations, gbc_lblWeekdayReservations);
 		
 		weekdayReservedField = new JTextField();
@@ -191,7 +194,7 @@ public class SettingsView extends View{
 		gbc_weekdayReservedField.insets = new Insets(0, 0, 5, 0);
 		gbc_weekdayReservedField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_weekdayReservedField.gridx = 1;
-		gbc_weekdayReservedField.gridy = 7;
+		gbc_weekdayReservedField.gridy = 8;
 		panel_4.add(weekdayReservedField, gbc_weekdayReservedField);
 		weekdayReservedField.setColumns(10);
 		
@@ -200,7 +203,7 @@ public class SettingsView extends View{
 		gbc_lblWeekendReservations.anchor = GridBagConstraints.EAST;
 		gbc_lblWeekendReservations.insets = new Insets(0, 0, 0, 5);
 		gbc_lblWeekendReservations.gridx = 0;
-		gbc_lblWeekendReservations.gridy = 8;
+		gbc_lblWeekendReservations.gridy = 9;
 		panel_4.add(lblWeekendReservations, gbc_lblWeekendReservations);
 		
 		weekendReservedField = new JTextField();
@@ -208,7 +211,7 @@ public class SettingsView extends View{
 		GridBagConstraints gbc_weekendReservedField = new GridBagConstraints();
 		gbc_weekendReservedField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_weekendReservedField.gridx = 1;
-		gbc_weekendReservedField.gridy = 8;
+		gbc_weekendReservedField.gridy = 9;
 		panel_4.add(weekendReservedField, gbc_weekendReservedField);
 		weekendReservedField.setColumns(10);
 		
@@ -218,15 +221,15 @@ public class SettingsView extends View{
 		panel_2.add(panel_5, BorderLayout.CENTER);
 		GridBagLayout gbl_panel_5 = new GridBagLayout();
 		gbl_panel_5.columnWidths = new int[]{111, 86, 0};
-		gbl_panel_5.rowHeights = new int[]{20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel_5.rowHeights = new int[]{20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panel_5.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_panel_5.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_5.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_5.setLayout(gbl_panel_5);
 		
 		JLabel lblNewLabel_2 = new JLabel("Amount of cars that can:");
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.gridwidth = 2;
-		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_2.gridx = 0;
 		gbc_lblNewLabel_2.gridy = 0;
 		panel_5.add(lblNewLabel_2, gbc_lblNewLabel_2);
@@ -237,7 +240,7 @@ public class SettingsView extends View{
 		GridBagConstraints gbc_separator_1 = new GridBagConstraints();
 		gbc_separator_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_separator_1.gridwidth = 2;
-		gbc_separator_1.insets = new Insets(0, 0, 5, 0);
+		gbc_separator_1.insets = new Insets(0, 0, 5, 5);
 		gbc_separator_1.gridx = 0;
 		gbc_separator_1.gridy = 1;
 		panel_5.add(separator_1, gbc_separator_1);
@@ -254,7 +257,7 @@ public class SettingsView extends View{
 		enterSpeedField.setText("8");
 		GridBagConstraints gbc_enterSpeedField = new GridBagConstraints();
 		gbc_enterSpeedField.anchor = GridBagConstraints.WEST;
-		gbc_enterSpeedField.insets = new Insets(0, 0, 5, 0);
+		gbc_enterSpeedField.insets = new Insets(0, 0, 5, 5);
 		gbc_enterSpeedField.gridx = 1;
 		gbc_enterSpeedField.gridy = 2;
 		panel_5.add(enterSpeedField, gbc_enterSpeedField);
@@ -272,7 +275,7 @@ public class SettingsView extends View{
 		paymentSpeedField.setText("5");
 		GridBagConstraints gbc_paymentSpeedField = new GridBagConstraints();
 		gbc_paymentSpeedField.anchor = GridBagConstraints.WEST;
-		gbc_paymentSpeedField.insets = new Insets(0, 0, 5, 0);
+		gbc_paymentSpeedField.insets = new Insets(0, 0, 5, 5);
 		gbc_paymentSpeedField.gridx = 1;
 		gbc_paymentSpeedField.gridy = 3;
 		panel_5.add(paymentSpeedField, gbc_paymentSpeedField);
@@ -290,7 +293,7 @@ public class SettingsView extends View{
 		exitSpeedField.setText("5");
 		GridBagConstraints gbc_exitSpeedField = new GridBagConstraints();
 		gbc_exitSpeedField.anchor = GridBagConstraints.WEST;
-		gbc_exitSpeedField.insets = new Insets(0, 0, 5, 0);
+		gbc_exitSpeedField.insets = new Insets(0, 0, 5, 5);
 		gbc_exitSpeedField.gridx = 1;
 		gbc_exitSpeedField.gridy = 4;
 		panel_5.add(exitSpeedField, gbc_exitSpeedField);
@@ -299,9 +302,9 @@ public class SettingsView extends View{
 		JLabel lblGarageSettings = new JLabel("Garage settings");
 		GridBagConstraints gbc_lblGarageSettings = new GridBagConstraints();
 		gbc_lblGarageSettings.gridwidth = 2;
-		gbc_lblGarageSettings.insets = new Insets(0, 0, 5, 0);
+		gbc_lblGarageSettings.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGarageSettings.gridx = 0;
-		gbc_lblGarageSettings.gridy = 6;
+		gbc_lblGarageSettings.gridy = 5;
 		panel_5.add(lblGarageSettings, gbc_lblGarageSettings);
 		
 		JSeparator separator_2 = new JSeparator();
@@ -310,9 +313,9 @@ public class SettingsView extends View{
 		GridBagConstraints gbc_separator_2 = new GridBagConstraints();
 		gbc_separator_2.fill = GridBagConstraints.HORIZONTAL;
 		gbc_separator_2.gridwidth = 2;
-		gbc_separator_2.insets = new Insets(0, 0, 5, 0);
+		gbc_separator_2.insets = new Insets(0, 0, 5, 5);
 		gbc_separator_2.gridx = 0;
-		gbc_separator_2.gridy = 7;
+		gbc_separator_2.gridy = 6;
 		panel_5.add(separator_2, gbc_separator_2);
 		
 		JLabel lblNumberOfFloors = new JLabel("Number of floors");
@@ -320,16 +323,16 @@ public class SettingsView extends View{
 		gbc_lblNumberOfFloors.anchor = GridBagConstraints.EAST;
 		gbc_lblNumberOfFloors.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNumberOfFloors.gridx = 0;
-		gbc_lblNumberOfFloors.gridy = 8;
+		gbc_lblNumberOfFloors.gridy = 7;
 		panel_5.add(lblNumberOfFloors, gbc_lblNumberOfFloors);
 		
 		numberOfFloorsField = new JTextField();
 		numberOfFloorsField.setText("3");
 		GridBagConstraints gbc_numberOfFloorsField = new GridBagConstraints();
 		gbc_numberOfFloorsField.anchor = GridBagConstraints.WEST;
-		gbc_numberOfFloorsField.insets = new Insets(0, 0, 5, 0);
+		gbc_numberOfFloorsField.insets = new Insets(0, 0, 5, 5);
 		gbc_numberOfFloorsField.gridx = 1;
-		gbc_numberOfFloorsField.gridy = 8;
+		gbc_numberOfFloorsField.gridy = 7;
 		panel_5.add(numberOfFloorsField, gbc_numberOfFloorsField);
 		numberOfFloorsField.setColumns(10);
 		
@@ -338,42 +341,43 @@ public class SettingsView extends View{
 		gbc_lblNumberOfRows.anchor = GridBagConstraints.EAST;
 		gbc_lblNumberOfRows.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNumberOfRows.gridx = 0;
-		gbc_lblNumberOfRows.gridy = 9;
+		gbc_lblNumberOfRows.gridy = 8;
 		panel_5.add(lblNumberOfRows, gbc_lblNumberOfRows);
 		
 		numberOfRowsField = new JTextField();
 		numberOfRowsField.setText("6");
 		GridBagConstraints gbc_numberOfRowsField = new GridBagConstraints();
 		gbc_numberOfRowsField.anchor = GridBagConstraints.WEST;
-		gbc_numberOfRowsField.insets = new Insets(0, 0, 5, 0);
+		gbc_numberOfRowsField.insets = new Insets(0, 0, 5, 5);
 		gbc_numberOfRowsField.gridx = 1;
-		gbc_numberOfRowsField.gridy = 9;
+		gbc_numberOfRowsField.gridy = 8;
 		panel_5.add(numberOfRowsField, gbc_numberOfRowsField);
 		numberOfRowsField.setColumns(10);
 		
 		JLabel lblNumberOfPlaces = new JLabel("Number of Places");
 		GridBagConstraints gbc_lblNumberOfPlaces = new GridBagConstraints();
 		gbc_lblNumberOfPlaces.anchor = GridBagConstraints.EAST;
-		gbc_lblNumberOfPlaces.insets = new Insets(0, 0, 0, 5);
+		gbc_lblNumberOfPlaces.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNumberOfPlaces.gridx = 0;
-		gbc_lblNumberOfPlaces.gridy = 10;
+		gbc_lblNumberOfPlaces.gridy = 9;
 		panel_5.add(lblNumberOfPlaces, gbc_lblNumberOfPlaces);
 		
 		numberOfPlacesField = new JTextField();
 		numberOfPlacesField.setText("30");
 		GridBagConstraints gbc_numberOfPlacesField = new GridBagConstraints();
+		gbc_numberOfPlacesField.insets = new Insets(0, 0, 5, 5);
 		gbc_numberOfPlacesField.anchor = GridBagConstraints.WEST;
 		gbc_numberOfPlacesField.gridx = 1;
-		gbc_numberOfPlacesField.gridy = 10;
+		gbc_numberOfPlacesField.gridy = 9;
 		panel_5.add(numberOfPlacesField, gbc_numberOfPlacesField);
 		numberOfPlacesField.setColumns(10);
 		
 		JLabel lblPaymentSettings = new JLabel("Payment settings");
 		GridBagConstraints gbc_lblPaymentSettings = new GridBagConstraints();
 		gbc_lblPaymentSettings.gridwidth = 2;
-		gbc_lblPaymentSettings.insets = new Insets(0, 0, 5, 0);
+		gbc_lblPaymentSettings.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPaymentSettings.gridx = 0;
-		gbc_lblPaymentSettings.gridy = 11;
+		gbc_lblPaymentSettings.gridy = 10;
 		panel_5.add(lblPaymentSettings, gbc_lblPaymentSettings);
 		
 		JSeparator separator_3 = new JSeparator();
@@ -384,25 +388,80 @@ public class SettingsView extends View{
 		gbc_separator_3.gridwidth = 3;
 		gbc_separator_3.insets = new Insets(0, 0, 5, 0);
 		gbc_separator_3.gridx = 0;
-		gbc_separator_3.gridy = 12;
+		gbc_separator_3.gridy = 11;
 		panel_5.add(separator_3, gbc_separator_3);
 		
 		JLabel lblPassholders = new JLabel("Number of passholders");
 		GridBagConstraints gbc_lblPassholders = new GridBagConstraints();
 		gbc_lblPassholders.anchor = GridBagConstraints.EAST;
-		gbc_lblPassholders.insets = new Insets(0, 0, 0, 5);
+		gbc_lblPassholders.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPassholders.gridx = 0;
-		gbc_lblPassholders.gridy = 13;
+		gbc_lblPassholders.gridy = 12;
 		panel_5.add(lblPassholders, gbc_lblPassholders);
 		
 		passholdersField = new JTextField();
 		passholdersField.setText("90");
 		GridBagConstraints gbc_passholdersField = new GridBagConstraints();
+		gbc_passholdersField.insets = new Insets(0, 0, 5, 5);
 		gbc_passholdersField.anchor = GridBagConstraints.WEST;
 		gbc_passholdersField.gridx = 1;
-		gbc_passholdersField.gridy = 13;
+		gbc_passholdersField.gridy = 12;
 		panel_5.add(passholdersField, gbc_passholdersField);
 		passholdersField.setColumns(10);
+		
+		JLabel lblFeePerMinute = new JLabel("Hourly rate");
+		GridBagConstraints gbc_lblFeePerMinute = new GridBagConstraints();
+		gbc_lblFeePerMinute.anchor = GridBagConstraints.EAST;
+		gbc_lblFeePerMinute.insets = new Insets(0, 0, 5, 5);
+		gbc_lblFeePerMinute.gridx = 0;
+		gbc_lblFeePerMinute.gridy = 13;
+		panel_5.add(lblFeePerMinute, gbc_lblFeePerMinute);
+		
+		feePerMinuteField = new JTextField();
+		feePerMinuteField.setText("2.20");
+		GridBagConstraints gbc_feePerMinuteField = new GridBagConstraints();
+		gbc_feePerMinuteField.insets = new Insets(0, 0, 5, 5);
+		gbc_feePerMinuteField.anchor = GridBagConstraints.WEST;
+		gbc_feePerMinuteField.gridx = 1;
+		gbc_feePerMinuteField.gridy = 13;
+		panel_5.add(feePerMinuteField, gbc_feePerMinuteField);
+		feePerMinuteField.setColumns(10);
+		
+		JLabel lblBonusFeePerMinute = new JLabel("Hourly bonus rate");
+		GridBagConstraints gbc_lblBonusFeePerMinute = new GridBagConstraints();
+		gbc_lblBonusFeePerMinute.anchor = GridBagConstraints.EAST;
+		gbc_lblBonusFeePerMinute.insets = new Insets(0, 0, 5, 5);
+		gbc_lblBonusFeePerMinute.gridx = 0;
+		gbc_lblBonusFeePerMinute.gridy = 14;
+		panel_5.add(lblBonusFeePerMinute, gbc_lblBonusFeePerMinute);
+		
+		bonusFeePerMinuteField = new JTextField();
+		bonusFeePerMinuteField.setText("1.50");
+		GridBagConstraints gbc_bonusFeePerMinuteField = new GridBagConstraints();
+		gbc_bonusFeePerMinuteField.insets = new Insets(0, 0, 5, 5);
+		gbc_bonusFeePerMinuteField.anchor = GridBagConstraints.WEST;
+		gbc_bonusFeePerMinuteField.gridx = 1;
+		gbc_bonusFeePerMinuteField.gridy = 14;
+		panel_5.add(bonusFeePerMinuteField, gbc_bonusFeePerMinuteField);
+		bonusFeePerMinuteField.setColumns(10);
+		
+		JLabel lblPassholderFee = new JLabel("Monthly parking pass fee");
+		GridBagConstraints gbc_lblPassholderFee = new GridBagConstraints();
+		gbc_lblPassholderFee.anchor = GridBagConstraints.EAST;
+		gbc_lblPassholderFee.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPassholderFee.gridx = 0;
+		gbc_lblPassholderFee.gridy = 15;
+		panel_5.add(lblPassholderFee, gbc_lblPassholderFee);
+		
+		passholderFeeField = new JTextField();
+		passholderFeeField.setText("80");
+		GridBagConstraints gbc_passholderFeeField = new GridBagConstraints();
+		gbc_passholderFeeField.insets = new Insets(0, 0, 5, 5);
+		gbc_passholderFeeField.anchor = GridBagConstraints.WEST;
+		gbc_passholderFeeField.gridx = 1;
+		gbc_passholderFeeField.gridy = 15;
+		panel_5.add(passholderFeeField, gbc_passholderFeeField);
+		passholderFeeField.setColumns(10);		
 		
 		JPanel panel_1 = new JPanel();
 		panel.add(panel_1, BorderLayout.NORTH);
@@ -440,6 +499,21 @@ public class SettingsView extends View{
     	}
 	}
 	
+	/**
+	 * Get the value that's put in the input field as a double.
+	 * @return the value as a double
+	 */
+	private double getFieldDouble(JTextField field)
+	{
+		try{
+			return Double.parseDouble(field.getText());
+		}
+		catch (NumberFormatException e) {
+			showError("Enter a valid double number");
+			return 0;
+		}
+	}
+	
 	public void applySettings()
 	{
 		controller.setTickPause(getFieldInt(simTickPauseTF));
@@ -450,6 +524,9 @@ public class SettingsView extends View{
 		controller.setWeekDayReservedArrivals(getFieldInt(weekdayReservedField));
 		controller.setWeekendReservedArrivals(getFieldInt(weekendReservedField));
 		controller.setNumberOfPassholders(getFieldInt(passholdersField));
+		controller.setHourlyFee(getFieldDouble(feePerMinuteField));
+		controller.setBonusHourlyFee(getFieldDouble(bonusFeePerMinuteField));
+		controller.setParkingpassFee(getFieldInt(passholderFeeField));
 		// TODO: MAKE TICKET COST SETTING.
 		
 		JOptionPane.showMessageDialog(this, "Settings have been applied", "Settings applied", JOptionPane.INFORMATION_MESSAGE);
@@ -471,5 +548,8 @@ public class SettingsView extends View{
 		numberOfRowsField.setText("6");
 		numberOfPlacesField.setText("30");
 		passholdersField.setText("90");
+		feePerMinuteField.setText("2.20");
+		bonusFeePerMinuteField.setText("1.50");
+		passholderFeeField.setText("80");
 	}
 }

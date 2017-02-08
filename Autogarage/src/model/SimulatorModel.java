@@ -635,8 +635,7 @@ public class SimulatorModel implements Runnable{
     }
     public void setNumberOfPassholders(int input){
     	this.numberOfPassHolders = input;
-    }
-    
+    }    
     
     /**
      * Returns the total amount of cars parked in the garage that are not in queue.

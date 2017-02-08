@@ -61,11 +61,11 @@ public class PieChartView extends View {
         int circleSize = (width + height) / 4;
         
         // Calculations
-        float y = totalCarInfo.get("pass") / (controller.getTotalNumberOfPlaces()/100);
+        float y = totalCarInfo.get("pass") / (controller.getTotalNumberOfPlaces()/100f);
         int yRot = Math.round(y*3.6f);
-        float y2 = totalCarInfo.get("adhoc") / (controller.getTotalNumberOfPlaces()/100);
+        float y2 = totalCarInfo.get("adhoc") / (controller.getTotalNumberOfPlaces()/100f);
         int y2Rot = Math.round(y2*3.6f);
-        float y3 = totalCarInfo.get("reservation") / (controller.getTotalNumberOfPlaces()/100);
+        float y3 = totalCarInfo.get("reservation") / (controller.getTotalNumberOfPlaces()/100f);
         int y3Rot = Math.round(y3*3.6f);
         float empty = 100 - y - y2 - y3;
         
@@ -95,10 +95,10 @@ public class PieChartView extends View {
         
         // Draw the names of the legenda
         g.setColor(Color.BLACK);
-        g.drawString("Pass: " + y + "%", width - 100, height - 100 + (5 + (g.getFont().getSize() / 2)));
-        g.drawString("Adhoc: " + y2 + "%", width - 100, height - 80 + (5 + (g.getFont().getSize() / 2)));
-        g.drawString("Reserved: " + y3 + "%", width - 100, height - 60 + (5 + (g.getFont().getSize() / 2)));
-        g.drawString("Empty spots: " + empty + "%", width - 100, height - 40 + (5 + (g.getFont().getSize() / 2)));
+        g.drawString("Pass: " + Math.round(y) + "%", width - 100, height - 100 + (5 + (g.getFont().getSize() / 2)));
+        g.drawString("Adhoc: " + Math.round(y2) + "%", width - 100, height - 80 + (5 + (g.getFont().getSize() / 2)));
+        g.drawString("Reserved: " + Math.round(y3) + "%", width - 100, height - 60 + (5 + (g.getFont().getSize() / 2)));
+        g.drawString("Empty spots: " + Math.round(empty) + "%", width - 100, height - 40 + (5 + (g.getFont().getSize() / 2)));
         
         // Repaint
         repaint();

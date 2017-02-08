@@ -45,11 +45,12 @@ public class SimulatorModel implements Runnable{
     int paymentSpeed = 5;	// number of cars that can pay per minute
     int exitSpeed = 5;		// number of cars that can leave per minute
     
-    private int numberOfFloors;								// The amount of floors in the garage.
-    private int numberOfRows;								// The amount of rows in each floor.
-    private int numberOfPlaces;								// The amount of places in each row
-    private int numberOfOpenSpots;							// The amount of free spots in the garage.
-    private Car[][][] cars;									//Car array of all the cars in the garage.
+    private int numberOfFloors;			// The amount of floors in the garage.
+    private int numberOfRows;			// The amount of rows in each floor.
+    private int numberOfPlaces;			// The amount of places in each row
+    private int numberOfOpenSpots;		// The amount of free spots in the garage.
+    private int numberOfPlaceholders;	// The amount of place holders.
+    private Car[][][] cars;				// Car array of all the cars in the garage.
     
     private boolean arePlaceholdersSet = false;
     
@@ -91,7 +92,7 @@ public class SimulatorModel implements Runnable{
         //Construct the banks.
         bank = new Bank();
         Car.setBank(bank);
-
+        
         //Construct hashmaps for car information and balance information and initialize variables.
         resetCarInfo();
         resetBalanceInfo();
@@ -157,6 +158,7 @@ public class SimulatorModel implements Runnable{
         this.numberOfAdHocsServed = 0;
         this.numberOfPassesServed = 0;
         this.numberOfReservationsServed = 0;
+        this.numberOfPlaceholders = 0;
         this.entranceLength = 0;
         this.passEntranceLength = 0;
         this.paymentLength = 0;
@@ -227,6 +229,7 @@ public class SimulatorModel implements Runnable{
     		Car car = placeholderQueue.removeCar();
         	Location freeLocation = getFirstFreeLocation();
         	setCarAt(freeLocation, car);
+        	numberOfPlaceholders++;
     		i++;
     	}
     	placeholdersAreSet();
@@ -282,6 +285,7 @@ public class SimulatorModel implements Runnable{
         			carLeavesSpot(placeholder);
         			Location freeLocation = getFirstFreeLocation();
         			setCarAt(freeLocation, car);
+        			numberOfPlaceholders--;
         		}
         		i++;
         	} else {
@@ -305,6 +309,7 @@ public class SimulatorModel implements Runnable{
         	} else {
         		carLeavesSpot(car);
         		placePlaceholders(1);
+        		numberOfPlaceholders++;
         	}
             car = getFirstLeavingCar();
         }
@@ -525,6 +530,7 @@ public class SimulatorModel implements Runnable{
     	totalCarInfo.put("adhoc served", 0); 	
     	totalCarInfo.put("pass served", 0); 	
     	totalCarInfo.put("reserved served", 0); 	
+    	totalCarInfo.put("placeholders", 0);
     }
     
     /**
@@ -652,7 +658,7 @@ public class SimulatorModel implements Runnable{
     	totalCarInfo.put("adhoc served", this.numberOfAdHocsServed);
     	totalCarInfo.put("pass served", this.numberOfPassesServed);
     	totalCarInfo.put("reserved served", this.numberOfReservationsServed);
-    	totalCarInfo.put("passHolders", this.numberOfPassHolders);
+    	totalCarInfo.put("placeholders", this.numberOfPlaceholders);
     	return this.totalCarInfo;
     }
     

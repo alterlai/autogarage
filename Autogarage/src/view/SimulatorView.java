@@ -13,6 +13,8 @@ public class SimulatorView extends View {
 	private BufferedImage carParkImage;
 	private SimulatorController controller;
 	
+	private String[] legendaNames;
+	private Color[] legendaColors;	
 	
 	/**
 	 * Set size to 0
@@ -22,6 +24,9 @@ public class SimulatorView extends View {
 	public SimulatorView(SimulatorController controller) {
 		size = new Dimension(0, 0);
 		this.controller = controller;
+		
+		legendaNames = new String[] {"Adhoc", "ParkingPass spots", "ParkingPass", "Reservation", "Empty spot"};
+		legendaColors = new Color[] {AdHocCar.COLOR, PassPlaceHolder.COLOR, ParkingPassCar.COLOR, ReservationCar.COLOR, Color.WHITE};
 	}
 	
 	
@@ -103,8 +108,6 @@ public class SimulatorView extends View {
 		
 		
 		// Draw the legenda
-		Color[] legendaColors = {AdHocCar.COLOR, PassPlaceHolder.COLOR, ParkingPassCar.COLOR, ReservationCar.COLOR, Color.WHITE};
-		String[] legendaNames = {"Adhoc", "ParkingPass spots", "ParkingPass", "Reservation", "Empty spot"};
 		for(int i = 0; i < legendaNames.length; i++) {
 			g.setColor(legendaColors[i]);
 			g.fillRect(width - (width/6), (height/20) + (i * (height/20)), (width/80), (height/40));

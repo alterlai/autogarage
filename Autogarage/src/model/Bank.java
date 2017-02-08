@@ -19,7 +19,6 @@ public class Bank {
 	public void addBalance(double amount, Car car)
 	{
 		totalBalance += amount;
-		System.out.println("Payment added. Total balance: " + totalBalance);
 		if (car instanceof AdHocCar) adHocBalance += amount;
 		if (car instanceof ParkingPassCar) passBalance += amount;
 		if (car instanceof ReservationCar) reservedBalance += amount;

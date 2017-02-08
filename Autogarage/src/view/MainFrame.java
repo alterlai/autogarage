@@ -84,7 +84,6 @@ public class MainFrame extends JFrame {
   		tabbedPane.addTab("Simulator", null, views.get(0), null);
   		tabbedPane.addTab("Statistics", null, views.get(1), null);
   		tabbedPane.addTab("Settings", null, views.get(2), null);
-  		tabbedPane.addTab("Other", null, new JPanel(), null);
   	}
     
     

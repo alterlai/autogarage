@@ -21,8 +21,8 @@ public class ReservationCar extends Car {
     }
     
     @Override
-    public void pay()
+    public void pay(Car car)
     {
-    	Car.BANK.addBalance(hourlyRate / 60 * this.getStayedMinutes() + bonusFee);
+    	Car.BANK.addBalance(hourlyRate / 60 * this.getStayedMinutes() + bonusFee, car);
     }
 }

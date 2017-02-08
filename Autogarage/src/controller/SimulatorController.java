@@ -87,15 +87,12 @@ public class SimulatorController {
 		}
 	}
 	
-	public HashMap<String, Double> getTotalBalanceInfo()
+	/**
+	 * @return the bank that's being used by the model.
+	 */
+	public Bank getBank()
 	{
-		try {
-			return model.getTotalBalanceInfo();
-		}
-		catch (NullPointerException e)
-		{
-			return null;
-		}
+		return model.getBank();
 	}
 	
 	/**

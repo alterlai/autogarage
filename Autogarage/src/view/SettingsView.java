@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -44,7 +46,7 @@ public class SettingsView extends View{
 	{
 		this.controller = controller;
 		setLayout(new GridLayout(0, 1, 0, 0));
-		
+
 		JPanel panel = new JPanel();
 		add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
@@ -250,7 +252,7 @@ public class SettingsView extends View{
 		enterSpeedField = new JTextField();
 		enterSpeedField.setText("8");
 		GridBagConstraints gbc_enterSpeedField = new GridBagConstraints();
-		gbc_enterSpeedField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_enterSpeedField.anchor = GridBagConstraints.WEST;
 		gbc_enterSpeedField.insets = new Insets(0, 0, 5, 0);
 		gbc_enterSpeedField.gridx = 1;
 		gbc_enterSpeedField.gridy = 2;
@@ -268,8 +270,8 @@ public class SettingsView extends View{
 		paymentSpeedField = new JTextField();
 		paymentSpeedField.setText("5");
 		GridBagConstraints gbc_paymentSpeedField = new GridBagConstraints();
+		gbc_paymentSpeedField.anchor = GridBagConstraints.WEST;
 		gbc_paymentSpeedField.insets = new Insets(0, 0, 5, 0);
-		gbc_paymentSpeedField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_paymentSpeedField.gridx = 1;
 		gbc_paymentSpeedField.gridy = 3;
 		panel_5.add(paymentSpeedField, gbc_paymentSpeedField);
@@ -286,8 +288,8 @@ public class SettingsView extends View{
 		exitSpeedField = new JTextField();
 		exitSpeedField.setText("5");
 		GridBagConstraints gbc_exitSpeedField = new GridBagConstraints();
+		gbc_exitSpeedField.anchor = GridBagConstraints.WEST;
 		gbc_exitSpeedField.insets = new Insets(0, 0, 5, 0);
-		gbc_exitSpeedField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_exitSpeedField.gridx = 1;
 		gbc_exitSpeedField.gridy = 4;
 		panel_5.add(exitSpeedField, gbc_exitSpeedField);
@@ -323,8 +325,8 @@ public class SettingsView extends View{
 		numberOfFloorsField = new JTextField();
 		numberOfFloorsField.setText("3");
 		GridBagConstraints gbc_numberOfFloorsField = new GridBagConstraints();
+		gbc_numberOfFloorsField.anchor = GridBagConstraints.WEST;
 		gbc_numberOfFloorsField.insets = new Insets(0, 0, 5, 0);
-		gbc_numberOfFloorsField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_numberOfFloorsField.gridx = 1;
 		gbc_numberOfFloorsField.gridy = 8;
 		panel_5.add(numberOfFloorsField, gbc_numberOfFloorsField);
@@ -341,8 +343,8 @@ public class SettingsView extends View{
 		numberOfRowsField = new JTextField();
 		numberOfRowsField.setText("6");
 		GridBagConstraints gbc_numberOfRowsField = new GridBagConstraints();
+		gbc_numberOfRowsField.anchor = GridBagConstraints.WEST;
 		gbc_numberOfRowsField.insets = new Insets(0, 0, 5, 0);
-		gbc_numberOfRowsField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_numberOfRowsField.gridx = 1;
 		gbc_numberOfRowsField.gridy = 9;
 		panel_5.add(numberOfRowsField, gbc_numberOfRowsField);
@@ -359,7 +361,7 @@ public class SettingsView extends View{
 		numberOfPlacesField = new JTextField();
 		numberOfPlacesField.setText("30");
 		GridBagConstraints gbc_numberOfPlacesField = new GridBagConstraints();
-		gbc_numberOfPlacesField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_numberOfPlacesField.anchor = GridBagConstraints.WEST;
 		gbc_numberOfPlacesField.gridx = 1;
 		gbc_numberOfPlacesField.gridy = 10;
 		panel_5.add(numberOfPlacesField, gbc_numberOfPlacesField);

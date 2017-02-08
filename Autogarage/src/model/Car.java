@@ -69,6 +69,6 @@ public abstract class Car {
     }
     
     public abstract Color getColor();
-    public abstract void pay();
+    public abstract void pay(Car car);
     
 }

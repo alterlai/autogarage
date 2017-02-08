@@ -65,7 +65,7 @@ public class MainFrame extends JFrame {
         pack();												// Resize window to content.
         setLocationRelativeTo(null);						// Set the position to the center of the screen.
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		// Shutdown when closing window.
-        setMinimumSize(new Dimension(500, 400));			// Set minimumSize of the window.
+        setMinimumSize(new Dimension(600, 500));			// Set minimumSize of the window.
         setVisible(true);									// Display the Frame.
 	}
 	
@@ -83,7 +83,6 @@ public class MainFrame extends JFrame {
   		tabbedPane.addTab("Simulator", null, views.get(0), null);
   		tabbedPane.addTab("Statistics", null, views.get(1), null);
   		tabbedPane.addTab("Settings", null, views.get(2), null);
-  		tabbedPane.addTab("Other", null, new JPanel(), null);
   	}
     
     

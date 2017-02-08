@@ -4,8 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import controller.SimulatorController;
-import model.Car;
-import model.Location;
+import model.*;
 
 @SuppressWarnings("serial")
 public class SimulatorView extends View {
@@ -86,28 +85,40 @@ public class SimulatorView extends View {
      * Paint a place on this car park view in a given color.
      */
     private void drawPlace(Graphics g, Location location, Color color) {
-        g.setColor(color);
-        /*g.fillRect(
-            location.getFloor() * 260 + (1 + (int)Math.floor(location.getRow() * 0.5)) * 60 + (location.getRow() % 2) * 20,
-            40 + location.getPlace() * 10,
-            20 - 1,
-            10 - 1
-        );*/
-        
-        
-        // DYNAMIC
 		int width = carParkImage.getWidth();
 		int height = carParkImage.getHeight();
+		
+		// Scaledown the simulator part to make space for the legenda
+		int simWidth = (int)(width * 0.8);
+		int simHeight = (int)(height * 1);
         
-        g.fillRect(
-        		location.getFloor() * (width/3) + 
-                (1 + (int)Math.floor(location.getRow() * 0.5)) * (width/13) +                 
-                (location.getRow() % 2) * (width/40),
-
-                (height/40) + location.getPlace() * (height/30),
-                
-                (width/40) - (width/800),
-                (height/40) - (width/400)
-        );
+		g.setColor(color);
+		
+		// Calculate where the place will be
+    	int floorPosX = ((simWidth/controller.getNumberOfFloors())/4) + location.getFloor() * (simWidth/controller.getNumberOfFloors());
+    	int floorWidth = (simWidth/controller.getNumberOfFloors()) - ((simWidth/controller.getNumberOfFloors())/2);
+    	
+						// Center										// Path size (big space)																	// Space between rows
+		int rowPosX = (floorWidth/(controller.getNumberOfRows())/2) + (int)Math.floor(location.getRow() * 0.5) * (floorWidth/(controller.getNumberOfRows())*2) + (location.getRow() % 2) * ((floorWidth/controller.getNumberOfRows())/2);
+		int rowWidth = (floorWidth/controller.getNumberOfRows())/2;
+		
+		int placeY = (simHeight/controller.getNumberOfPlaces()/2) + location.getPlace() * (simHeight/controller.getNumberOfPlaces());
+		int placeWidth = rowWidth - (int)(rowWidth * 0.2);
+		int placeHeight = (int)((simHeight/controller.getNumberOfPlaces())*0.6);
+		
+		// Draw the place
+		g.fillRect(floorPosX + rowPosX, placeY, placeWidth, placeHeight);
+		
+		
+		// Draw the legenda
+		Color[] legendaColors = {AdHocCar.COLOR, ParkingPassCar.COLOR, Color.WHITE};
+		String[] legendaNames = {"Adhoc", "ParkingPass", "Empty spot"};
+		for(int i = 0; i < legendaNames.length; i++) {
+			g.setColor(legendaColors[i]);
+			g.fillRect(width - 120, 20 + (i * 20), 10, 10);
+			g.setColor(Color.BLACK);
+			g.drawString(legendaNames[i], width - 100, 20 + (i * 20) + (5 + (g.getFont().getSize() / 2)));
+		}
     }
+    
 }

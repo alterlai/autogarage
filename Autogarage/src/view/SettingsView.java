@@ -1,8 +1,8 @@
 package view;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JLabel;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 
 import controller.SimulatorController;
 
@@ -12,9 +12,6 @@ public class SettingsView extends View{
 	public SettingsView(SimulatorController controller)
 	{
 		this.controller = controller;
-		
-		setLayout(new BorderLayout());
-		add(new JLabel("SETTINGS PAGE"), BorderLayout.NORTH);
 	}
 	
 	@Override

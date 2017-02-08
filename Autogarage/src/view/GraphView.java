@@ -10,6 +10,9 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import controller.SimulatorController;
+import model.AdHocCar;
+import model.ParkingPassCar;
+import model.ReservationCar;
 
 @SuppressWarnings("serial")
 public class GraphView extends View {
@@ -59,34 +62,41 @@ public class GraphView extends View {
 		int width = graphImage.getWidth();
 		int height = graphImage.getHeight();
 		
-		int passVal = (height/100) * ( totalCarInfo.get("pass") / (540/100) );
-		int adhocVal = (height/100) * ( totalCarInfo.get("adhoc") / (540/100) );
-		int reservationVal = (height/100) * ( totalCarInfo.get("reservation") / (540/100) );
+		int nPlaces = controller.getNumberOfPlaces() * controller.getNumberOfRows() * controller.getNumberOfFloors();
+		
+		int passVal = (height/100) * ( totalCarInfo.get("pass") / (nPlaces/100) );
+		int adhocVal = (height/100) * ( totalCarInfo.get("adhoc") / (nPlaces/100) );
+		int reservationVal = (height/100) * ( totalCarInfo.get("reservation") / (nPlaces/100) );
 		
 		// Graphics2D to use strokes for bigger lines
         Graphics2D g = (Graphics2D)graphImage.getGraphics();
+        
+        // Copy the graph to the left
         g.copyArea(30, 0, width-30, height, -30, 0);
+        
+        // Draw rect to refresh
         g.setColor(getBackground());
         g.fillRect(width-30, 0, width, height);
         
-        g.setColor(Color.BLUE);
-        //g.drawLine(width-30, height - lastVal, width, height - passVal);
+        // Draw the graph lines
+        g.setColor(ParkingPassCar.COLOR);
         g.setStroke(new BasicStroke(4));
         g.draw(new Line2D.Float(width-30, height - lastVal, width, height - passVal));
         
-        g.setColor(Color.RED);
-        //g.drawLine(width-30, height - lastVal2, width, height - adhocVal);
+        g.setColor(AdHocCar.COLOR);
         g.setStroke(new BasicStroke(4));
         g.draw(new Line2D.Float(width-30, height - lastVal2, width, height - adhocVal));
         
-        g.setColor(Color.GREEN);
-        //g.drawLine(width-30, height - lastVal3, width, height - reservationVal);
+        g.setColor(ReservationCar.COLOR);
         g.setStroke(new BasicStroke(4));
         g.draw(new Line2D.Float(width-30, height - lastVal3, width, height - reservationVal));
         
+        // Change the previous values
         lastVal = passVal;
         lastVal2 = adhocVal;
         lastVal3 = reservationVal;
+        
+        // Repaint
         repaint();
 	}
 	

@@ -75,7 +75,7 @@ public class SimulatorModel implements Runnable{
         bank = new Bank();
         Car.setBank(bank);
         
-      //Construct hashmap for car information and initialize variables.
+        //Construct hashmap for car information and initialize variables.
         resetCarInfo();
         
         // Populate fields.

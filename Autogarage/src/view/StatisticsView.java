@@ -23,10 +23,10 @@ public class StatisticsView extends View {
 	private JTextField passCarTf;
 	private JTextField reserverationTf;
 	private JTextField freeSpotsTf;
-	private JTextField adHocEntranceQueueField;
-	private JTextField passEntranceQueueField;
-	private JTextField paymentQueueField;
-	private JTextField exitQueueField;
+	private JTextField standardEntranceTf;
+	private JTextField passEntranceTf;
+	private JTextField paymentQueueTf;
+	private JTextField exitQueueTf;
 	private View graphPanel;
 	private View piePanel;
 	private JTextField servedCarsTf;
@@ -69,7 +69,7 @@ public class StatisticsView extends View {
 		gbl_populationData.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_populationData.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE, 0.0};
 		populationData.setLayout(gbl_populationData);
-		
+	
 		
 		// Total label
 		JLabel totalCarsLb = new JLabel("Total amount of cars");
@@ -92,24 +92,6 @@ public class StatisticsView extends View {
 		totalCarsTf.setEditable(false);
 		totalCarsTf.setColumns(10);
 		
-		JLabel lblCarsInEnter = new JLabel("Ad hoc cars in entrance queue");
-		GridBagConstraints gbc_lblCarsInEnter = new GridBagConstraints();
-		gbc_lblCarsInEnter.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCarsInEnter.anchor = GridBagConstraints.EAST;
-		gbc_lblCarsInEnter.gridx = 2;
-		gbc_lblCarsInEnter.gridy = 0;
-		populationData.add(lblCarsInEnter, gbc_lblCarsInEnter);
-		
-		adHocEntranceQueueField = new JTextField();
-		adHocEntranceQueueField.setEditable(false);
-		adHocEntranceQueueField.setText("0");
-		GridBagConstraints gbc_adHocEntranceQueueField = new GridBagConstraints();
-		gbc_adHocEntranceQueueField.insets = new Insets(0, 0, 5, 0);
-		gbc_adHocEntranceQueueField.gridx = 3;
-		gbc_adHocEntranceQueueField.gridy = 0;
-		populationData.add(adHocEntranceQueueField, gbc_adHocEntranceQueueField);
-		adHocEntranceQueueField.setColumns(10);
-		
 		// AdHoc label
 		JLabel lblAdhocCars = new JLabel("AdHoc");
 		GridBagConstraints gbc_lblAdhocCars = new GridBagConstraints();
@@ -131,6 +113,7 @@ public class StatisticsView extends View {
 		gbc_adHocTF.gridy = 1;
 		populationData.add(adHocTF, gbc_adHocTF);
 		
+		// Parking pass label
 		JLabel lblParkingPass = new JLabel("Parking pass");
 		GridBagConstraints gbc_lblParkingPass = new GridBagConstraints();
 		gbc_lblParkingPass.insets = new Insets(0, 0, 5, 5);
@@ -149,42 +132,6 @@ public class StatisticsView extends View {
 		passCarTf.setText("0");
 		passCarTf.setEditable(false);
 		passCarTf.setColumns(10);
-		
-		JLabel lblPassholdersInEntrance = new JLabel("Passholders in entrance queue");
-		GridBagConstraints gbc_lblPassholdersInEntrance = new GridBagConstraints();
-		gbc_lblPassholdersInEntrance.anchor = GridBagConstraints.EAST;
-		gbc_lblPassholdersInEntrance.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPassholdersInEntrance.gridx = 2;
-		gbc_lblPassholdersInEntrance.gridy = 1;
-		populationData.add(lblPassholdersInEntrance, gbc_lblPassholdersInEntrance);
-		
-		passEntranceQueueField = new JTextField();
-		passEntranceQueueField.setEditable(false);
-		passEntranceQueueField.setText("0");
-		GridBagConstraints gbc_passEntranceQueueField = new GridBagConstraints();
-		gbc_passEntranceQueueField.insets = new Insets(0, 0, 5, 0);
-		gbc_passEntranceQueueField.gridx = 3;
-		gbc_passEntranceQueueField.gridy = 1;
-		populationData.add(passEntranceQueueField, gbc_passEntranceQueueField);
-		passEntranceQueueField.setColumns(10);
-		
-		JLabel lblCarsInPayment = new JLabel("Cars in payment queue");
-		GridBagConstraints gbc_lblCarsInPayment = new GridBagConstraints();
-		gbc_lblCarsInPayment.anchor = GridBagConstraints.EAST;
-		gbc_lblCarsInPayment.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCarsInPayment.gridx = 2;
-		gbc_lblCarsInPayment.gridy = 2;
-		populationData.add(lblCarsInPayment, gbc_lblCarsInPayment);
-		
-		paymentQueueField = new JTextField();
-		paymentQueueField.setEditable(false);
-		paymentQueueField.setText("0");
-		GridBagConstraints gbc_paymentQueueField = new GridBagConstraints();
-		gbc_paymentQueueField.insets = new Insets(0, 0, 5, 0);
-		gbc_paymentQueueField.gridx = 3;
-		gbc_paymentQueueField.gridy = 2;
-		populationData.add(paymentQueueField, gbc_paymentQueueField);
-		paymentQueueField.setColumns(10);
 		
 		// Reservation label
 		JLabel reservationLb = new JLabel("Reservation");
@@ -205,24 +152,6 @@ public class StatisticsView extends View {
 		gbc_reserverationTf.gridx = 1;
 		gbc_reserverationTf.gridy = 3;
 		populationData.add(reserverationTf, gbc_reserverationTf);
-
-		JLabel lblCarsInExit = new JLabel("Cars in exit queue");
-		GridBagConstraints gbc_lblCarsInExit = new GridBagConstraints();
-		gbc_lblCarsInExit.anchor = GridBagConstraints.EAST;
-		gbc_lblCarsInExit.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCarsInExit.gridx = 2;
-		gbc_lblCarsInExit.gridy = 3;
-		populationData.add(lblCarsInExit, gbc_lblCarsInExit);
-		
-		exitQueueField = new JTextField();
-		exitQueueField.setText("0");
-		exitQueueField.setEditable(false);
-		GridBagConstraints gbc_exitQueueField = new GridBagConstraints();
-		gbc_exitQueueField.insets = new Insets(0, 0, 5, 0);
-		gbc_exitQueueField.gridx = 3;
-		gbc_exitQueueField.gridy = 3;
-		populationData.add(exitQueueField, gbc_exitQueueField);
-		exitQueueField.setColumns(10);
 		
 		// Free spots label
 		JLabel freeSpotsLb = new JLabel("Free spots");
@@ -284,6 +213,85 @@ public class StatisticsView extends View {
 		missedCarsTf.setEditable(false);
 		missedCarsTf.setColumns(10);
 		
+		// Standard entrance queue length label
+		JLabel lblCarsInStandardEntrance = new JLabel("Cars in standard entrance queue");
+		GridBagConstraints gbc_lblCarsInStandardEntrance = new GridBagConstraints();
+		gbc_lblCarsInStandardEntrance.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCarsInStandardEntrance.anchor = GridBagConstraints.EAST;
+		gbc_lblCarsInStandardEntrance.gridx = 2;
+		gbc_lblCarsInStandardEntrance.gridy = 0;
+		populationData.add(lblCarsInStandardEntrance, gbc_lblCarsInStandardEntrance);
+		
+		// Standard entrance queue length text field
+		standardEntranceTf = new JTextField();
+		standardEntranceTf.setEditable(false);
+		standardEntranceTf.setText("0");
+		GridBagConstraints gbc_standardEntranceTf = new GridBagConstraints();
+		gbc_standardEntranceTf.insets = new Insets(0, 0, 5, 0);
+		gbc_standardEntranceTf.gridx = 3;
+		gbc_standardEntranceTf.gridy = 0;
+		populationData.add(standardEntranceTf, gbc_standardEntranceTf);
+		standardEntranceTf.setColumns(10);
+		
+		// Pass holders entrance queue length label
+		JLabel lblCarsInPassEntrance = new JLabel("Cars in passholders entrance queue");
+		GridBagConstraints gbc_lblCarsInPassEntrance = new GridBagConstraints();
+		gbc_lblCarsInPassEntrance.anchor = GridBagConstraints.EAST;
+		gbc_lblCarsInPassEntrance.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCarsInPassEntrance.gridx = 2;
+		gbc_lblCarsInPassEntrance.gridy = 1;
+		populationData.add(lblCarsInPassEntrance, gbc_lblCarsInPassEntrance);
+		
+		// Pass holders entrance queue length text field
+		passEntranceTf = new JTextField();
+		passEntranceTf.setEditable(false);
+		passEntranceTf.setText("0");
+		GridBagConstraints gbc_passEntranceTf = new GridBagConstraints();
+		gbc_passEntranceTf.insets = new Insets(0, 0, 5, 0);
+		gbc_passEntranceTf.gridx = 3;
+		gbc_passEntranceTf.gridy = 1;
+		populationData.add(passEntranceTf, gbc_passEntranceTf);
+		passEntranceTf.setColumns(10);
+		
+		// Payment queue length label
+		JLabel lblCarsInPayment = new JLabel("Cars in payment queue");
+		GridBagConstraints gbc_lblCarsInPayment = new GridBagConstraints();
+		gbc_lblCarsInPayment.anchor = GridBagConstraints.EAST;
+		gbc_lblCarsInPayment.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCarsInPayment.gridx = 2;
+		gbc_lblCarsInPayment.gridy = 2;
+		populationData.add(lblCarsInPayment, gbc_lblCarsInPayment);
+		
+		// Payment queue length text field
+		paymentQueueTf = new JTextField();
+		paymentQueueTf.setEditable(false);
+		paymentQueueTf.setText("0");
+		GridBagConstraints gbc_paymentQueueTf = new GridBagConstraints();
+		gbc_paymentQueueTf.insets = new Insets(0, 0, 5, 0);
+		gbc_paymentQueueTf.gridx = 3;
+		gbc_paymentQueueTf.gridy = 2;
+		populationData.add(paymentQueueTf, gbc_paymentQueueTf);
+		paymentQueueTf.setColumns(10);
+		
+		// Exit queue length label
+		JLabel lblCarsInExit = new JLabel("Cars in exit queue");
+		GridBagConstraints gbc_lblCarsInExit = new GridBagConstraints();
+		gbc_lblCarsInExit.anchor = GridBagConstraints.EAST;
+		gbc_lblCarsInExit.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCarsInExit.gridx = 2;
+		gbc_lblCarsInExit.gridy = 3;
+		populationData.add(lblCarsInExit, gbc_lblCarsInExit);
+		
+		// Exit queue length text field
+		exitQueueTf = new JTextField();
+		exitQueueTf.setText("0");
+		exitQueueTf.setEditable(false);
+		GridBagConstraints gbc_exitQueueTf = new GridBagConstraints();
+		gbc_exitQueueTf.insets = new Insets(0, 0, 5, 0);
+		gbc_exitQueueTf.gridx = 3;
+		gbc_exitQueueTf.gridy = 3;
+		populationData.add(exitQueueTf, gbc_exitQueueTf);
+		exitQueueTf.setColumns(10);
 		
 		
 		/*
@@ -499,10 +507,10 @@ public class StatisticsView extends View {
 		passCarTf.setText("" + totalCarInfo.get("pass"));
 		reserverationTf.setText("" + totalCarInfo.get("reservation"));
 		freeSpotsTf.setText("" + totalCarInfo.get("free"));
-		adHocEntranceQueueField.setText("" + totalCarInfo.get("entranceCarQueue"));
-		passEntranceQueueField.setText("" + totalCarInfo.get("entrancePassQueue"));
-		paymentQueueField.setText("" + totalCarInfo.get("paymentQueue"));
-		exitQueueField.setText("" + totalCarInfo.get("exitCarQueue"));
+		standardEntranceTf.setText("" + totalCarInfo.get("standardEntranceQueue"));
+		passEntranceTf.setText("" + totalCarInfo.get("passEntranceQueue"));
+		paymentQueueTf.setText("" + totalCarInfo.get("paymentQueue"));
+		exitQueueTf.setText("" + totalCarInfo.get("exitQueue"));
 		servedCarsTf.setText("" + totalCarInfo.get("served"));
 		missedCarsTf.setText("" + totalCarInfo.get("missed"));
 		adHocPaidTf.setText("" + totalCarInfo.get("adhoc served"));

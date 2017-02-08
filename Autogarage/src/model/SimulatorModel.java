@@ -21,10 +21,10 @@ public class SimulatorModel implements Runnable{
 	private static final String RESERVED = "3";
 
 	// Queues
-	private CarQueue entranceCarQueue;
-    private CarQueue entrancePassQueue;
+	private CarQueue standardEntranceQueue;
+    private CarQueue passEntranceQueue;
     private CarQueue paymentCarQueue;
-    private CarQueue exitCarQueue;
+    private CarQueue exitQueue;
     
     //Tick information.
     private int tickPause = 100;
@@ -63,6 +63,12 @@ public class SimulatorModel implements Runnable{
     private int numberOfServedCars;						// The amount of served cars.
     private int numberOfMissedCars; 					// The amount of missed cars because of business.
     private int numberOfPassHolders = 20;				// Amount of customers with a pass.
+    
+    // Car queue statistics
+    private int entranceLength;
+    private int passEntranceLength;
+    private int paymentLength;
+    private int exitLength;
         
     /**
      * Constructor for the SimulatorModel class.
@@ -72,10 +78,10 @@ public class SimulatorModel implements Runnable{
         this.controller = controller;
         time = new Time();
         //Generate new queues.
-    	entranceCarQueue = new CarQueue();
-        entrancePassQueue = new CarQueue();
+    	standardEntranceQueue = new CarQueue();
+        passEntranceQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
-        exitCarQueue = new CarQueue();
+        exitQueue = new CarQueue();
         
         //Construct the banks.
         bank = new Bank();
@@ -128,10 +134,10 @@ public class SimulatorModel implements Runnable{
      */
     public void reset()
     {
-    	entranceCarQueue = new CarQueue();
-        entrancePassQueue = new CarQueue();
+    	standardEntranceQueue = new CarQueue();
+        passEntranceQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
-        exitCarQueue = new CarQueue();
+        exitQueue = new CarQueue();
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
         currentTick = 1;
         this.numberOfOpenSpots = numberOfFloors*numberOfRows*numberOfPlaces;
@@ -140,6 +146,10 @@ public class SimulatorModel implements Runnable{
         this.numberOfAdHocsServed = 0;
         this.numberOfPassesServed = 0;
         this.numberOfReservationsServed = 0;
+        this.entranceLength = 0;
+        this.passEntranceLength = 0;
+        this.paymentLength = 0;
+        this.exitLength = 0;
         time = new Time();
         bank = new Bank();
         Car.setBank(bank);
@@ -161,6 +171,13 @@ public class SimulatorModel implements Runnable{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    	
+    	// Reset queue variables to 0
+    	entranceLength = 0;
+    	passEntranceLength = 0;
+    	paymentLength = 0;
+    	exitLength = 0;
+    	
     	handleEntrance();
     	
     	//Loop over every element in the car count and reset the value to 0 for counting cars per tick.
@@ -203,8 +220,8 @@ public class SimulatorModel implements Runnable{
 
     private void handleEntrance(){
     	carsArriving();
-    	carsEntering(entrancePassQueue);
-    	carsEntering(entranceCarQueue);  	
+    	carsEntering(passEntranceQueue);
+    	carsEntering(standardEntranceQueue);  	
     }
     
     private void handleExit(){
@@ -224,26 +241,16 @@ public class SimulatorModel implements Runnable{
 
     private void carsEntering(CarQueue queue){
         int i=0;
+        
         // Remove car from the front of the queue and assign to a parking space.
-    	while (queue.carsInQueue()>0 && 
-    			getNumberOfOpenSpots()>0 && 
-    			i<enterSpeed) {
-            Car car = queue.removeCar();
-            Location freeLocation = getFirstFreeLocation();
-            setCarAt(freeLocation, car);
-            i++;
+        while (queue.carsInQueue()>0 && 
+        		getNumberOfOpenSpots()>0 && 
+        		i<enterSpeed) {
+        	Car car = queue.removeCar();
+        	Location freeLocation = getFirstFreeLocation();
+        	setCarAt(freeLocation, car);
+        	i++;
         }
-    	
-    	//TODO: dit werkt nog niet!!!
-    	// Any car that doesn't get added to the parking lot gets added to the missed statistic
-    	/*
-    	while (queue.carsInQueue()>0) {
-    		queue.removeCar();
-    		numberOfMissedCars++;
-    		i++;
-    	}
-    	*/
-    	
     }
     
     private void carsReadyToLeave(){
@@ -252,7 +259,10 @@ public class SimulatorModel implements Runnable{
         while (car!=null) {
         	if (car.getHasToPay()){
 	            car.setIsPaying(true);
-	            paymentCarQueue.addCar(car);
+	            if (paymentCarQueue.carsInQueue() < paymentSpeed) {
+	            	paymentCarQueue.addCar(car);
+	            	paymentLength++;
+	            }
         	}
         	else {
         		carLeavesSpot(car);
@@ -278,8 +288,8 @@ public class SimulatorModel implements Runnable{
     private void carsLeaving(){
         // Let cars leave.
     	int i=0;
-    	while (exitCarQueue.carsInQueue()>0 && i < exitSpeed){
-            Car car = exitCarQueue.removeCar();
+    	while (exitQueue.carsInQueue()>0 && i < exitSpeed){
+            Car car = exitQueue.removeCar();
             
             numberOfServedCars++;
             if (car instanceof AdHocCar) this.numberOfAdHocsServed++;
@@ -309,19 +319,34 @@ public class SimulatorModel implements Runnable{
     	switch(type) {
     	case AD_HOC: 
             for (int i = 0; i < numberOfCars; i++) {
-            	entranceCarQueue.addCar(new AdHocCar());
+            	if (standardEntranceQueue.carsInQueue() > enterSpeed) {
+            		numberOfMissedCars++;
+            	} else {            	
+            		standardEntranceQueue.addCar(new AdHocCar());
+            		entranceLength++;
+            	}	
             }
             break;
             
     	case PASS:
             for (int i = 0; i < numberOfCars; i++) {
-            	entrancePassQueue.addCar(new ParkingPassCar());
+            	if (passEntranceQueue.carsInQueue() > enterSpeed) {
+            		numberOfMissedCars++;
+            	} else {            	
+            		passEntranceQueue.addCar(new ParkingPassCar());
+            		passEntranceLength++;
+            	}
             }
             break;
             
     	case RESERVED:
     		for (int i = 0; i < numberOfCars; i++) {
-            	entrancePassQueue.addCar(new ReservationCar());
+    			if (passEntranceQueue.carsInQueue() > enterSpeed) {
+            		numberOfMissedCars++;
+            	} else {            	
+            		passEntranceQueue.addCar(new ReservationCar());
+            		passEntranceLength++;
+            	}
             }
             break;
             
@@ -330,7 +355,10 @@ public class SimulatorModel implements Runnable{
     
     private void carLeavesSpot(Car car){
     	removeCarAt(car.getLocation());
-        exitCarQueue.addCar(car);
+    	if (exitQueue.carsInQueue() < exitSpeed) {
+    		exitQueue.addCar(car);
+    		exitLength++;
+    	}
     }
    
     /**
@@ -433,10 +461,10 @@ public class SimulatorModel implements Runnable{
     	totalCarInfo.put("pass", 0);
     	totalCarInfo.put("adhoc", 0);
     	totalCarInfo.put("reservation", 0);
-    	totalCarInfo.put("entranceCarQueue", 0);
+    	totalCarInfo.put("standardEntranceQueue", 0);
     	totalCarInfo.put("paymentQueue", 0);
-    	totalCarInfo.put("entrancePassQueue", 0);
-    	totalCarInfo.put("exitCarQueue", 0);
+    	totalCarInfo.put("passEntranceQueue", 0);
+    	totalCarInfo.put("exitQueue", 0);
     	totalCarInfo.put("free", 0); 
     	totalCarInfo.put("served", 0);
     	totalCarInfo.put("missed", 0); 	
@@ -559,10 +587,10 @@ public class SimulatorModel implements Runnable{
     public HashMap<String, Integer> getTotalCarInfo()
     {
     	totalCarInfo.put("free", this.numberOfOpenSpots);
-    	totalCarInfo.put("entranceCarQueue", entranceCarQueue.carsInQueue());
-    	totalCarInfo.put("paymentQueue", paymentCarQueue.carsInQueue());
-    	totalCarInfo.put("entrancePassQueue", entranceCarQueue.carsInQueue());
-    	totalCarInfo.put("exitCarQueue", exitCarQueue.carsInQueue());
+    	totalCarInfo.put("standardEntranceQueue", this.entranceLength);
+    	totalCarInfo.put("paymentQueue", this.paymentLength);
+    	totalCarInfo.put("passEntranceQueue", this.passEntranceLength);
+    	totalCarInfo.put("exitQueue", this.exitLength);
     	totalCarInfo.put("served", this.numberOfServedCars);
     	totalCarInfo.put("missed", this.numberOfMissedCars);
     	totalCarInfo.put("adhoc served", this.numberOfAdHocsServed);

@@ -70,15 +70,7 @@ public class SimulatorView extends View {
             }
         }
 		repaint();
-	}
-	
-	
-	/**
-	 * Set the default size for this JPanel.
-	 */
-    public Dimension getPreferredSize() {
-        return new Dimension(800, 400);
-    }    
+	}   
     
     
     /**
@@ -115,10 +107,18 @@ public class SimulatorView extends View {
 		String[] legendaNames = {"Adhoc", "ParkingPass", "Empty spot"};
 		for(int i = 0; i < legendaNames.length; i++) {
 			g.setColor(legendaColors[i]);
-			g.fillRect(width - 120, 20 + (i * 20), 10, 10);
+			g.fillRect(width - (width/6), (height/20) + (i * (height/20)), (width/80), (height/40));
 			g.setColor(Color.BLACK);
-			g.drawString(legendaNames[i], width - 100, 20 + (i * 20) + (5 + (g.getFont().getSize() / 2)));
+			g.setFont(new Font("TimesRoman", Font.PLAIN, (width+height)/100));
+			g.drawString(legendaNames[i], width - (width/8), (height/20) + (i * (height/20)) + ((height/160) + (g.getFont().getSize() / 2)));
 		}
     }
+    
+	/**
+	 * Set the default size for this JPanel.
+	 */
+    public Dimension getPreferredSize() {
+        return new Dimension(800, 400);
+    } 
     
 }

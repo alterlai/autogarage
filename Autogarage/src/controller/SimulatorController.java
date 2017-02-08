@@ -181,7 +181,7 @@ public class SimulatorController {
 	 */
 	public void updateViews()
 	{
-		view.updateView(); //TODO make a list of all the views instead of just one variable and loop over the list.
+		view.updateView();
 	}
 	
 	/**

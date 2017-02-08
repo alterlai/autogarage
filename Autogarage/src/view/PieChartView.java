@@ -79,26 +79,26 @@ public class PieChartView extends View {
         // Draw Arcs
         g.setColor(new Color(230,230,230));
         g.fillArc((width/3)-(circleSize/2), (height/2)-(circleSize/2), circleSize, circleSize, 0, 360);							// Draw Arc
-        g.fillRect(width - 120, height - 40, 10, 10);																			// Draw rect for legenda
+        g.fillRect(width - 140, height - 40, 10, 10);																			// Draw rect for legenda
         
         g.setColor(ParkingPassCar.COLOR);
         g.fillArc((width/3)-(circleSize/2), (height/2)-(circleSize/2), circleSize, circleSize, 90, -yRot);						// Draw Arc
-        g.fillRect(width - 120, height - 100, 10, 10);																			// Draw rect for legenda
+        g.fillRect(width - 140, height - 100, 10, 10);																			// Draw rect for legenda
         
         g.setColor(AdHocCar.COLOR);
         g.fillArc((width/3)-(circleSize/2), (height/2)-(circleSize/2), circleSize, circleSize, -yRot+90, -y2Rot);				// Draw Arc
-        g.fillRect(width - 120, height - 80, 10, 10);																			// Draw rect for legenda
+        g.fillRect(width - 140, height - 80, 10, 10);																			// Draw rect for legenda
         
         g.setColor(ReservationCar.COLOR);
         g.fillArc((width/3)-(circleSize/2), (height/2)-(circleSize/2), circleSize, circleSize, -(yRot+y2Rot)+90, -y3Rot);		// Draw Arc
-        g.fillRect(width - 120, height - 60, 10, 10);																			// Draw rect for legenda
+        g.fillRect(width - 140, height - 60, 10, 10);																			// Draw rect for legenda
         
         // Draw the names of the legenda
         g.setColor(Color.BLACK);
-        g.drawString("Pass: " + Math.round(y) + "%", width - 100, height - 100 + (5 + (g.getFont().getSize() / 2)));
-        g.drawString("Adhoc: " + Math.round(y2) + "%", width - 100, height - 80 + (5 + (g.getFont().getSize() / 2)));
-        g.drawString("Reserved: " + Math.round(y3) + "%", width - 100, height - 60 + (5 + (g.getFont().getSize() / 2)));
-        g.drawString("Empty spots: " + Math.round(empty) + "%", width - 100, height - 40 + (5 + (g.getFont().getSize() / 2)));
+        g.drawString("Pass: " + Math.round(y) + "%", width - 120, height - 100 + (5 + (g.getFont().getSize() / 2)));
+        g.drawString("Adhoc: " + Math.round(y2) + "%", width - 120, height - 80 + (5 + (g.getFont().getSize() / 2)));
+        g.drawString("Reserved: " + Math.round(y3) + "%", width - 120, height - 60 + (5 + (g.getFont().getSize() / 2)));
+        g.drawString("Empty spots: " + Math.round(empty) + "%", width - 120, height - 40 + (5 + (g.getFont().getSize() / 2)));
         
         // Repaint
         repaint();

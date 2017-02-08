@@ -25,6 +25,7 @@ public class SimulatorModel implements Runnable{
     private CarQueue passEntranceQueue;
     private CarQueue paymentCarQueue;
     private CarQueue exitQueue;
+    private CarQueue placeholderQueue;
     
     //Tick information.
     private int tickPause = 100;
@@ -37,16 +38,20 @@ public class SimulatorModel implements Runnable{
     int weekendPassArrivals = 5; 		// average number of arriving cars per hour
     int weekDayReservedArrivals = 50; 	// average number of arriving cars per hour
     int weekendReservedArrivals = 100; 	// average number of arriving cars per hour
+    
+    private int numberOfPassHolders = 90;	// Amount of customers with a pass.
 
     int enterSpeed = 8; 	// number of cars that can enter per minute
     int paymentSpeed = 5;	// number of cars that can pay per minute
     int exitSpeed = 5;		// number of cars that can leave per minute
     
-    private int numberOfFloors;		// The amount of floors in the garage.
-    private int numberOfRows;		// The amount of rows in each floor.
-    private int numberOfPlaces;		// The amount of places in each row
-    private int numberOfOpenSpots;	// The amount of free spots in the garage.
-    private Car[][][] cars;			//Car array of all the cars in the garage.
+    private int numberOfFloors;								// The amount of floors in the garage.
+    private int numberOfRows;								// The amount of rows in each floor.
+    private int numberOfPlaces;								// The amount of places in each row
+    private int numberOfOpenSpots;							// The amount of free spots in the garage.
+    private Car[][][] cars;									//Car array of all the cars in the garage.
+    
+    private boolean arePlaceholdersSet = false;
     
     private int numberOfAdHocsServed;		// The amount of AdHocs that have paid.
     private int numberOfPassesServed;		// The amount of Parking pass cars that have paid.
@@ -58,11 +63,10 @@ public class SimulatorModel implements Runnable{
     private boolean running = true;			//Flag for the thread to run.
     
     // Statistics
-    private HashMap<String, Integer> totalCarInfo;		// Hashmap containing the total amount of cars in the garage.
-    private Bank bank;									// The bank regulating money.
-    private int numberOfServedCars;						// The amount of served cars.
-    private int numberOfMissedCars; 					// The amount of missed cars because of business.
-    private int numberOfPassHolders = 20;				// Amount of customers with a pass.
+    private HashMap<String, Integer> totalCarInfo;	// Hashmap containing the total amount of cars in the garage.
+    private Bank bank;								// The bank regulating money.
+    private int numberOfServedCars;					// The amount of served cars.
+    private int numberOfMissedCars; 				// The amount of missed cars because of business.
     
     // Car queue statistics
     private int entranceLength;
@@ -82,6 +86,7 @@ public class SimulatorModel implements Runnable{
         passEntranceQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitQueue = new CarQueue();
+        placeholderQueue = new CarQueue();
         
         //Construct the banks.
         bank = new Bank();
@@ -105,6 +110,11 @@ public class SimulatorModel implements Runnable{
      */
     public void run() {
         int i = 0;
+        
+        if (!arePlaceholdersSet) {
+        	placePlaceholders(numberOfPassHolders);
+        }
+        
     	while (i < simulationLength && running)
     	{
     		tick();
@@ -138,6 +148,7 @@ public class SimulatorModel implements Runnable{
         passEntranceQueue = new CarQueue();
         paymentCarQueue = new CarQueue();
         exitQueue = new CarQueue();
+        placeholderQueue = new CarQueue();
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
         currentTick = 1;
         this.numberOfOpenSpots = numberOfFloors*numberOfRows*numberOfPlaces;
@@ -155,6 +166,7 @@ public class SimulatorModel implements Runnable{
         Car.setBank(bank);
         resetCarInfo();
         resetBalanceInfo();
+        this.arePlaceholdersSet = false;
     }
     
     /**
@@ -207,6 +219,22 @@ public class SimulatorModel implements Runnable{
             }
         }
     }
+    
+    private void placePlaceholders(int placeHolders) {
+    	int i = 0;
+    	while (placeHolders > i) {
+    		placeholderQueue.addCar(new PassPlaceHolder());
+    		Car car = placeholderQueue.removeCar();
+        	Location freeLocation = getFirstFreeLocation();
+        	setCarAt(freeLocation, car);
+    		i++;
+    	}
+    	placeholdersAreSet();
+    }
+    
+    private void placeholdersAreSet() {
+    	this.arePlaceholdersSet = true;
+    }
 
     /**
      * This method will help increment total counts in the car total hashmap.
@@ -241,15 +269,26 @@ public class SimulatorModel implements Runnable{
 
     private void carsEntering(CarQueue queue){
         int i=0;
-        
+ 
         // Remove car from the front of the queue and assign to a parking space.
         while (queue.carsInQueue()>0 && 
         		getNumberOfOpenSpots()>0 && 
         		i<enterSpeed) {
         	Car car = queue.removeCar();
-        	Location freeLocation = getFirstFreeLocation();
-        	setCarAt(freeLocation, car);
-        	i++;
+        	
+        	if (car instanceof ParkingPassCar) {
+        		Car placeholder = getFirstPlaceholder();
+        		if (placeholder != null) {
+        			carLeavesSpot(placeholder);
+        			Location freeLocation = getFirstFreeLocation();
+        			setCarAt(freeLocation, car);
+        		}
+        		i++;
+        	} else {
+        		Location freeLocation = getFirstFreeLocation();
+        		setCarAt(freeLocation, car);
+        		i++;
+        	}
         }
     }
     
@@ -263,9 +302,9 @@ public class SimulatorModel implements Runnable{
 	            	paymentCarQueue.addCar(car);
 	            	paymentLength++;
 	            }
-        	}
-        	else {
+        	} else {
         		carLeavesSpot(car);
+        		placePlaceholders(1);
         	}
             car = getFirstLeavingCar();
         }
@@ -372,6 +411,21 @@ public class SimulatorModel implements Runnable{
                     Location location = new Location(floor, row, place);
                     Car car = getCarAt(location);
                     if (car != null && car.getMinutesLeft() <= 0 && !car.getIsPaying()) {
+                        return car;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    
+    public Car getFirstPlaceholder() {
+    	for (int floor = 0; floor < getNumberOfFloors(); floor++) {
+            for (int row = 0; row < getNumberOfRows(); row++) {
+                for (int place = 0; place < getNumberOfPlaces(); place++) {
+                    Location location = new Location(floor, row, place);
+                    Car car = getCarAt(location);
+                    if (car != null && car instanceof PassPlaceHolder) {
                         return car;
                     }
                 }
@@ -579,7 +633,9 @@ public class SimulatorModel implements Runnable{
     public void setNumberOfPlaces(int input){
     	this.numberOfPlaces = input;
     }
-    
+    public void setNumberOfPassholders(int input){
+    	this.numberOfPassHolders = input;
+    }    
     
     /**
      * Returns the total amount of cars parked in the garage that are not in queue.

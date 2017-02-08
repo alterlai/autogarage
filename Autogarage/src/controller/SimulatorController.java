@@ -144,7 +144,20 @@ public class SimulatorController {
     public void setNumberOfPlaces(int input){
     	model.setNumberOfPlaces(input);
     }
-	
+    public void setNumberOfPassholders(int input){
+    	model.setNumberOfPassholders(input);
+    }
+    public void setHourlyFee(Double input){
+    	AdHocCar.setHourlyRate(input);
+    	ReservationCar.setHourlyRate(input);
+    }
+    public void setBonusHourlyFee(Double input){
+    	ReservationCar.setBonusFee(input);
+    }
+	public void setParkingpassFee(int input){
+		ParkingPassCar.setMonthlyRate(input);
+	}
+    
 	/**
 	 * returns the time object.
 	 * @return

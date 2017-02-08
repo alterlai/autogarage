@@ -5,8 +5,7 @@ import java.awt.*;
 
 public class ParkingPassCar extends Car {
 	private static final Color COLOR=Color.blue;
-	//TODO add mutator methods for rates.
-	private static double monthlyRate = 80;	
+	private static int monthlyRate = 80;	
 	
     public ParkingPassCar() {
     	Random random = new Random();
@@ -19,15 +18,17 @@ public class ParkingPassCar extends Car {
     	return COLOR;
     }
     
-	public static double getMonthlyRate()
+	public static int getMonthlyRate()
 	{
 		return monthlyRate;
+	}
+	
+	public static void setMonthlyRate(int newRate) {
+		monthlyRate = newRate;
 	}
     
     public void pay(Car car)
     {
     	//pass holders payment is handled in the model.
     }
-    
-
 }

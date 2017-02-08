@@ -158,6 +158,7 @@ public class SimulatorModel implements Runnable{
         this.numberOfAdHocsServed = 0;
         this.numberOfPassesServed = 0;
         this.numberOfReservationsServed = 0;
+        this.numberOfPlaceholders = 0;
         this.entranceLength = 0;
         this.passEntranceLength = 0;
         this.paymentLength = 0;

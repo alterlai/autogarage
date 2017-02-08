@@ -427,7 +427,7 @@ public class SettingsView extends View{
 		panel_5.add(feePerMinuteField, gbc_feePerMinuteField);
 		feePerMinuteField.setColumns(10);
 		
-		JLabel lblBonusFeePerMinute = new JLabel("Hourly bonus rate");
+		JLabel lblBonusFeePerMinute = new JLabel("Reservation bonus rate");
 		GridBagConstraints gbc_lblBonusFeePerMinute = new GridBagConstraints();
 		gbc_lblBonusFeePerMinute.anchor = GridBagConstraints.EAST;
 		gbc_lblBonusFeePerMinute.insets = new Insets(0, 0, 5, 5);

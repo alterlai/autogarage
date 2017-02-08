@@ -6,7 +6,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import controller.SimulatorController;
-import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
@@ -14,18 +13,12 @@ import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import java.awt.Insets;
 import java.awt.Component;
-import javax.swing.Box;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
 import java.awt.Color;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.border.BevelBorder;
 import javax.swing.JSeparator;
-import javax.swing.JFormattedTextField;
 
+@SuppressWarnings("serial")
 public class SettingsView extends View{
 	private SimulatorController controller;
 	private JTextField simTickPauseTF;

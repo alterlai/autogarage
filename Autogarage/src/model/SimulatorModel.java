@@ -80,7 +80,7 @@ public class SimulatorModel implements Runnable{
         //Construct the banks.
         bank = new Bank();
         Car.setBank(bank);
-        
+
         //Construct hashmaps for car information and balance information and initialize variables.
         resetCarInfo();
         resetBalanceInfo();

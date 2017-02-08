@@ -527,7 +527,6 @@ public class SettingsView extends View{
 		controller.setHourlyFee(getFieldDouble(feePerMinuteField));
 		controller.setBonusHourlyFee(getFieldDouble(bonusFeePerMinuteField));
 		controller.setParkingpassFee(getFieldInt(passholderFeeField));
-		// TODO: MAKE TICKET COST SETTING.
 		
 		JOptionPane.showMessageDialog(this, "Settings have been applied", "Settings applied", JOptionPane.INFORMATION_MESSAGE);
 	}

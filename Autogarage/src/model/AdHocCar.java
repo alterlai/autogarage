@@ -4,7 +4,8 @@ import java.util.Random;
 import java.awt.*;
 
 public class AdHocCar extends Car {
-	private static final Color COLOR=Color.red;
+
+	public static final Color COLOR=Color.red;	
 	private static double hourlyRate = 2.20;		// The cost of parking per minute.
 	
     public AdHocCar() {

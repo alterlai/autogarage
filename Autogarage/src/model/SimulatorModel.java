@@ -91,7 +91,7 @@ public class SimulatorModel implements Runnable{
         //Construct the banks.
         bank = new Bank();
         Car.setBank(bank);
-        
+
         //Construct hashmaps for car information and balance information and initialize variables.
         resetCarInfo();
         resetBalanceInfo();
@@ -652,6 +652,7 @@ public class SimulatorModel implements Runnable{
     	totalCarInfo.put("adhoc served", this.numberOfAdHocsServed);
     	totalCarInfo.put("pass served", this.numberOfPassesServed);
     	totalCarInfo.put("reserved served", this.numberOfReservationsServed);
+    	totalCarInfo.put("passHolders", this.numberOfPassHolders);
     	return this.totalCarInfo;
     }
     

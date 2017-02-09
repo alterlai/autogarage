@@ -337,7 +337,7 @@ public class SimulatorModel implements Runnable{
             
             numberOfServedCars++;
             if (car instanceof AdHocCar) this.numberOfAdHocsServed++;
-            if (car instanceof ParkingPassCar) this.numberOfPassesServed++;
+            if (car instanceof ParkingPassCar) {this.numberOfPassesServed++; this.numberOfPlaceholders--;}
             if (car instanceof ReservationCar) this.numberOfReservationsServed++;
             
             i++;
@@ -458,7 +458,7 @@ public class SimulatorModel implements Runnable{
     /**
      * Return the car that is at a given location.
      * @param location	The location of which you want to get the car
-     * @return	Car		the car at the given locaion.
+     * @return	Car		the car at the given location.
      */
     public Car getCarAt(Location location) {
         if (!locationIsValid(location)) {

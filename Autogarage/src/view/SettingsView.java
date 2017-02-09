@@ -292,6 +292,7 @@ public class SettingsView extends View{
 		panel_5.add(exitSpeedField, gbc_exitSpeedField);
 		exitSpeedField.setColumns(10);
 		
+		// Garage Settings
 		JLabel lblGarageSettings = new JLabel("Garage settings");
 		GridBagConstraints gbc_lblGarageSettings = new GridBagConstraints();
 		gbc_lblGarageSettings.gridwidth = 2;
@@ -365,6 +366,7 @@ public class SettingsView extends View{
 		panel_5.add(numberOfPlacesField, gbc_numberOfPlacesField);
 		numberOfPlacesField.setColumns(10);
 		
+		// Payment
 		JLabel lblPaymentSettings = new JLabel("Payment settings");
 		GridBagConstraints gbc_lblPaymentSettings = new GridBagConstraints();
 		gbc_lblPaymentSettings.gridwidth = 2;
@@ -454,10 +456,7 @@ public class SettingsView extends View{
 		gbc_passholderFeeField.gridx = 1;
 		gbc_passholderFeeField.gridy = 15;
 		panel_5.add(passholderFeeField, gbc_passholderFeeField);
-		passholderFeeField.setColumns(10);		
-		
-		JPanel panel_1 = new JPanel();
-		panel.add(panel_1, BorderLayout.NORTH);
+		passholderFeeField.setColumns(10);
 		
 		JPanel panel_3 = new JPanel();
 		panel.add(panel_3, BorderLayout.SOUTH);
@@ -473,8 +472,7 @@ public class SettingsView extends View{
 	
 	@Override
 	public void updateView() {
-		// Nothing to update.
-		
+		// Nothing to update.		
 	}
 	
 	/**
@@ -520,6 +518,10 @@ public class SettingsView extends View{
 		controller.setHourlyFee(getFieldDouble(feePerMinuteField));
 		controller.setBonusHourlyFee(getFieldDouble(bonusFeePerMinuteField));
 		controller.setParkingpassFee(getFieldInt(passholderFeeField));
+		
+		controller.setNumberOfFloors(getFieldInt(numberOfFloorsField));
+		controller.setNumberOfRows(getFieldInt(numberOfRowsField));
+		controller.setNumberOfPlaces(getFieldInt(numberOfPlacesField));
 		// TODO: MAKE TICKET COST SETTING.
 		
 		JOptionPane.showMessageDialog(this, "Settings have been applied", "Settings applied", JOptionPane.INFORMATION_MESSAGE);

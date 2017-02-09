@@ -141,11 +141,9 @@ public class SimulatorController {
     }
     public void setNumberOfFloors(int input){
     	model.setNumberOfFloors(input);
-    	resetSimulation();
     }
     public void setNumberOfRows(int input){
     	model.setNumberOfRows(input);
-    	resetSimulation();
     }
     public void setNumberOfPlaces(int input){
     	model.setNumberOfPlaces(input);
